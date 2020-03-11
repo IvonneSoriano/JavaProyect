@@ -5,51 +5,91 @@
  */
 package sv.edu.udb.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Imer Palma
  */
-public class Employees {
-    private int Id, rolId, departmentId;
+public class Employee {
+
+    private int id, rolId, departmentId;
     private String name, lastname;
-    
-    public Employees(){}
-    public void setEmployeeId(int employeeID){
-        this.Id = employeeID;
+    private String username;
+    private String password;
+    private List<Comment> commentsList = new ArrayList<>();
+
+    public Employee() {
+
     }
-    public int getEmployeeId(){
-        return Id;
+
+    public Employee(String username) {
+        this.username = username;
     }
-    
-    public void setRolId(int rolId){
+
+    public void setEmployeeId(int employeeID) {
+        this.id = employeeID;
+    }
+
+    public int getEmployeeId() {
+        return id;
+    }
+
+    public void setRolId(int rolId) {
         this.rolId = rolId;
-    } 
-    
-    public int getRolId(){
+    }
+
+    public int getRolId() {
         return rolId;
     }
-    
-    public void setDepartmentId(int departmentId){
+
+    public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
-    
-    public int getDepartmentId(){
+
+    public int getDepartmentId() {
         return departmentId;
     }
-    
-    public void setEmployeeName(String employeeName){
+
+    public void setEmployeeName(String employeeName) {
         this.name = employeeName;
     }
-    
-    public String getEmployeeName(){
+
+    public String getEmployeeName() {
         return name;
     }
-    
-    public void  setEmployeeLastname(String employeeLastname){
+
+    public void setEmployeeLastname(String employeeLastname) {
         this.lastname = employeeLastname;
     }
-    
-    public String getEmployeeLastname(){
+
+    public String getEmployeeLastname() {
         return lastname;
     }
+
+    public List<Comment> getCommentsList() {
+        return commentsList;
+    }
+
+    public void setCommentsList(List<Comment> commentsList) {
+        this.commentsList = commentsList;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
