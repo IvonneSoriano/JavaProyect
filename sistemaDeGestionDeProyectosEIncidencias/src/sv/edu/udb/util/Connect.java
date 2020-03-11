@@ -47,8 +47,8 @@ public class Connect {
     }
     //Metodo que recibe un sql como parametro que sea un update,insert.delete
 
-    public void setQuery(String query) throws SQLException {
-        this.s.executeUpdate(query);
+    public int setQuery(String query) throws SQLException {
+        return this.s.executeUpdate(query);
     }
     //Metodo que cierra la conexion
 

@@ -16,13 +16,16 @@ import sv.edu.udb.util.DAODefaults;
  */
 public class EmployeeController {
 
-    public static int tipoEmpleadoLoggeado = -1;
+    public void insertEmployee(Employee e) {
+        EmployeeDAO dao = new EmployeeDAO();
+        dao.save(e);
+    }
+    
 
     public Employee findEmployee(String username) {
         EmployeeDAO dao = new EmployeeDAO();
         Optional<Employee> foundEmp = dao.getEmployeeByUsername(username);
 
         return foundEmp.orElseGet(() -> new Employee(DAODefaults.NON_EXISTING_USER.getDefaultValue()));
-
     }
 }

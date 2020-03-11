@@ -67,7 +67,25 @@ public class EmployeeDAO implements Dao<Employee> {
 
     @Override
     public void save(Employee t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Connect connection = new Connect();
+
+            int result = connection.setQuery("INSERT INTO `gestion_tickets`.`employees` "
+                    + "(`ROLID`, `DEPARMENTID`, `EMPLOYEENAME`, `EMPLOYEELASTNAME`, `USERNAME`, `PASSWORD`) "
+                    + "VALUES ('" + t.getRolId() + "', '" + t.getDepartmentId()
+                    + "', '" + t.getEmployeeName() + "', '"
+                    + t.getEmployeeLastname() + "', '"
+                    + t.getUsername() + "', '" + t.getPassword() + "');");
+
+            if (result <= 0) {
+                logger.error("INSERT to Employees table has failed");
+            } else {
+                logger.info("INSERT to Employees table has successfully completed!");
+            }
+
+        } catch (Exception e) {
+            logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+        }
     }
 
     @Override
