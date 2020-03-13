@@ -11,7 +11,7 @@ package sv.edu.udb.models;
  */
 public class Employees {
     private int Id, rolId, departmentId;
-    private String name, lastname;
+    private String name, lastname, username, password;
     
     public Employees(){}
     public void setEmployeeId(int employeeID){
@@ -51,5 +51,17 @@ public class Employees {
     
     public String getEmployeeLastname(){
         return lastname;
+    }
+    public void setUsername(String username){
+        this.username= username;
+    }
+    public String getUsername(){
+        return username;
+    }
+    public void setPassword(String password){
+        this.password = password;
+    }
+    public String getPassword(){
+        return password;
     }
 }
