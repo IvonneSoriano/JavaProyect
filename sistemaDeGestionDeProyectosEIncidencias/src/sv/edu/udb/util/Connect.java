@@ -5,7 +5,9 @@
  */
 package sv.edu.udb.util;
 
+import java.io.FileInputStream;
 import java.sql.*;
+import java.util.Properties;
 
 /**
  *
@@ -23,7 +25,12 @@ public class Connect {
             //obtenemos el driver de para mysql
             //Class.forName("com.mysql.jdbc.Driver");
             // Se obtiene una conexión con la base de datos.
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestion_tickets?characterEncoding=latin1&useConfigs=maxPerformance", "root", "This#is#4#MySQL");
+            Properties prop = new Properties();
+            FileInputStream ip = new FileInputStream("nbproject/config.properties");
+            prop.load(ip);
+
+            conexion = DriverManager.getConnection(prop.getProperty("db_url"), prop.getProperty("db_user"), prop.getProperty("db_pswd"));
+
             // Permite ejecutar sentencias SQL sin parámetros
             s = conexion.createStatement();
             //  System.err.println("exito");
