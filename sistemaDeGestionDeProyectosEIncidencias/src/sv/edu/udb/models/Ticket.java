@@ -10,7 +10,7 @@ import java.util.*;
  * @author Imer
  */
 public class Ticket {
-    private int id, request, programmer, tester;
+    private int id, request, programmer, tester, project;
     private String ticketStatus, internalCode;
     private Date startDate, endDate;
     public Ticket(){
@@ -20,6 +20,12 @@ public class Ticket {
     }
     public int getIdTicket(){
         return id;
+    }
+    public void setProjectId(int projectId){
+        this.project = projectId;
+    }
+    public int getProjectId(){
+        return project;
     }
     public void setRequestId(int requestTicket){
         this.request = requestTicket;
