@@ -5,11 +5,20 @@
  */
 package sv.edu.udb.vistas;
 
+import javax.swing.JOptionPane;
+import org.apache.log4j.Logger;
+import sv.edu.udb.controllers.EmployeeController;
+import sv.edu.udb.models.Employee;
+import sv.edu.udb.util.DAODefaults;
+
 /**
  *
  * @author kiss_
  */
 public class Login extends javax.swing.JFrame {
+
+    private final EmployeeController controller = new EmployeeController();
+    private static Logger logger = Logger.getLogger(Login.class);
 
     /**
      * Creates new form Login
@@ -17,8 +26,8 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         //Codigo para centrar el Form
-        this.setLocationRelativeTo(null); 
-        
+        this.setLocationRelativeTo(null);
+
         //Codigo para maximizar el form.
         //this.setExtendedState(MAXIMIZED_BOTH);
     }
@@ -66,6 +75,11 @@ public class Login extends javax.swing.JFrame {
 
         btnEntrar.setText("Ingresar");
         btnEntrar.setBorder(null);
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,6 +130,19 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        logger.info("Username: " + txtUser.getText() + " has tried to log in!");
+        Employee e = controller.findEmployee(txtUser.getText());
+
+        if (!e.getUsername().equals(DAODefaults.NON_EXISTING_USER.getDefaultValue())) {
+            JOptionPane.showMessageDialog(null, "Bienvenido: "
+                    + e.getEmployeeName() + " "
+                    + e.getEmployeeLastname());
+        } else {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getUsername());
+        }
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
      * @param args the command line arguments
