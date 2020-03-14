@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sv.edu.udb.models;
 
 import java.util.*;
@@ -13,7 +8,7 @@ import java.util.*;
  */
 public class Ticket {
 
-    private int id, request, programmer, tester;
+    private int id, request, programmer, tester, projectID;
     private String ticketStatus, internalCode;
     private Date startDate, endDate;
 
@@ -82,5 +77,13 @@ public class Ticket {
 
     public Date getEndDate() {
         return endDate;
+    }
+
+    public int getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
     }
 }
