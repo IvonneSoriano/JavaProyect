@@ -29,13 +29,13 @@ public class CreateUser extends javax.swing.JInternalFrame {
 
         lblTipo = new javax.swing.JLabel();
         cmbbxTipoEmpleado = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lblApellido = new javax.swing.JLabel();
         txtLastname = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblUsers = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        lblContra = new javax.swing.JLabel();
         txtContra = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JButton();
@@ -46,15 +46,15 @@ public class CreateUser extends javax.swing.JInternalFrame {
 
         cmbbxTipoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel2.setText("Nombre:");
+        lblNombre.setText("Nombre:");
 
-        jLabel3.setText("Apellido:");
+        lblApellido.setText("Apellido:");
 
-        jLabel4.setText("Usuario:");
+        lblUsers.setText("Usuario:");
 
         txtUsuario.setText("jTextField1");
 
-        jLabel5.setText("Contraseña:");
+        lblContra.setText("Contraseña:");
 
         txtContra.setText("jPasswordField1");
 
@@ -76,12 +76,12 @@ public class CreateUser extends javax.swing.JInternalFrame {
                 .addContainerGap(143, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2))
+                        .addComponent(lblUsers)
+                        .addComponent(lblApellido)
+                        .addComponent(lblNombre))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jLabel5))
+                        .addComponent(lblContra))
                     .addComponent(lblDepto)
                     .addComponent(lblTipo))
                 .addGap(55, 55, 55)
@@ -119,19 +119,19 @@ public class CreateUser extends javax.swing.JInternalFrame {
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(lblNombre))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtLastname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(lblApellido))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(lblUsers))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(lblContra))
                 .addGap(31, 31, 31)
                 .addComponent(btnIngresar)
                 .addContainerGap(55, Short.MAX_VALUE))
@@ -145,13 +145,13 @@ public class CreateUser extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JComboBox<String> cmbbxDepoto;
     private javax.swing.JComboBox<String> cmbbxTipoEmpleado;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lblApellido;
+    private javax.swing.JLabel lblContra;
     private javax.swing.JLabel lblDepto;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTipo;
+    private javax.swing.JLabel lblUsers;
     private javax.swing.JPasswordField txtContra;
     private javax.swing.JTextField txtLastname;
     private javax.swing.JTextField txtName;
