@@ -46,13 +46,10 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`requests` (
   CONSTRAINT `FK_REL_TYPE_REQUEST`
         FOREIGN KEY (`REQUESTTYPEID`)
         REFERENCES `gestion_tickets`.`requesttypes` (`REQUESTTYPEID`)
-        ON DELETE RESTRICT
-        ON UPDATE RESTRICT)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0;
-
-CREATE INDEX `FK_REL_TYPE_REQUEST` ON `gestion_tickets`.`requests` (`REQUESTTYPEID` ASC) VISIBLE;
-
 -- -----------------------------------------------------
 -- Table `gestion_tickets`.`departments`
 -- -----------------------------------------------------
@@ -92,21 +89,15 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`employees` (
   CONSTRAINT `FK_REL_DEPARMENT_EMPLOYEE`
         FOREIGN KEY (`DEPARMENTID`)
         REFERENCES `gestion_tickets`.`departments` (`DEPARMENTID`)
-        ON DELETE RESTRICT
-        ON UPDATE RESTRICT,
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
   CONSTRAINT `FK_REL_ROL_EMPLOYEE`
         FOREIGN KEY (`ROLID`)
         REFERENCES `gestion_tickets`.`roles` (`ROLID`)
-        ON DELETE RESTRICT
-        ON UPDATE RESTRICT)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0;
-
-CREATE INDEX `FK_REL_DEPARMENT_EMPLOYEE` ON `gestion_tickets`.`employees` (`DEPARMENTID` ASC) VISIBLE;
-
-CREATE INDEX `FK_REL_ROL_EMPLOYEE` ON `gestion_tickets`.`employees` (`ROLID` ASC) VISIBLE;
-
-CREATE INDEX `SECONDARY` ON `gestion_tickets`.`employees` (`ROLID` ASC, `DEPARMENTID` ASC) VISIBLE;
 -- -----------------------------------------------------
 -- Table `gestion_tickets`.`comments`
 -- -----------------------------------------------------
@@ -132,10 +123,6 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`comments` (
         ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0;
-
-CREATE INDEX `FK_REL_EMPLOYEE_REQUEST` ON `gestion_tickets`.`comments` (`REQUESTID` ASC) VISIBLE;
-
-CREATE INDEX `fk_comments_employees1_idx` ON `gestion_tickets`.`comments` (`EMPLOYEEID` ASC, `DEPARMENTID` ASC) VISIBLE;
 -- -----------------------------------------------------
 -- Table `gestion_tickets`.`projects`
 -- -----------------------------------------------------
@@ -146,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`projects` (
   `DEPARMENTID` SMALLINT NOT NULL,
   `PROJECTNAME` VARCHAR(256) NOT NULL,
   `PROJECTDESCRIPTION` VARCHAR(1024) NOT NULL,
-  `CREATIONDATE` TIMESTAMP NOT NULL,
+  `CREATIONDATE` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`PROJECTID`),
   CONSTRAINT `fk_projects_departments1`
         FOREIGN KEY (`DEPARMENTID`)
@@ -155,8 +142,6 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`projects` (
         ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0;
-
-CREATE INDEX `fk_projects_departments1_idx` ON `gestion_tickets`.`projects` (`DEPARMENTID` ASC) VISIBLE;
 -- -----------------------------------------------------
 -- Table `gestion_tickets`.`tickets`
 -- -----------------------------------------------------
@@ -169,16 +154,14 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`tickets` (
   `ID_PROGRAMADOR` SMALLINT NOT NULL,
   `ID_TESTER` SMALLINT NOT NULL,
   `TICKET_STATUS` VARCHAR(16) NOT NULL,
-  `STARTDATE` TIMESTAMP NOT NULL,
-  `ENDDATE` TIMESTAMP NOT NULL,
   `INTERNALCODE` VARCHAR(24) NOT NULL,
+  `STARTDATE` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ENDDATE` TIMESTAMP NOT NULL,
   PRIMARY KEY (`TICKETID`, `REQUESTID`),
   CONSTRAINT `fk_tickets_requests1`
         FOREIGN KEY (`REQUESTID`)
         REFERENCES `gestion_tickets`.`requests` (`REQUESTID`)
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0;
-
-CREATE INDEX `fk_tickets_requests1_idx` ON `gestion_tickets`.`tickets` (`REQUESTID` ASC) VISIBLE;
