@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class Ticket {
 
-    private int id, request, programmer, tester;
+    private int id, request, programmer, tester, projectID;
     private String ticketStatus, internalCode;
     private Date startDate, endDate;
 
@@ -82,5 +82,13 @@ public class Ticket {
 
     public Date getEndDate() {
         return endDate;
+    }
+
+    public int getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
     }
 }
