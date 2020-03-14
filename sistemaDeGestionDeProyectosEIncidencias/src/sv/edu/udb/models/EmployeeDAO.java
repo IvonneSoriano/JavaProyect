@@ -88,14 +88,71 @@ public class EmployeeDAO implements Dao<Employee> {
         }
     }
 
+    // THIS METHOD CAN BE DONE BY SUPERVISOR  
     @Override
     public void update(Employee t, String[] params) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Connect connection = new Connect();
+
+            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
+                    + "`ROLID` = " + t.getRolId()
+                    + ", `EMPLOYEENAME` = " + t.getEmployeeName()
+                    + ", `EMPLOYEELASTNAME` = " + t.getEmployeeLastname()
+                    + ", `USERNAME` = " + t.getUsername()
+                    + "WHERE `EmployeeID` = " + t.getEmployeeId() + "';");
+
+            if (result <= 0) {
+                logger.error("UPDATE to Employees table has failed");
+            } else {
+                logger.info("UPDATE to Employees table has successfully completed!");
+            }
+        } catch (Exception e) {
+            logger.error("Error processing UPDATE query in save method. Message: " + e.getMessage());
+        }
+    }
+
+    //THIS METHOD CAN BE DONE BY THE SA
+    public void updateSA(Employee t, String[] params) {
+        try {
+            Connect connection = new Connect();
+
+            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
+                    + "`ROLID` = " + t.getRolId()
+                    + ", `DEPARMENTID` = " + t.getDepartmentId()
+                    + ", `EMPLOYEENAME` = " + t.getEmployeeName()
+                    + ", `EMPLOYEELASTNAME` = " + t.getEmployeeLastname()
+                    + ", `USERNAME` = " + t.getUsername()
+                    + ", `PASSWORD` = " + t.getPassword()
+                    + "WHERE `EmployeeID` = " + t.getEmployeeId() + "';"
+            );
+
+            if (result <= 0) {
+                logger.error("UPDATE to Employees table has failed");
+            } else {
+                logger.info("UPDATE to Employees table has successfully completed!");
+            }
+        } catch (Exception e) {
+            logger.error("Error processing UPDATE query in save method. Message: " + e.getMessage());
+        }
     }
 
     @Override
     public void delete(Employee t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Connect connection = new Connect();
+
+            int result = connection.setQuery("DELETE FROM `gestion_tickets`.`employees` WHERE `EmployeeID` = "
+                    + t.getEmployeeId() + ";");
+
+            if (result <= 0) {
+                logger.error("DELETE to Employees table has failed");
+            } else {
+                logger.info("DELETO to Employees table has successfully completed!");
+            }
+
+        } catch (Exception e) {
+            logger.error("Error processing DELETE query in save method. Message: " + e.getMessage());
+        }
     }
 
     public Optional<Employee> getEmployeeByUsername(String username) {
