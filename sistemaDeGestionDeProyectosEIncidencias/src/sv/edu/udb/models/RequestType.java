@@ -9,22 +9,28 @@ package sv.edu.udb.models;
  *
  * @author Imer
  */
-public class RequestTypes {
+public class RequestType {
+
     private int id;
     private String requestName;
-    public RequestTypes(){
+
+    public RequestType() {
     }
-    public void setId(int idRequest){
-        this.id  =idRequest;
+
+    public void setId(int idRequest) {
+        this.id = idRequest;
     }
-    public int getId(){
+
+    public int getId() {
         return id;
     }
-    public void setRequestTypeName(String requestName){
+
+    public void setRequestTypeName(String requestName) {
         this.requestName = requestName;
     }
-    public String getRequestTypeName(){
+
+    public String getRequestTypeName() {
         return requestName;
     }
-    
+
 }

@@ -7,7 +7,7 @@ package sv.edu.udb.vistas.projectviews;
 
 import java.sql.*;
 
-import sv.edu.udb.util.Connec;
+import sv.edu.udb.util.Connect;
 
 /**
  *
@@ -18,26 +18,25 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     /**
      * Creates new form ProjectView
      */
-   
-    
     public ProjectInsert() {
         initComponents();
         try {
-            Connec cnx = new Connec();
+            Connect cnx = new Connect();
             cnx.setRs("select * from departments");
             cmbDepartment.removeAllItems();
             ResultSet comboFill = (ResultSet) cnx.getRs();
-            while (comboFill.next()) {                
+            while (comboFill.next()) {
                 cmbDepartment.addItem(comboFill.getString(2));
-               
+
             }
             cnx.cerrarConexion();
-            
+
         } catch (Exception e) {
         }
-        
+
     }
-    public void values(){
+
+    public void values() {
     }
 
     /**
@@ -123,21 +122,19 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            
-            Connec cnx = new Connec();
+
+            Connect cnx = new Connect();
             Timestamp date = new Timestamp(System.currentTimeMillis());
-            String sql = "Insert Into projects values ("+cmbDepartment.getSelectedIndex()+",'"+txtname.getText()+"','"+txtAreaDescripcion.getText()+"','"+date+"')";
+            String sql = "Insert Into projects values (" + cmbDepartment.getSelectedIndex() + ",'" + txtname.getText() + "','" + txtAreaDescripcion.getText() + "','" + date + "')";
             cnx.setQuery(sql);
             cnx.cerrarConexion();
-            
-            
+
         } catch (SQLException e) {
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbDepartment;

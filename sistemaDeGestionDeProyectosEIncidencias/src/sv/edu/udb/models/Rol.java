@@ -9,25 +9,27 @@ package sv.edu.udb.models;
  *
  * @author Imer Palma
  */
-public class Roles {
+public class Rol {
+
     private int id;
     private String name;
-    
-    public Roles(){}
-    
-    public void setRolId(int rolId){
+
+    public Rol() {
+    }
+
+    public void setRolId(int rolId) {
         this.id = rolId;
     }
-    
-    public int getRolId(){
+
+    public int getRolId() {
         return id;
     }
-    
-    public void setRolName(String rolName){
+
+    public void setRolName(String rolName) {
         this.name = rolName;
     }
-    
-    public String getRolName(){
+
+    public String getRolName() {
         return name;
     }
 }

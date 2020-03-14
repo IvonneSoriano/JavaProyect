@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import sv.edu.udb.util.Connec;
+import sv.edu.udb.util.Connect;
 
 /**
  *
@@ -21,13 +21,15 @@ public class ProjectDelete extends javax.swing.JInternalFrame {
      * Creates new form ProjectDelete
      */
     ResultSet projects;
+
     public ProjectDelete() {
         initComponents();
         values();
     }
-    public void values(){
+
+    public void values() {
         try {
-            Connec cnx = new Connec();
+            Connect cnx = new Connect();
             cnx.setRs("select projects.projectid, departments.deparmentname, projects.projectname, projects.projectdescription, projects.creationdate from projects inner join departments on project.departmentid = deparments.departmentid");
             projects = (ResultSet) cnx.getRs();
             projects.last();
@@ -35,47 +37,39 @@ public class ProjectDelete extends javax.swing.JInternalFrame {
             projects.next();
             llenarTxtbox();
             cnx.cerrarConexion();
-            
+
         } catch (Exception e) {
         }
     }
-    private void llenarTxtbox() throws SQLException
-    {
+
+    private void llenarTxtbox() throws SQLException {
         txtId.setText(String.valueOf(projects.getString(1)));
         txtDepartment.setText(String.valueOf(projects.getString(2)));
         txtNombre.setText(String.valueOf(projects.getString(3)));
         txtAreaDescripcion.setText(String.valueOf(projects.getString(4)));
         txtDate.setText(String.valueOf(projects.getString(5)));
-      
-              
+
     }
-          private void siguiente() throws SQLException
-    {
-        if(projects.isAfterLast()==false)
-        {
+
+    private void siguiente() throws SQLException {
+        if (projects.isAfterLast() == false) {
             btnAnterior.setEnabled(true);
             projects.next();
             llenarTxtbox();
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(this,"Ya no existe regristros por recorrer");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya no existe regristros por recorrer");
             projects.previous();
             btnSiguiente.setEnabled(false);
         }
     }
-    
-    private void anterior() throws SQLException
-    {
-          if(projects.isBeforeFirst()==false)
-        {
+
+    private void anterior() throws SQLException {
+        if (projects.isBeforeFirst() == false) {
             btnSiguiente.setEnabled(true);
             projects.previous();
             llenarTxtbox();
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(this,"Ya no existe regristros por recorrer");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya no existe regristros por recorrer");
             projects.next();
             btnAnterior.setEnabled(false);
         }
@@ -212,26 +206,26 @@ public class ProjectDelete extends javax.swing.JInternalFrame {
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
         // TODO add your handling code here:
-         try {
+        try {
             anterior();
         } catch (SQLException ex) {
             try {
                 anterior();
             } catch (SQLException ex1) {
-                
+
             }
         }
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         // TODO add your handling code here:
-         try {
+        try {
             siguiente();
         } catch (SQLException ex) {
             try {
                 siguiente();
             } catch (SQLException ex1) {
-                
+
             }
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
@@ -239,14 +233,13 @@ public class ProjectDelete extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
-            
-            Connec cnx = new Connec();
-           
-            String sql = "Delete from projects where projectid = "+txtId.getText();
+
+            Connect cnx = new Connect();
+
+            String sql = "Delete from projects where projectid = " + txtId.getText();
             cnx.setQuery(sql);
             cnx.cerrarConexion();
-            
-            
+
         } catch (SQLException e) {
         }
     }//GEN-LAST:event_jButton2ActionPerformed

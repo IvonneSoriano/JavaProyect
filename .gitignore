@@ -12,7 +12,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar commenting this out to let log4j jar and others go through
 *.war
 *.nar
 *.ear
@@ -25,3 +25,9 @@ hs_err_pid*
 
 **/nbproject/private/
 **/build/
+/sistemaDeGestionDeProyectosEIncidencias/dist/
+
+# This will avoid pushing log file to our repo
+GestionTicketsLog 
+private.xml
+config.properties

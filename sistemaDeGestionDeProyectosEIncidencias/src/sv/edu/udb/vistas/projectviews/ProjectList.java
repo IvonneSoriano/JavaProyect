@@ -7,7 +7,7 @@ package sv.edu.udb.vistas.projectviews;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
-import sv.edu.udb.util.Connec;
+import sv.edu.udb.util.Connect;
 
 /**
  *
@@ -18,27 +18,28 @@ public class ProjectList extends javax.swing.JInternalFrame {
     /**
      * Creates new form ProjectList
      */
-     Connec cnx =new Connec();
-     ResultSet tabla;
+    Connect cnx = new Connect();
+    ResultSet tabla;
+
     public ProjectList() throws SQLException {
         initComponents();
-        Object[][] data =null;
-        String [] columns= {
-        "Id Proyecto","Nombre de proyecto","Departamento","Fecha de creacion","Descripcion"
+        Object[][] data = null;
+        String[] columns = {
+            "Id Proyecto", "Nombre de proyecto", "Departamento", "Fecha de creacion", "Descripcion"
         };
-        DefaultTableModel modelo1=new DefaultTableModel(data,columns);
+        DefaultTableModel modelo1 = new DefaultTableModel(data, columns);
         this.jTable1.setModel(modelo1);
-        
-        cnx.setRs("select projects.projectid, projects.projectname, departments.deparmentname, projects.creationdate, projects.projectdescription from projects inner join departments on project.departmentid = deparments.departmentid");
-        tabla =cnx.getRs();
-        while(tabla.next())
-        {
-            Object [] newRow= {
-            tabla.getInt(1),tabla.getString(2),
-            tabla.getString(3),tabla.getString(4),tabla.getString(5)};
+
+        cnx.setRs("select projects.projectid, projects.projectname, departments.deparmentname, projects.creationdate, projects.projectdescription "
+                + "FROM projects INNER JOIN departments ON project.departmentid = deparments.departmentid");
+        tabla = cnx.getRs();
+        while (tabla.next()) {
+            Object[] newRow = {
+                tabla.getInt(1), tabla.getString(2),
+                tabla.getString(3), tabla.getString(4), tabla.getString(5)};
             modelo1.addRow(newRow);
         }
-        
+
         tabla.close();
         cnx.cerrarConexion();
     }
