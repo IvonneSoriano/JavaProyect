@@ -5,17 +5,23 @@
  */
 package sv.edu.udb.vistas;
 
+import org.apache.log4j.Logger;
+import sv.edu.udb.models.Session;
+
 /**
  *
  * @author kiss_
  */
 public class Contenedor extends javax.swing.JFrame {
 
+    private static Logger logger = Logger.getLogger(Contenedor.class);
+
     /**
      * Creates new form Contenedor
      */
     public Contenedor() {
         initComponents();
+        setExtendedState(Contenedor.MAXIMIZED_BOTH);
     }
 
     /**
