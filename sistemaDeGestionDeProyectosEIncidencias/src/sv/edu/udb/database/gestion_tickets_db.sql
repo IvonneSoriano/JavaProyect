@@ -28,7 +28,7 @@ DROP SCHEMA IF EXISTS `gestion_tickets` ;
 -- -----------------------------------------------------
 -- Schema gestion_tickets
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `gestion_tickets` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+CREATE SCHEMA IF NOT EXISTS `gestion_tickets`;
 USE `gestion_tickets` ;
 
 -- -----------------------------------------------------
@@ -41,10 +41,7 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`requesttypes` (
   `REQUESTTYPENAME` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`REQUESTTYPEID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
+AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `gestion_tickets`.`requests`
@@ -64,9 +61,8 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`requests` (
         ON DELETE RESTRICT
         ON UPDATE RESTRICT)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+AUTO_INCREMENT = 1;
+
 
 CREATE INDEX `FK_REL_TYPE_REQUEST` ON `gestion_tickets`.`requests` (`REQUESTTYPEID` ASC) VISIBLE;
 
@@ -81,10 +77,7 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`departments` (
   `DEPARMENTNAME` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`DEPARMENTID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
+AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `gestion_tickets`.`roles`
@@ -96,10 +89,7 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`roles` (
   `ROLNAME` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`ROLID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
+AUTO_INCREMENT = 5;
 
 -- -----------------------------------------------------
 -- Table `gestion_tickets`.`employees`
@@ -107,13 +97,11 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `gestion_tickets`.`employees` ;
 
 CREATE TABLE IF NOT EXISTS `gestion_tickets`.`employees` (
-  `EmployeeID` SMALLINT NOT NULL AUTO_INCREMENT,
+  `EmployeeID` SMALLINT NOT NULL,
   `ROLID` SMALLINT NOT NULL,
   `DEPARMENTID` SMALLINT NOT NULL,
   `EMPLOYEENAME` VARCHAR(64) NOT NULL,
   `EMPLOYEELASTNAME` VARCHAR(64) NOT NULL,
-  `USERNAME` VARCHAR(16) NOT NULL,
-  `PASSWORD` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`EmployeeID`, `DEPARMENTID`),
   CONSTRAINT `FK_REL_DEPARMENT_EMPLOYEE`
         FOREIGN KEY (`DEPARMENTID`)
@@ -126,9 +114,8 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`employees` (
         ON DELETE RESTRICT
         ON UPDATE RESTRICT)
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+AUTO_INCREMENT = 1;
+
 
 CREATE INDEX `FK_REL_DEPARMENT_EMPLOYEE` ON `gestion_tickets`.`employees` (`DEPARMENTID` ASC) VISIBLE;
 
@@ -161,9 +148,8 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`comments` (
         ON DELETE NO ACTION
         ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+AUTO_INCREMENT = 1;
+
 
 CREATE INDEX `FK_REL_EMPLOYEE_REQUEST` ON `gestion_tickets`.`comments` (`REQUESTID` ASC) VISIBLE;
 
@@ -188,9 +174,8 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`projects` (
         ON DELETE NO ACTION
         ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+AUTO_INCREMENT = 1;
+
 
 CREATE INDEX `fk_projects_departments1_idx` ON `gestion_tickets`.`projects` (`DEPARMENTID` ASC) VISIBLE;
 
@@ -217,9 +202,8 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`tickets` (
         ON DELETE NO ACTION
         ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+AUTO_INCREMENT = 1;
+
 
 CREATE INDEX `fk_tickets_requests1_idx` ON `gestion_tickets`.`tickets` (`REQUESTID` ASC) VISIBLE;
 
@@ -227,3 +211,4 @@ CREATE INDEX `fk_tickets_requests1_idx` ON `gestion_tickets`.`tickets` (`REQUEST
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
