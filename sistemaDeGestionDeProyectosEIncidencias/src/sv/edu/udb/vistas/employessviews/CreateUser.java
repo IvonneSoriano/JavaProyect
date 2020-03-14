@@ -5,6 +5,7 @@
  */
 package sv.edu.udb.vistas.employessviews;
 
+import javax.swing.*;
 /**
  *
  * @author kiss_

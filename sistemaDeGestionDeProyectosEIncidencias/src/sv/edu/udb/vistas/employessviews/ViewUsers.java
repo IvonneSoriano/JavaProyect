@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package sv.edu.udb.vistas.employessviews;
-
+import javax.swing.*;
 /**
  *
  * @author kiss_
