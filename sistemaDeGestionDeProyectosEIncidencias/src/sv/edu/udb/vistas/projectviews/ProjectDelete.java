@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import sv.edu.udb.util.Connect;
+import sv.edu.udb.controllers.ProjectsController;
 
 /**
  *
@@ -29,14 +30,14 @@ public class ProjectDelete extends javax.swing.JInternalFrame {
 
     public void values() {
         try {
-            Connect cnx = new Connect();
-            cnx.setRs("select projects.projectid, departments.deparmentname, projects.projectname, projects.projectdescription, projects.creationdate from projects inner join departments on project.departmentid = deparments.departmentid");
-            projects = (ResultSet) cnx.getRs();
+            ProjectsController pc = new ProjectsController();
+            projects =(ResultSet) pc.getProjects();
+           
             projects.last();
             projects.beforeFirst();
             projects.next();
             llenarTxtbox();
-            cnx.cerrarConexion();
+            
 
         } catch (Exception e) {
         }

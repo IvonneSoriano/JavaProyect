@@ -121,16 +121,16 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try {
+//        try {
 
-            Connect cnx = new Connect();
-            Timestamp date = new Timestamp(System.currentTimeMillis());
-            String sql = "Insert Into projects values (" + cmbDepartment.getSelectedIndex() + ",'" + txtname.getText() + "','" + txtAreaDescripcion.getText() + "','" + date + "')";
-            cnx.setQuery(sql);
-            cnx.cerrarConexion();
+//            Connect cnx = new Connect();
+//            Timestamp date = new Timestamp(System.currentTimeMillis());
+//            String sql = "Insert Into projects values (" + cmbDepartment.getSelectedIndex() + ",'" + txtname.getText() + "','" + txtAreaDescripcion.getText() + "','" + date + "')";
+//            cnx.setQuery(sql);
+//            cnx.cerrarConexion();
 
-        } catch (SQLException e) {
-        }
+//        } catch (SQLException e) {
+//        }
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
