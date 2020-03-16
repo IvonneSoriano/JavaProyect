@@ -8,6 +8,7 @@ package sv.edu.udb.vistas.projectviews;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import sv.edu.udb.util.Connect;
+import sv.edu.udb.controllers.ProjectsController;
 
 /**
  *
@@ -20,7 +21,7 @@ public class ProjectList extends javax.swing.JInternalFrame {
      */
     Connect cnx = new Connect();
     ResultSet tabla;
-
+    
     public ProjectList() throws SQLException {
         initComponents();
         Object[][] data = null;
@@ -29,19 +30,19 @@ public class ProjectList extends javax.swing.JInternalFrame {
         };
         DefaultTableModel modelo1 = new DefaultTableModel(data, columns);
         this.jTable1.setModel(modelo1);
-
-        cnx.setRs("select projects.projectid, projects.projectname, departments.deparmentname, projects.creationdate, projects.projectdescription "
-                + "FROM projects INNER JOIN departments ON project.departmentid = deparments.departmentid");
-        tabla = cnx.getRs();
-        while (tabla.next()) {
-            Object[] newRow = {
-                tabla.getInt(1), tabla.getString(2),
-                tabla.getString(3), tabla.getString(4), tabla.getString(5)};
-            modelo1.addRow(newRow);
-        }
-
-        tabla.close();
-        cnx.cerrarConexion();
+        
+//        cnx.setRs("select projects.projectid, projects.projectname, departments.deparmentname, projects.creationdate, projects.projectdescription "
+//                + "FROM projects INNER JOIN departments ON project.departmentid = deparments.departmentid");
+//        tabla = cnx.getRs();
+//        while (tabla.next()) {
+//            Object[] newRow = {
+//                tabla.getInt(1), tabla.getString(2),
+//                tabla.getString(3), tabla.getString(4), tabla.getString(5)};
+//            modelo1.addRow(newRow);
+//        }
+//
+//        tabla.close();
+//        cnx.cerrarConexion();
     }
 
     /**
