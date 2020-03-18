@@ -7,6 +7,7 @@ package sv.edu.udb.vistas;
 
 import org.apache.log4j.Logger;
 import sv.edu.udb.models.Session;
+import sv.edu.udb.vistas.employessviews.CreateUser;
 
 /**
  *
@@ -22,6 +23,9 @@ public class Contenedor extends javax.swing.JFrame {
     public Contenedor() {
         initComponents();
         setExtendedState(Contenedor.MAXIMIZED_BOTH);
+        if(Session.employeeType % 2 == 0){
+           employeeMenu.setVisible(false);
+        }
     }
 
     /**
@@ -35,12 +39,12 @@ public class Contenedor extends javax.swing.JFrame {
 
         desktopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
+        ticketMenu = new javax.swing.JMenu();
         btnNewTicket = new javax.swing.JMenuItem();
         btnVerTicket = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
+        employeeMenu = new javax.swing.JMenu();
         btnAgregarEmp = new javax.swing.JMenuItem();
         btnVerEmp = new javax.swing.JMenuItem();
         btnEditarEmp = new javax.swing.JMenuItem();
@@ -51,21 +55,21 @@ public class Contenedor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("Ticket");
+        ticketMenu.setMnemonic('f');
+        ticketMenu.setText("Ticket");
 
         btnNewTicket.setMnemonic('o');
         btnNewTicket.setText("Nuevo Ticket");
-        fileMenu.add(btnNewTicket);
+        ticketMenu.add(btnNewTicket);
 
         btnVerTicket.setMnemonic('s');
         btnVerTicket.setText("Ver Ticket");
-        fileMenu.add(btnVerTicket);
+        ticketMenu.add(btnVerTicket);
 
         saveAsMenuItem.setMnemonic('a');
         saveAsMenuItem.setText("Save As ...");
         saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
+        ticketMenu.add(saveAsMenuItem);
 
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
@@ -74,30 +78,35 @@ public class Contenedor extends javax.swing.JFrame {
                 exitMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        ticketMenu.add(exitMenuItem);
 
-        menuBar.add(fileMenu);
+        menuBar.add(ticketMenu);
 
-        editMenu.setMnemonic('e');
-        editMenu.setText("Empleados");
+        employeeMenu.setMnemonic('e');
+        employeeMenu.setText("Empleados");
 
         btnAgregarEmp.setMnemonic('t');
         btnAgregarEmp.setText("Agregar empleado");
-        editMenu.add(btnAgregarEmp);
+        btnAgregarEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarEmpActionPerformed(evt);
+            }
+        });
+        employeeMenu.add(btnAgregarEmp);
 
         btnVerEmp.setMnemonic('y');
         btnVerEmp.setText("Ver Empleados");
-        editMenu.add(btnVerEmp);
+        employeeMenu.add(btnVerEmp);
 
         btnEditarEmp.setMnemonic('p');
         btnEditarEmp.setText("Editar Empleados");
-        editMenu.add(btnEditarEmp);
+        employeeMenu.add(btnEditarEmp);
 
         deleteMenuItem.setMnemonic('d');
         deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
+        employeeMenu.add(deleteMenuItem);
 
-        menuBar.add(editMenu);
+        menuBar.add(employeeMenu);
 
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
@@ -131,6 +140,13 @@ public class Contenedor extends javax.swing.JFrame {
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void btnAgregarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpActionPerformed
+        // TODO add your handling code here:
+        CreateUser cu = new CreateUser();
+        desktopPane.add(cu);
+        cu.show();
+    }//GEN-LAST:event_btnAgregarEmpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,12 +193,12 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenu employeeMenu;
     private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem saveAsMenuItem;
+    private javax.swing.JMenu ticketMenu;
     // End of variables declaration//GEN-END:variables
 
 }

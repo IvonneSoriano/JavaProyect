@@ -70,7 +70,7 @@ public class ViewUsers extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblEmployees);
 
-        panedUsers.addTab("tab1", jScrollPane1);
+        panedUsers.addTab("Supervisores", jScrollPane1);
 
         tblSupervisor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,7 +85,7 @@ public class ViewUsers extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblSupervisor);
 
-        panedUsers.addTab("tab2", jScrollPane2);
+        panedUsers.addTab("Empleados por depto.", jScrollPane2);
 
         btnEdit.setText("Editar");
 
