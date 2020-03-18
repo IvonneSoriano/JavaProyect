@@ -5,7 +5,15 @@
  */
 package sv.edu.udb.vistas.employessviews;
 
+import sv.edu.udb.controllers.DeparmentController;
+import sv.edu.udb.controllers.RolController;
 import javax.swing.*;
+import sv.edu.udb.util.Connect;
+import sv.edu.udb.models.Session;
+import java.util.List;
+import java.util.ArrayList;
+import sv.edu.udb.models.Deparment;
+import sv.edu.udb.models.Rol;
 /**
  *
  * @author kiss_
@@ -15,8 +23,40 @@ public class CreateUser extends javax.swing.JInternalFrame {
     /**
      * Creates new form CreateUser
      */
+    DeparmentController dep = new DeparmentController();
+    RolController rol = new RolController();
+    List<Deparment> listaDep = new ArrayList<>();
+    Deparment liDep = new Deparment();
+    List<Rol> listaRol = new ArrayList<>();
+    Rol liRol = new Rol();
+    
     public CreateUser() {
         initComponents();
+        
+           
+            if (Session.employeeType == 5) {
+                listaDep = dep.showDeparment();
+                listaRol = rol.showRol();
+            } else {
+                liDep = dep.showDeparment(Session.deparmentId);
+                liRol = rol.showRol(Session.employeeType);
+            }
+            cmbbxDepoto.removeAllItems();
+            cmbbxTipoEmpleado.removeAllItems();
+            
+            if(listaDep.isEmpty()){
+                cmbbxDepoto.addItem(liDep.getDepartmentName());
+                cmbbxTipoEmpleado.addItem(liRol.getRolName());
+            }
+            else{
+                for (Deparment deparment : listaDep) {
+                    cmbbxDepoto.addItem(deparment.getDepartmentName());
+                }
+                for (Rol rol : listaRol){
+                    cmbbxTipoEmpleado.addItem(rol.getRolName());
+                }
+            }
+
     }
 
     /**
@@ -38,7 +78,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
         txtUsuario = new javax.swing.JTextField();
         lblContra = new javax.swing.JLabel();
         txtContra = new javax.swing.JPasswordField();
-        jLabel6 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JButton();
         lblDepto = new javax.swing.JLabel();
         cmbbxDepoto = new javax.swing.JComboBox<>();
@@ -59,8 +99,8 @@ public class CreateUser extends javax.swing.JInternalFrame {
 
         txtContra.setText("jPasswordField1");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Registro de nuevo empleado");
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setText("Registro de nuevo empleado");
 
         btnIngresar.setText("Ingresar");
         btnIngresar.setToolTipText("");
@@ -98,7 +138,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
-                        .addComponent(jLabel6))
+                        .addComponent(lblTitulo))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(230, 230, 230)
                         .addComponent(btnIngresar)))
@@ -108,7 +148,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel6)
+                .addComponent(lblTitulo)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipo)
@@ -146,12 +186,12 @@ public class CreateUser extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JComboBox<String> cmbbxDepoto;
     private javax.swing.JComboBox<String> cmbbxTipoEmpleado;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblContra;
     private javax.swing.JLabel lblDepto;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTipo;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblUsers;
     private javax.swing.JPasswordField txtContra;
     private javax.swing.JTextField txtLastname;
