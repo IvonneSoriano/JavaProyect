@@ -15,7 +15,7 @@ import sv.edu.udb.models.Project;
 import sv.edu.udb.models.Session;
 
 
-import sv.edu.udb.util.Connect;
+
 
 /**
  *
@@ -46,7 +46,7 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
             
             if(listDep.isEmpty()){
                 cmbDepartment.addItem(deptOb.getDepartmentName());
-               
+                
             }
             else{
                 for (Deparment deparment : listDep) {
@@ -142,8 +142,11 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
        Timestamp tp = null;
+       
+       
        proOb.setProjectName(txtname.getText());
-       proOb.setDepartmentId(PROPERTIES);
+       deptOb = depto.showDepartment((String)cmbDepartment.getSelectedItem());
+       proOb.setDepartmentId(deptOb.getDepartmentId());
        proOb.setProjectDescription(txtAreaDescripcion.getText());
        proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
        procControl.insertProject(proOb);

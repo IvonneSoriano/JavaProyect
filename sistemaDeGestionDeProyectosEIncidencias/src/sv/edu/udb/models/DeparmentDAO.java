@@ -106,4 +106,33 @@ try {
         }
         return department;
     }
+    public Deparment getOneByName(String nombre){
+        Connect connection = null;
+         Deparment department = new Deparment();
+try {
+            connection = new Connect();
+        }catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+try {
+            connection.setRs("SELECT * FROM departments WHERE departments.deparmentname='" + nombre + "';");
+            ResultSet departmentFound = (ResultSet) connection.getRs();
+
+            while (departmentFound.next()) {
+                department.setDepartmentId(departmentFound.getInt("DEPARMENTID"));
+                department.setDepartmentName(departmentFound.getString("DEPARMENTNAME"));
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return department;
+    }
 }

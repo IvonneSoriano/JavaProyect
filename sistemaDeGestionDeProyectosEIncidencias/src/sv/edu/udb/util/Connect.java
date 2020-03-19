@@ -49,7 +49,7 @@ public class Connect {
         try {
             this.rs = s.executeQuery(consulta);
         } catch (SQLException e2) {
-            System.out.println("ERROR:Fallo en SQL: " + e2.getMessage());
+            System.out.println("ERROR:Fallo en SQL: " + e2.getMessage() +" Sql: " +consulta);
         }
     }
     //Metodo que recibe un sql como parametro que sea un update,insert.delete

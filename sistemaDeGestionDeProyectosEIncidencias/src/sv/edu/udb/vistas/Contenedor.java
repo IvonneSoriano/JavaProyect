@@ -8,7 +8,7 @@ package sv.edu.udb.vistas;
 import org.apache.log4j.Logger;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.vistas.employessviews.CreateUser;
-import sv.edu.udb.vistas.projectviews.ProjectInsert;
+import sv.edu.udb.vistas.projectviews.*;
 
 /**
  *
@@ -52,6 +52,8 @@ public class Contenedor extends javax.swing.JFrame {
         deleteMenuItem = new javax.swing.JMenuItem();
         projectMenu = new javax.swing.JMenu();
         insertProject = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuBorrar = new javax.swing.JMenuItem();
+        jListMenu = new javax.swing.JMenuItem();
         editProject = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
 
@@ -122,6 +124,22 @@ public class Contenedor extends javax.swing.JFrame {
         });
         projectMenu.add(insertProject);
 
+        jMenuBorrar.setText("Borrar");
+        jMenuBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuBorrarActionPerformed(evt);
+            }
+        });
+        projectMenu.add(jMenuBorrar);
+
+        jListMenu.setText("Lista");
+        jListMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jListMenuActionPerformed(evt);
+            }
+        });
+        projectMenu.add(jListMenu);
+
         editProject.setMnemonic('a');
         editProject.setText("Editar");
         projectMenu.add(editProject);
@@ -164,6 +182,22 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(insert);
         insert.show();
     }//GEN-LAST:event_insertProjectActionPerformed
+
+    private void jMenuBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBorrarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuBorrarActionPerformed
+
+    private void jListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListMenuActionPerformed
+        // TODO add your handling code here:
+        try {
+           ProjectList list = new ProjectList();
+           desktopPane.add(list);
+           list.show(); 
+        } catch (Exception e) {
+        }
+        
+    }//GEN-LAST:event_jListMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,6 +246,7 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenu employeeMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem insertProject;
+    private javax.swing.JMenuItem jListMenu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu projectMenu;

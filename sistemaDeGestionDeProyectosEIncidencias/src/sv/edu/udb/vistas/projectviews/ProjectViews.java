@@ -159,12 +159,7 @@ public class ProjectViews extends javax.swing.JFrame {
 
     private void deleteProjectsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProjectsMenuActionPerformed
         // TODO add your handling code here:
-        try {
-             ProjectDelete pd = new ProjectDelete();
-             desktopPane.add(pd);
-             pd.show();
-        } catch (Exception e) {
-        }
+        
     }//GEN-LAST:event_deleteProjectsMenuActionPerformed
 
     private void insertProjetsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjetsMenuActionPerformed
