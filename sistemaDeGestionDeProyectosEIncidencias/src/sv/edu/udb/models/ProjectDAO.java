@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.log4j.Logger;
 import sv.edu.udb.util.Connect;
+import java.sql.Timestamp;
 
 /**
  *
@@ -42,10 +43,10 @@ public class ProjectDAO implements Dao<Project> {
             while (projectSet.next()) {
                 Project project = new Project();
                 project.setProjectsId(projectSet.getInt("PROJECTID"));
-                project.setDepartmentId(projectSet.getInt("DEPARTMENTID"));
+                project.setDepartmentId(projectSet.getInt("DEPARMENTID"));
                 project.setProjectName(projectSet.getString("PROJECTNAME"));
                 project.setProjectDescription(projectSet.getString("PROJECTDESCRIPTION"));
-                project.setCreationDate(projectSet.getDate("CREATIONDATE"));
+                project.setCreationDate(projectSet.getTimestamp("CREATIONDATE"));
                 projectFound.add(project);
                 
                 
@@ -70,7 +71,7 @@ public class ProjectDAO implements Dao<Project> {
         
          try {
             Connect connection = new Connect();
-
+            
             int result = connection.setQuery("INSERT INTO `gestion_tickets`.`projects` "
                     + "( `DEPARMENTID`, `PROJECTNAME`, `PROJECTDESCRIPTION`, `CREATIONDATE`) "
                     + "VALUES ( '" + t.getDepartmentId()
@@ -122,16 +123,16 @@ public class ProjectDAO implements Dao<Project> {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
         try {
-            connection.setRs("SELECT * FROM PROJECTS WHERE DEPARTMENTID = "+Session.deparmentId+";");
+            connection.setRs("SELECT * FROM PROJECTS WHERE DEPARMENTID = "+Session.deparmentId+";");
             ResultSet projectSet = (ResultSet) connection.getRs();
 
             while (projectSet.next()) {
                 Project project = new Project();
                 project.setProjectsId(projectSet.getInt("PROJECTID"));
-                project.setDepartmentId(projectSet.getInt("DEPARTMENTID"));
+                project.setDepartmentId(projectSet.getInt("DEPARMENTID"));
                 project.setProjectName(projectSet.getString("PROJECTNAME"));
                 project.setProjectDescription(projectSet.getString("PROJECTDESCRIPTION"));
-                project.setCreationDate(projectSet.getDate("CREATIONDATE"));
+                project.setCreationDate(projectSet.getTimestamp("CREATIONDATE"));
                 projectFound.add(project);
                 
                 
