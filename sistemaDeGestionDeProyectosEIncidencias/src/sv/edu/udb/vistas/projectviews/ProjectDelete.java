@@ -11,10 +11,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+<<<<<<< HEAD
 
 import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.models.Project;
 
+=======
+import sv.edu.udb.util.Connect;
+import sv.edu.udb.controllers.ProjectsController;
+>>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
 
 /**
  *

@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import sv.edu.udb.util.Connect;
 import sv.edu.udb.controllers.ProjectsController;
+<<<<<<< HEAD
 import sv.edu.udb.models.Project;
+=======
+>>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
 
 /**
  *
@@ -24,9 +27,13 @@ public class ProjectList extends javax.swing.JInternalFrame {
      */
     Connect cnx = new Connect();
     ResultSet tabla;
+<<<<<<< HEAD
     Project proOb = new Project();
     ProjectsController procControl = new ProjectsController();
     List<Project> listPro = new ArrayList<>();
+=======
+    
+>>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
     public ProjectList() throws SQLException {
         initComponents();
         Object[][] data = null;
@@ -35,6 +42,7 @@ public class ProjectList extends javax.swing.JInternalFrame {
         };
         DefaultTableModel modelo1 = new DefaultTableModel(data, columns);
         this.jTable1.setModel(modelo1);
+<<<<<<< HEAD
               listPro = procControl.projectsByDepto();
               for (Project projects : listPro) {
                    Object[] newRow = { projects.getProjectsId(), projects.getProjectName(),
@@ -42,6 +50,9 @@ public class ProjectList extends javax.swing.JInternalFrame {
                 modelo1.addRow(newRow);  
               }
            
+=======
+        
+>>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
 //        cnx.setRs("select projects.projectid, projects.projectname, departments.deparmentname, projects.creationdate, projects.projectdescription "
 //                + "FROM projects INNER JOIN departments ON project.departmentid = deparments.departmentid");
 //        tabla = cnx.getRs();

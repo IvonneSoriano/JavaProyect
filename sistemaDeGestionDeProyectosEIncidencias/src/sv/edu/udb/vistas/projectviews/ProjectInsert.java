@@ -140,12 +140,28 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+<<<<<<< HEAD
        Timestamp tp = null;
        proOb.setProjectName(txtname.getText());
        proOb.setDepartmentId(PROPERTIES);
        proOb.setProjectDescription(txtAreaDescripcion.getText());
        proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
        procControl.insertProject(proOb);
+=======
+        // TODO add your handling code here:
+//        try {
+
+//            Connect cnx = new Connect();
+//            Timestamp date = new Timestamp(System.currentTimeMillis());
+//            String sql = "Insert Into projects values (" + cmbDepartment.getSelectedIndex() + ",'" + txtname.getText() + "','" + txtAreaDescripcion.getText() + "','" + date + "')";
+//            cnx.setQuery(sql);
+//            cnx.cerrarConexion();
+
+//        } catch (SQLException e) {
+//        }
+
+
+>>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
