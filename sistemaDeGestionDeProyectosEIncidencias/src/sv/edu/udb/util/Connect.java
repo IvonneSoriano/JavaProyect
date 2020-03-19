@@ -23,7 +23,7 @@ public class Connect {
     public Connect() throws SQLException {
         try {
             //obtenemos el driver de para mysql
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             // Se obtiene una conexión con la base de datos.
             Properties prop = new Properties();
             FileInputStream ip = new FileInputStream("nbproject/config.properties");
