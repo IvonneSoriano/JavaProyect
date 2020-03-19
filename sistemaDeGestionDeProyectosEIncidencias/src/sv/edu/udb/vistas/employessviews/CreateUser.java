@@ -193,6 +193,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
         user.setEmployeeName(txtName.getText());
         user.setEmployeeLastname(txtLastname.getText());
         user.setEmployeeLastname(txtLastname.getText());
+        user.setUsername(txtUsuario.getText());
     }//GEN-LAST:event_btnIngresarActionPerformed
 
 
