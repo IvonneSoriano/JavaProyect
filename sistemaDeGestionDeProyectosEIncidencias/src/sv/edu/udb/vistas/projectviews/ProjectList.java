@@ -7,8 +7,11 @@ package sv.edu.udb.vistas.projectviews;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import sv.edu.udb.util.Connect;
 import sv.edu.udb.controllers.ProjectsController;
+import sv.edu.udb.models.Project;
 
 /**
  *
@@ -21,7 +24,9 @@ public class ProjectList extends javax.swing.JInternalFrame {
      */
     Connect cnx = new Connect();
     ResultSet tabla;
-    
+    Project proOb = new Project();
+    ProjectsController procControl = new ProjectsController();
+    List<Project> listPro = new ArrayList<>();
     public ProjectList() throws SQLException {
         initComponents();
         Object[][] data = null;
@@ -30,7 +35,13 @@ public class ProjectList extends javax.swing.JInternalFrame {
         };
         DefaultTableModel modelo1 = new DefaultTableModel(data, columns);
         this.jTable1.setModel(modelo1);
-        
+              listPro = procControl.projectsByDepto();
+              for (Project projects : listPro) {
+                   Object[] newRow = { projects.getProjectsId(), projects.getProjectName(),
+                   projects.getDepartmentId(), projects.getCreationDate(), projects.getProjectDescription()};
+                modelo1.addRow(newRow);  
+              }
+           
 //        cnx.setRs("select projects.projectid, projects.projectname, departments.deparmentname, projects.creationdate, projects.projectdescription "
 //                + "FROM projects INNER JOIN departments ON project.departmentid = deparments.departmentid");
 //        tabla = cnx.getRs();

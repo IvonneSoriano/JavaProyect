@@ -6,11 +6,15 @@
 package sv.edu.udb.vistas.projectviews;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import sv.edu.udb.util.Connect;
+
 import sv.edu.udb.controllers.ProjectsController;
+import sv.edu.udb.models.Project;
+
 
 /**
  *
@@ -22,7 +26,9 @@ public class ProjectDelete extends javax.swing.JInternalFrame {
      * Creates new form ProjectDelete
      */
     ResultSet projects;
-
+    Project proOb = new Project();
+    ProjectsController procControl = new ProjectsController();
+    List<Project> listPro = new ArrayList<>();
     public ProjectDelete() {
         initComponents();
         values();
@@ -233,16 +239,12 @@ public class ProjectDelete extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        try {
+        
+            proOb.setProjectsId(Integer.parseInt(txtId.getText()));
+            procControl.deleteProject(proOb);
+            
 
-            Connect cnx = new Connect();
-
-            String sql = "Delete from projects where projectid = " + txtId.getText();
-            cnx.setQuery(sql);
-            cnx.cerrarConexion();
-
-        } catch (SQLException e) {
-        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

@@ -6,6 +6,14 @@
 package sv.edu.udb.vistas.projectviews;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import sv.edu.udb.controllers.DeparmentController;
+import sv.edu.udb.controllers.ProjectsController;
+import sv.edu.udb.models.Deparment;
+import sv.edu.udb.models.Project;
+import sv.edu.udb.models.Session;
+
 
 import sv.edu.udb.util.Connect;
 
@@ -18,26 +26,38 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     /**
      * Creates new form ProjectView
      */
+    DeparmentController depto = new DeparmentController();
+    List<Deparment> listDep = new ArrayList<>();
+    Deparment deptOb = new Deparment();
+    ProjectsController procControl = new ProjectsController();
+    List<Project> listPro = new ArrayList<>();
+    Project proOb = new Project();
     public ProjectInsert() {
         initComponents();
-        try {
-            Connect cnx = new Connect();
-            cnx.setRs("select * from departments");
-            cmbDepartment.removeAllItems();
-            ResultSet comboFill = (ResultSet) cnx.getRs();
-            while (comboFill.next()) {
-                cmbDepartment.addItem(comboFill.getString(2));
-
+        if (Session.employeeType == 5) {
+                listDep = depto.showDeparment();
+               
+            } else {
+                deptOb = depto.showDeparment(Session.deparmentId);
+               
             }
-            cnx.cerrarConexion();
-
-        } catch (Exception e) {
-        }
+           cmbDepartment.removeAllItems();
+           
+            
+            if(listDep.isEmpty()){
+                cmbDepartment.addItem(deptOb.getDepartmentName());
+               
+            }
+            else{
+                for (Deparment deparment : listDep) {
+                    cmbDepartment.addItem(deparment.getDepartmentName());
+                }
+                
+            }
 
     }
 
-    public void values() {
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,19 +140,12 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-//        try {
-
-//            Connect cnx = new Connect();
-//            Timestamp date = new Timestamp(System.currentTimeMillis());
-//            String sql = "Insert Into projects values (" + cmbDepartment.getSelectedIndex() + ",'" + txtname.getText() + "','" + txtAreaDescripcion.getText() + "','" + date + "')";
-//            cnx.setQuery(sql);
-//            cnx.cerrarConexion();
-
-//        } catch (SQLException e) {
-//        }
-
-
+       Timestamp tp = null;
+       proOb.setProjectName(txtname.getText());
+       proOb.setDepartmentId(PROPERTIES);
+       proOb.setProjectDescription(txtAreaDescripcion.getText());
+       proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
+       procControl.insertProject(proOb);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
