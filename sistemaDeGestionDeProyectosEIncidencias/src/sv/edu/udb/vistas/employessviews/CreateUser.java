@@ -13,6 +13,7 @@ import sv.edu.udb.models.Session;
 import java.util.List;
 import java.util.ArrayList;
 import sv.edu.udb.models.Deparment;
+import sv.edu.udb.models.Employee;
 import sv.edu.udb.models.Rol;
 /**
  *
@@ -29,6 +30,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
     Deparment liDep = new Deparment();
     List<Rol> listaRol = new ArrayList<>();
     Rol liRol = new Rol();
+    Employee user = new Employee();
     
     public CreateUser() {
         initComponents();
@@ -104,6 +106,11 @@ public class CreateUser extends javax.swing.JInternalFrame {
 
         btnIngresar.setText("Ingresar");
         btnIngresar.setToolTipText("");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         lblDepto.setText("Departamento:");
 
@@ -180,6 +187,13 @@ public class CreateUser extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here:
+        user.setEmployeeName(txtName.getText());
+        user.setEmployeeLastname(txtLastname.getText());
+        user.setEmployeeLastname(txtLastname.getText());
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

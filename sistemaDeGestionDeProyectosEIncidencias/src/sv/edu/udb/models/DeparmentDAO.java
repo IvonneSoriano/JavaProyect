@@ -91,7 +91,6 @@ try {
 
             while (departmentFound.next()) {
                 department.setDepartmentId(departmentFound.getInt("DEPARMENTID"));
-                department.setDepartmentName(departmentFound.getString("DEPARMENTNAME"));
             }
 
         } catch (SQLException e) {
@@ -105,5 +104,36 @@ try {
 
         }
         return department;
+    }
+    
+    
+    public int getId(String depto){
+        Connect connection = null;
+         Deparment department = new Deparment();
+try {
+            connection = new Connect();
+        }catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+try {
+            connection.setRs("SELECT DEPARMENTID FROM `departments` WHERE departments.deparmentname = '" + depto + "';");
+            ResultSet departmentFound = (ResultSet) connection.getRs();
+
+            while (departmentFound.next()) {
+                department.setDepartmentId(departmentFound.getInt("DEPARMENTID"));
+                department.setDepartmentName(departmentFound.getString("DEPARMENTNAME"));
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return department.getDepartmentId();
     }
 }
