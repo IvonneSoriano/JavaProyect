@@ -140,14 +140,14 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-<<<<<<< HEAD
+
        Timestamp tp = null;
        proOb.setProjectName(txtname.getText());
        proOb.setDepartmentId(PROPERTIES);
        proOb.setProjectDescription(txtAreaDescripcion.getText());
        proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
        procControl.insertProject(proOb);
-=======
+
         // TODO add your handling code here:
 //        try {
 
@@ -161,7 +161,6 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
 //        }
 
 
->>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

@@ -12,10 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.log4j.Logger;
 import sv.edu.udb.util.Connect;
-<<<<<<< HEAD
 import java.sql.Timestamp;
-=======
->>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
 
 /**
  *
@@ -46,17 +43,12 @@ public class ProjectDAO implements Dao<Project> {
             while (projectSet.next()) {
                 Project project = new Project();
                 project.setProjectsId(projectSet.getInt("PROJECTID"));
-<<<<<<< HEAD
+
                 project.setDepartmentId(projectSet.getInt("DEPARMENTID"));
                 project.setProjectName(projectSet.getString("PROJECTNAME"));
                 project.setProjectDescription(projectSet.getString("PROJECTDESCRIPTION"));
                 project.setCreationDate(projectSet.getTimestamp("CREATIONDATE"));
-=======
-                project.setDepartmentId(projectSet.getInt("DEPARTMENTID"));
-                project.setProjectName(projectSet.getString("PROJECTNAME"));
-                project.setProjectDescription(projectSet.getString("PROJECTDESCRIPTION"));
-                project.setCreationDate(projectSet.getDate("CREATIONDATE"));
->>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
+
                 projectFound.add(project);
                 
                 
@@ -81,11 +73,6 @@ public class ProjectDAO implements Dao<Project> {
         
          try {
             Connect connection = new Connect();
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
             int result = connection.setQuery("INSERT INTO `gestion_tickets`.`projects` "
                     + "( `DEPARMENTID`, `PROJECTNAME`, `PROJECTDESCRIPTION`, `CREATIONDATE`) "
                     + "VALUES ( '" + t.getDepartmentId()
@@ -137,27 +124,18 @@ public class ProjectDAO implements Dao<Project> {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
         try {
-<<<<<<< HEAD
+
             connection.setRs("SELECT * FROM PROJECTS WHERE DEPARMENTID = "+Session.deparmentId+";");
-=======
-            connection.setRs("SELECT * FROM PROJECTS WHERE DEPARTMENTID = "+Session.deparmentId+";");
->>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
             ResultSet projectSet = (ResultSet) connection.getRs();
 
             while (projectSet.next()) {
                 Project project = new Project();
                 project.setProjectsId(projectSet.getInt("PROJECTID"));
-<<<<<<< HEAD
                 project.setDepartmentId(projectSet.getInt("DEPARMENTID"));
                 project.setProjectName(projectSet.getString("PROJECTNAME"));
                 project.setProjectDescription(projectSet.getString("PROJECTDESCRIPTION"));
                 project.setCreationDate(projectSet.getTimestamp("CREATIONDATE"));
-=======
-                project.setDepartmentId(projectSet.getInt("DEPARTMENTID"));
-                project.setProjectName(projectSet.getString("PROJECTNAME"));
-                project.setProjectDescription(projectSet.getString("PROJECTDESCRIPTION"));
-                project.setCreationDate(projectSet.getDate("CREATIONDATE"));
->>>>>>> 2e15f786158da4825dcf51a3e0bbce33ddaa7183
+
                 projectFound.add(project);
                 
                 
