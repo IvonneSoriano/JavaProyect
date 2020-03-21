@@ -31,3 +31,5 @@ hs_err_pid*
 GestionTicketsLog 
 private.xml
 config.properties
+nblibraries.properties
+private.properties
