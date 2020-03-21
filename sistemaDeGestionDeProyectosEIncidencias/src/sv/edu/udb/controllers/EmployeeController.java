@@ -16,9 +16,9 @@ import sv.edu.udb.util.DAODefaults;
  */
 public class EmployeeController {
 
-    public void insertEmployee(Employee e) {
+    public boolean insertEmployee(Employee e) {
         EmployeeDAO dao = new EmployeeDAO();
-        dao.save(e);
+        return dao.save(e);
     }
     
 

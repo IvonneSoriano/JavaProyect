@@ -25,7 +25,7 @@ public class RequestDAO implements Dao<Request> {
     }
 
     @Override
-    public void save(Request t) {
+    public boolean save(Request t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

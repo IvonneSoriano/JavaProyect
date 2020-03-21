@@ -36,7 +36,7 @@ public class RolDAO implements Dao<Rol> {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
         try {
-            connection.setRs("SELECT * FROM ROLES;");
+            connection.setRs("SELECT * FROM ROLES WHERE NOT ROLID=5;");
             ResultSet roles = (ResultSet) connection.getRs();
 
             while (roles.next()) {
@@ -60,7 +60,7 @@ public class RolDAO implements Dao<Rol> {
     }
 
     @Override
-    public void save(Rol t) {
+    public boolean save(Rol t) {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -116,5 +116,34 @@ try {
 
         }
         return rol;
+    }
+    
+        public int getId(String rol){
+        Connect connection = null;
+        Rol roll = new Rol();
+try {
+            connection = new Connect();
+        }catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+try {
+            connection.setRs("SELECT ROLID FROM `roles` WHERE roles.rolname = '" + rol + "';");
+            ResultSet rolFound = (ResultSet) connection.getRs();
+
+            while (rolFound.next()) {
+                roll.setRolId(rolFound.getInt("ROLID"));
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return roll.getRolId();
     }
 }

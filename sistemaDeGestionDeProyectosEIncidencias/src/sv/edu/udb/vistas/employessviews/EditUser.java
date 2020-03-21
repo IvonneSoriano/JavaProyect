@@ -5,60 +5,23 @@
  */
 package sv.edu.udb.vistas.employessviews;
 
+import javax.swing.JOptionPane;
 import sv.edu.udb.controllers.DeparmentController;
-import sv.edu.udb.controllers.RolController;
 import sv.edu.udb.controllers.EmployeeController;
-import javax.swing.*;
-import sv.edu.udb.util.Connect;
-import sv.edu.udb.models.Session;
-import java.util.List;
-import java.util.ArrayList;
-import sv.edu.udb.models.Deparment;
+import sv.edu.udb.controllers.RolController;
 import sv.edu.udb.models.Employee;
-import sv.edu.udb.models.Rol;
+
 /**
  *
  * @author kiss_
  */
-public class CreateUser extends javax.swing.JInternalFrame {
+public class EditUser extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form CreateUser
+     * Creates new form EditUser
      */
-    DeparmentController dep = new DeparmentController();
-    RolController rol = new RolController();
-    List<Deparment> listaDep = new ArrayList<>();
-    Deparment liDep = new Deparment();
-    List<Rol> listaRol = new ArrayList<>();
-    Rol liRol = new Rol();
-    
-    
-    public CreateUser() {
+    public EditUser() {
         initComponents();
-        
-           
-            if (Session.employeeType == 5) {
-                listaDep = dep.showDeparment();
-                listaRol = rol.showRol();
-            } else {
-                liDep = dep.showDeparment(Session.deparmentId);
-                liRol = rol.showRol(Session.employeeType);
-            }
-            cmbbxDepoto.removeAllItems();
-            cmbbxTipoEmpleado.removeAllItems();
-            
-            if(listaDep.isEmpty()){
-                cmbbxDepoto.addItem(liDep.getDepartmentName());
-                cmbbxTipoEmpleado.addItem(liRol.getRolName());
-            }
-            else{
-                listaDep.forEach((deparment) -> {
-                    cmbbxDepoto.addItem(deparment.getDepartmentName());
-            });
-                listaRol.forEach((rol) -> {
-                    cmbbxTipoEmpleado.addItem(rol.getRolName());
-            });
-            }
     }
 
     /**
@@ -70,6 +33,11 @@ public class CreateUser extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtContra = new javax.swing.JPasswordField();
+        lblTitulo = new javax.swing.JLabel();
+        btnEditar = new javax.swing.JButton();
+        lblDepto = new javax.swing.JLabel();
+        cmbbxDepoto = new javax.swing.JComboBox<>();
         lblTipo = new javax.swing.JLabel();
         cmbbxTipoEmpleado = new javax.swing.JComboBox<>();
         lblNombre = new javax.swing.JLabel();
@@ -79,11 +47,23 @@ public class CreateUser extends javax.swing.JInternalFrame {
         lblUsers = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblContra = new javax.swing.JLabel();
-        txtContra = new javax.swing.JPasswordField();
-        lblTitulo = new javax.swing.JLabel();
-        btnIngresar = new javax.swing.JButton();
-        lblDepto = new javax.swing.JLabel();
-        cmbbxDepoto = new javax.swing.JComboBox<>();
+
+        txtContra.setText("jPasswordField1");
+
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setText("Editar Empleado");
+
+        btnEditar.setText("Ingresar");
+        btnEditar.setToolTipText("");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        lblDepto.setText("Departamento:");
+
+        cmbbxDepoto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblTipo.setText("Tipo de empleado:");
 
@@ -99,29 +79,12 @@ public class CreateUser extends javax.swing.JInternalFrame {
 
         lblContra.setText("Contraseña:");
 
-        txtContra.setText("jPasswordField1");
-
-        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblTitulo.setText("Registro de nuevo empleado");
-
-        btnIngresar.setText("Ingresar");
-        btnIngresar.setToolTipText("");
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
-            }
-        });
-
-        lblDepto.setText("Departamento:");
-
-        cmbbxDepoto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(143, Short.MAX_VALUE)
+                .addContainerGap(148, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblUsers)
@@ -144,11 +107,11 @@ public class CreateUser extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(lblTitulo))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(230, 230, 230)
-                        .addComponent(btnIngresar)))
+                        .addComponent(btnEditar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(204, 204, 204)
+                        .addComponent(lblTitulo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -181,20 +144,20 @@ public class CreateUser extends javax.swing.JInternalFrame {
                     .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblContra))
                 .addGap(31, 31, 31)
-                .addComponent(btnIngresar)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addComponent(btnEditar)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         Employee user = new Employee();
         DeparmentController depto = new DeparmentController();
         RolController rolUser = new RolController();
         EmployeeController ec = new EmployeeController();
-        
+
         user.setEmployeeName(txtName.getText());
         user.setEmployeeLastname(txtLastname.getText());
         user.setEmployeeLastname(txtLastname.getText());
@@ -204,25 +167,17 @@ public class CreateUser extends javax.swing.JInternalFrame {
         user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
         if(ec.insertEmployee(user)){
             JOptionPane.showMessageDialog(null, "El usuario se ha insertado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
-            clearForm();
+            
         }
         else{
             JOptionPane.showMessageDialog(null, "El usuario no se ha insertado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
         }
-        
-    }//GEN-LAST:event_btnIngresarActionPerformed
 
-    private void clearForm(){
-        txtName.setText("");
-        txtLastname.setText("");
-        txtUsuario.setText("");
-        txtContra.setText("");
-        
-    }
-    
+    }//GEN-LAST:event_btnEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JComboBox<String> cmbbxDepoto;
     private javax.swing.JComboBox<String> cmbbxTipoEmpleado;
     private javax.swing.JLabel lblApellido;

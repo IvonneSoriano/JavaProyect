@@ -18,7 +18,7 @@ public interface Dao<T> {
 
     List<T> getAll();
 
-    void save(T t);
+    boolean save(T t);
 
     void update(T t, String[] params);
 

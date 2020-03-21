@@ -25,7 +25,7 @@ public class CommentDAO implements Dao<Comment> {
     }
 
     @Override
-    public void save(Comment t) {
+    public boolean save(Comment t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -60,7 +60,7 @@ public class DeparmentDAO implements Dao<Deparment>{
     }
 
     @Override
-    public void save(Deparment t) {
+    public boolean save(Deparment t) {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -84,6 +84,7 @@ try {
             connection = new Connect();
         }catch (SQLException ex) {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+            
         }
 try {
             connection.setRs("SELECT * FROM departments WHERE departments.deparmentid=" + id + ";");
@@ -91,6 +92,7 @@ try {
 
             while (departmentFound.next()) {
                 department.setDepartmentId(departmentFound.getInt("DEPARMENTID"));
+                department.setDepartmentName(departmentFound.getString("DEPARMENTNAME"));
             }
 
         } catch (SQLException e) {
@@ -121,7 +123,6 @@ try {
 
             while (departmentFound.next()) {
                 department.setDepartmentId(departmentFound.getInt("DEPARMENTID"));
-                department.setDepartmentName(departmentFound.getString("DEPARMENTNAME"));
             }
 
         } catch (SQLException e) {

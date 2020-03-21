@@ -16,6 +16,7 @@ public class ViewUsers extends javax.swing.JFrame {
      */
     public ViewUsers() {
         initComponents();
+        
     }
 
     /**
@@ -65,9 +66,17 @@ public class ViewUsers extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Apellido", "Departamento", "Usuario"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblEmployees);
 
         panedUsers.addTab("Supervisores", jScrollPane1);

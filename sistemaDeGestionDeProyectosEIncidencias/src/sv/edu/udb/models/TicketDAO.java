@@ -25,7 +25,7 @@ public class TicketDAO implements Dao<Ticket>{
     }
 
     @Override
-    public void save(Ticket t) {
+    public boolean save(Ticket t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

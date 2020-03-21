@@ -23,4 +23,9 @@ public class DeparmentController {
         DeparmentDAO dao = new DeparmentDAO();
         return dao.getAll();
     }
+      
+      public int showID(String depto){
+          DeparmentDAO dao = new DeparmentDAO();
+          return dao.getId(depto);
+      }
 }

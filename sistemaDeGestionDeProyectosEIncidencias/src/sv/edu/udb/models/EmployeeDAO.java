@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import sv.edu.udb.util.Connect;
 
@@ -66,7 +67,7 @@ public class EmployeeDAO implements Dao<Employee> {
     }
 
     @Override
-    public void save(Employee t) {
+    public boolean save(Employee t) {
         try {
             Connect connection = new Connect();
 
@@ -79,12 +80,15 @@ public class EmployeeDAO implements Dao<Employee> {
 
             if (result <= 0) {
                 logger.error("INSERT to Employees table has failed");
+                return false;
             } else {
                 logger.info("INSERT to Employees table has successfully completed!");
+                return true;
             }
 
         } catch (Exception e) {
             logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+            return false;
         }
     }
 
