@@ -42,4 +42,18 @@ public class EmployeeController {
 
         return foundEmp;
     }
+     
+       public List<Employee> findEmployees() {
+        EmployeeDAO dao = new EmployeeDAO();
+        List<Employee> foundEmp = dao.getAllEmployees();
+
+        return foundEmp;
+    }
+       
+         public List<Employee> findSupervisors() {
+        EmployeeDAO dao = new EmployeeDAO();
+        List<Employee> foundEmp = dao.getAllSupervisors();
+
+        return foundEmp;
+    }
 }

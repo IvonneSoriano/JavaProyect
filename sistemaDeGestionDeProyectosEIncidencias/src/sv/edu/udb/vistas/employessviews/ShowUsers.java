@@ -8,6 +8,7 @@ package sv.edu.udb.vistas.employessviews;
 import java.util.List;
 import sv.edu.udb.models.Employee;
 import sv.edu.udb.models.Session;
+import sv.edu.udb.controllers.EmployeeController;
 
 /**
  *
@@ -20,6 +21,7 @@ public class ShowUsers extends javax.swing.JInternalFrame {
      */
      List<Employee> supervisores;
      List<Employee> empleados;
+     EmployeeController ec = new EmployeeController();
     
     public ShowUsers() {
         initComponents();
@@ -29,8 +31,60 @@ public class ShowUsers extends javax.swing.JInternalFrame {
         if(Session.employeeType != 5){
             panedUsers.setEnabledAt(1, false);
         }
+        switch(Session.employeeType){
+            case 1:
+                empleados=ec.findEmployee(2, Session.deparmentId);
+                break;
+                
+            case 3:
+                empleados=ec.findEmployee(4, Session.deparmentId);
+                break;
+                
+            case 5:
+                empleados=ec.findEmployees();
+                break;
+        }
+        supervisores=ec.findSupervisors();
+        
+        showEmployees();
+        showSupervisors();
     }
 
+    public void showEmployees(){
+        String matriz[][] = new String[empleados.size()][4];
+        
+        for (int i = 0; i < empleados.size(); i++) {
+            matriz[i][0]= empleados.get(i).getEmployeeName();
+            matriz[i][1]= empleados.get(i).getEmployeeLastname();
+            matriz[i][2]= Integer.toString(empleados.get(i).getDepartmentId());
+            matriz[i][3]= empleados.get(i).getUsername();
+        }
+        tblEmployee.setModel(new javax.swing.table.DefaultTableModel(
+        matriz,
+        new String[]{
+            "Nombre", "Apellido","Departamento", "Usuario"
+        }
+        ));
+
+    }
+    
+       public void showSupervisors(){
+        String matriz[][] = new String[supervisores.size()][4];
+        
+        for (int i = 0; i < supervisores.size(); i++) {
+            matriz[i][0]= supervisores.get(i).getEmployeeName();
+            matriz[i][1]= supervisores.get(i).getEmployeeLastname();
+            matriz[i][2]= Integer.toString(supervisores.get(i).getDepartmentId());
+            matriz[i][3]= supervisores.get(i).getUsername();
+        }
+        tblSupervisor.setModel(new javax.swing.table.DefaultTableModel(
+        matriz,
+        new String[]{
+            "Nombre", "Apellido","Departamento", "Usuario"
+        }
+        ));
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
