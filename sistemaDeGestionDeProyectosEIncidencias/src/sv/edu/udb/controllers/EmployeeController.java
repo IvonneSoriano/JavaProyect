@@ -5,6 +5,7 @@
  */
 package sv.edu.udb.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import sv.edu.udb.models.Employee;
 import sv.edu.udb.models.EmployeeDAO;
@@ -27,5 +28,18 @@ public class EmployeeController {
         Optional<Employee> foundEmp = dao.getEmployeeByUsername(username);
 
         return foundEmp.orElseGet(() -> new Employee(DAODefaults.NON_EXISTING_USER.getDefaultValue()));
+    }
+    public List<Employee> findEmployee(int rol) {
+        EmployeeDAO dao = new EmployeeDAO();
+        List<Employee> foundEmp = dao.getAllByRol(rol);
+
+        return foundEmp;
+    }
+    
+     public List<Employee> findEmployee(int rol, int dep) {
+        EmployeeDAO dao = new EmployeeDAO();
+        List<Employee> foundEmp = dao.getAllByRolAndDepto(rol, dep);
+
+        return foundEmp;
     }
 }

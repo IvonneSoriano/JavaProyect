@@ -8,6 +8,8 @@ package sv.edu.udb.vistas;
 import org.apache.log4j.Logger;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.vistas.employessviews.CreateUser;
+import sv.edu.udb.vistas.employessviews.ShowUsers;
+
 
 /**
  *
@@ -96,6 +98,11 @@ public class Contenedor extends javax.swing.JFrame {
 
         btnVerEmp.setMnemonic('y');
         btnVerEmp.setText("Ver Empleados");
+        btnVerEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerEmpActionPerformed(evt);
+            }
+        });
         employeeMenu.add(btnVerEmp);
 
         btnEditarEmp.setMnemonic('p');
@@ -147,6 +154,13 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(cu);
         cu.show();
     }//GEN-LAST:event_btnAgregarEmpActionPerformed
+
+    private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
+        // TODO add your handling code here:
+        ShowUsers su = new ShowUsers();
+        desktopPane.add(su);
+        su.show();
+    }//GEN-LAST:event_btnVerEmpActionPerformed
 
     /**
      * @param args the command line arguments
