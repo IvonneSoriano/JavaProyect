@@ -7,10 +7,10 @@ package sv.edu.udb.vistas;
 
 import org.apache.log4j.Logger;
 import sv.edu.udb.models.Session;
+import sv.edu.udb.util.Roles;
 import sv.edu.udb.vistas.employessviews.CreateUser;
 import sv.edu.udb.vistas.projectviews.*;
 import sv.edu.udb.vistas.employessviews.ShowUsers;
-
 
 /**
  *
@@ -26,8 +26,10 @@ public class Contenedor extends javax.swing.JFrame {
     public Contenedor() {
         initComponents();
         setExtendedState(Contenedor.MAXIMIZED_BOTH);
-        if(Session.employeeType % 2 == 0){
-           employeeMenu.setVisible(false);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
+                || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
+            employeeMenu.setVisible(false);
         }
     }
 
@@ -46,7 +48,7 @@ public class Contenedor extends javax.swing.JFrame {
         btnNewTicket = new javax.swing.JMenuItem();
         btnVerTicket = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
+        cerrarSesionMenuItem = new javax.swing.JMenuItem();
         employeeMenu = new javax.swing.JMenu();
         btnAgregarEmp = new javax.swing.JMenuItem();
         btnVerEmp = new javax.swing.JMenuItem();
@@ -77,14 +79,14 @@ public class Contenedor extends javax.swing.JFrame {
         saveAsMenuItem.setDisplayedMnemonicIndex(5);
         ticketMenu.add(saveAsMenuItem);
 
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        cerrarSesionMenuItem.setMnemonic('x');
+        cerrarSesionMenuItem.setText("Cerrar Sesion");
+        cerrarSesionMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
+                cerrarSesionMenuItemActionPerformed(evt);
             }
         });
-        ticketMenu.add(exitMenuItem);
+        ticketMenu.add(cerrarSesionMenuItem);
 
         menuBar.add(ticketMenu);
 
@@ -132,11 +134,6 @@ public class Contenedor extends javax.swing.JFrame {
         projectMenu.add(insertProject);
 
         jMenuBorrar.setText("Borrar");
-        jMenuBorrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuBorrarActionPerformed(evt);
-            }
-        });
         projectMenu.add(jMenuBorrar);
 
         jListMenu.setText("Lista");
@@ -172,9 +169,13 @@ public class Contenedor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
+    private void cerrarSesionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionMenuItemActionPerformed
+        Session.logOut();
+        new Login().setVisible(true);
+        this.dispose();
+        return;
+
+    }//GEN-LAST:event_cerrarSesionMenuItemActionPerformed
 
     private void btnAgregarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpActionPerformed
         // TODO add your handling code here:
@@ -183,12 +184,6 @@ public class Contenedor extends javax.swing.JFrame {
         cu.show();
     }//GEN-LAST:event_btnAgregarEmpActionPerformed
 
-    private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
-        // TODO add your handling code here:
-        ShowUsers su = new ShowUsers();
-        desktopPane.add(su);
-        su.show();
-    }//GEN-LAST:event_btnVerEmpActionPerformed
     private void insertProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjectActionPerformed
         // TODO add your handling code here:
         ProjectInsert insert = new ProjectInsert();
@@ -196,21 +191,23 @@ public class Contenedor extends javax.swing.JFrame {
         insert.show();
     }//GEN-LAST:event_insertProjectActionPerformed
 
-    private void jMenuBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBorrarActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jMenuBorrarActionPerformed
-
     private void jListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListMenuActionPerformed
         // TODO add your handling code here:
         try {
-           ProjectList list = new ProjectList();
-           desktopPane.add(list);
-           list.show(); 
+            ProjectList list = new ProjectList();
+            desktopPane.add(list);
+            list.show();
         } catch (Exception e) {
         }
-        
+
     }//GEN-LAST:event_jListMenuActionPerformed
+
+    private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
+        // TODO add your handling code here:
+         ShowUsers cu = new ShowUsers();
+        desktopPane.add(cu);
+        cu.show();
+    }//GEN-LAST:event_btnVerEmpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,11 +250,11 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnNewTicket;
     private javax.swing.JMenuItem btnVerEmp;
     private javax.swing.JMenuItem btnVerTicket;
+    private javax.swing.JMenuItem cerrarSesionMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     public static javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem editProject;
     private javax.swing.JMenu employeeMenu;
-    private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem insertProject;
     private javax.swing.JMenuItem jListMenu;
     private javax.swing.JMenu jMenu1;
