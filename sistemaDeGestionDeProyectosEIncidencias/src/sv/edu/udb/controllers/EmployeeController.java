@@ -21,7 +21,6 @@ public class EmployeeController {
         EmployeeDAO dao = new EmployeeDAO();
         return dao.save(e);
     }
-    
 
     public Employee findEmployee(String username) {
         EmployeeDAO dao = new EmployeeDAO();
@@ -29,30 +28,43 @@ public class EmployeeController {
 
         return foundEmp.orElseGet(() -> new Employee(DAODefaults.NON_EXISTING_USER.getDefaultValue()));
     }
+
     public List<Employee> findEmployee(int rol) {
         EmployeeDAO dao = new EmployeeDAO();
         List<Employee> foundEmp = dao.getAllByRol(rol);
 
         return foundEmp;
     }
-    
-     public List<Employee> findEmployee(int rol, int dep) {
+
+    public List<Employee> findEmployee(int rol, int dep) {
         EmployeeDAO dao = new EmployeeDAO();
         List<Employee> foundEmp = dao.getAllByRolAndDepto(rol, dep);
 
         return foundEmp;
     }
-     
-       public List<Employee> findEmployees() {
+
+    public List<Employee> findEmployees() {
         EmployeeDAO dao = new EmployeeDAO();
         List<Employee> foundEmp = dao.getAllEmployees();
 
         return foundEmp;
     }
-       
-         public List<Employee> findSupervisors() {
+
+    public List<Employee> findSupervisors() {
         EmployeeDAO dao = new EmployeeDAO();
         List<Employee> foundEmp = dao.getAllSupervisors();
+
+        return foundEmp;
+    }
+
+    public boolean deleteEmployee(Employee t) {
+        EmployeeDAO dao = new EmployeeDAO();
+        return dao.delete(t);
+    }
+
+    public Employee getEmployeeById(int id) {
+        EmployeeDAO dao = new EmployeeDAO();
+        Employee foundEmp = dao.getEmployeeById(id);
 
         return foundEmp;
     }

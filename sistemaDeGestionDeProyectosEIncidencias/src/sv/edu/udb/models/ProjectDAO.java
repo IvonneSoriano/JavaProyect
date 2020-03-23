@@ -35,7 +35,7 @@ public class ProjectDAO implements Dao<Project> {
     }
 
     @Override
-    public void delete(Project t) {
+    public boolean delete(Project t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -73,7 +73,7 @@ public class RolDAO implements Dao<Rol> {
    
 
     @Override
-    public void delete(Rol t) {
+    public boolean delete(Rol t) {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

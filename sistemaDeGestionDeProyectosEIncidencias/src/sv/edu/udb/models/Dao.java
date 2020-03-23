@@ -22,5 +22,5 @@ public interface Dao<T> {
 
     void update(T t, String[] params);
 
-    void delete(T t);
+    boolean delete(T t);
 }

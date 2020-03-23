@@ -73,7 +73,7 @@ public class DeparmentDAO implements Dao<Deparment>{
    
 
     @Override
-    public void delete(Deparment t) {
+    public boolean delete(Deparment t) {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

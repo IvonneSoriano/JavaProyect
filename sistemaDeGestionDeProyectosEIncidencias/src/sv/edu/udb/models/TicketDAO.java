@@ -35,7 +35,7 @@ public class TicketDAO implements Dao<Ticket>{
     }
 
     @Override
-    public void delete(Ticket t) {
+    public boolean delete(Ticket t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

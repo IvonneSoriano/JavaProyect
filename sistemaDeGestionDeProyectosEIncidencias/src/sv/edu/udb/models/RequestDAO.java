@@ -35,7 +35,7 @@ public class RequestDAO implements Dao<Request> {
     }
 
     @Override
-    public void delete(Request t) {
+    public boolean delete(Request t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

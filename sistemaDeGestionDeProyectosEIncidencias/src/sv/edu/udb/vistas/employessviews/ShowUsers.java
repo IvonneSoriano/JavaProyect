@@ -6,9 +6,12 @@
 package sv.edu.udb.vistas.employessviews;
 
 import java.util.List;
+import javax.swing.JOptionPane;
+import sun.awt.EmbeddedFrame;
 import sv.edu.udb.models.Employee;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.controllers.EmployeeController;
+import sv.edu.udb.vistas.Contenedor;
 
 /**
  *
@@ -19,72 +22,76 @@ public class ShowUsers extends javax.swing.JInternalFrame {
     /**
      * Creates new form ShowUsers
      */
-     List<Employee> supervisores;
-     List<Employee> empleados;
-     EmployeeController ec = new EmployeeController();
-    
+   private  List<Employee> supervisores;
+   private List<Employee> empleados;
+   private EmployeeController ec = new EmployeeController();
+   private Employee employeeSelected = new Employee();
+   private int employeeId = -1;
+
     public ShowUsers() {
         initComponents();
 //        Aqui se deben inicializar los 
-        
-        
-        if(Session.employeeType != 5){
+
+        if (Session.employeeType != 5) {
             panedUsers.setEnabledAt(1, false);
         }
-        switch(Session.employeeType){
+        switch (Session.employeeType) {
             case 1:
-                empleados=ec.findEmployee(2, Session.deparmentId);
+                empleados = ec.findEmployee(2, Session.deparmentId);
                 break;
-                
+
             case 3:
-                empleados=ec.findEmployee(4, Session.deparmentId);
+                empleados = ec.findEmployee(4, Session.deparmentId);
                 break;
-                
+
             case 5:
-                empleados=ec.findEmployees();
+                empleados = ec.findEmployees();
                 break;
         }
-        supervisores=ec.findSupervisors();
-        
+        supervisores = ec.findSupervisors();
+
         showEmployees();
         showSupervisors();
     }
 
-    public void showEmployees(){
-        String matriz[][] = new String[empleados.size()][4];
-        
+    public void showEmployees() {
+        String matriz[][] = new String[empleados.size()][5];
+
         for (int i = 0; i < empleados.size(); i++) {
-            matriz[i][0]= empleados.get(i).getEmployeeName();
-            matriz[i][1]= empleados.get(i).getEmployeeLastname();
-            matriz[i][2]= Integer.toString(empleados.get(i).getDepartmentId());
-            matriz[i][3]= empleados.get(i).getUsername();
+            matriz[i][0] = Integer.toString(empleados.get(i).getEmployeeId());
+            matriz[i][1] = empleados.get(i).getEmployeeName();
+            matriz[i][2] = empleados.get(i).getEmployeeLastname();
+            matriz[i][3] = Integer.toString(empleados.get(i).getDepartmentId());
+            matriz[i][4] = empleados.get(i).getUsername();
         }
         tblEmployee.setModel(new javax.swing.table.DefaultTableModel(
-        matriz,
-        new String[]{
-            "Nombre", "Apellido","Departamento", "Usuario"
-        }
+                matriz,
+                new String[]{
+                    "ID", "Nombre", "Apellido", "Departamento", "Usuario"
+                }
         ));
 
     }
-    
-       public void showSupervisors(){
-        String matriz[][] = new String[supervisores.size()][4];
-        
+
+    public void showSupervisors() {
+        String matriz[][] = new String[supervisores.size()][5];
+
         for (int i = 0; i < supervisores.size(); i++) {
-            matriz[i][0]= supervisores.get(i).getEmployeeName();
-            matriz[i][1]= supervisores.get(i).getEmployeeLastname();
-            matriz[i][2]= Integer.toString(supervisores.get(i).getDepartmentId());
-            matriz[i][3]= supervisores.get(i).getUsername();
+            matriz[i][0] = Integer.toString(supervisores.get(i).getEmployeeId());
+            matriz[i][1] = supervisores.get(i).getEmployeeName();
+            matriz[i][2] = supervisores.get(i).getEmployeeLastname();
+            matriz[i][3] = Integer.toString(supervisores.get(i).getDepartmentId());
+            matriz[i][4] = supervisores.get(i).getUsername();
         }
         tblSupervisor.setModel(new javax.swing.table.DefaultTableModel(
-        matriz,
-        new String[]{
-            "Nombre", "Apellido","Departamento", "Usuario"
-        }
+                matriz,
+                new String[]{
+                    "ID", "Nombre", "Apellido", "Departamento", "Usuario"
+                }
         ));
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,8 +111,18 @@ public class ShowUsers extends javax.swing.JInternalFrame {
         tblSupervisor = new javax.swing.JTable();
 
         btnEdit.setText("Editar");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Eliminar");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitulo.setText("Listado de Usuarios");
@@ -114,32 +131,37 @@ public class ShowUsers extends javax.swing.JInternalFrame {
 
         tblEmployee.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        tblEmployee.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEmployeeMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblEmployee);
 
         panedUsers.addTab("Empleados por depto.", jScrollPane2);
 
         tblSupervisor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Apellido", "Departamento", "Usuario"
+                "Nombre", "Apellido", "Departamento", "Title 4", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -186,6 +208,50 @@ public class ShowUsers extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmployeeMouseClicked
+        // TODO add your handling code here:
+        int rowSelected = tblEmployee.rowAtPoint(evt.getPoint());
+        employeeSelected.setEmployeeId(Integer.parseInt((String) tblEmployee.getValueAt(rowSelected, 0)));
+        employeeSelected.setEmployeeName((String) tblEmployee.getValueAt(rowSelected, 1));
+        employeeSelected.setEmployeeLastname((String) tblEmployee.getValueAt(rowSelected, 2));
+        employeeId = Integer.parseInt((String) tblEmployee.getValueAt(rowSelected, 0));
+        JOptionPane.showMessageDialog(rootPane, employeeId);
+    }//GEN-LAST:event_tblEmployeeMouseClicked
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        if (employeeId != -1) {
+            EditUser su = new EditUser(employeeSelected);
+            Contenedor.desktopPane.add(su);
+            this.dispose();
+            su.show();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un empleado a editar", "Empleado No seleccionado", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        if (employeeId != -1) {
+            employeeSelected.setEmployeeId(employeeId);
+            int res = JOptionPane.showConfirmDialog(rootPane,"¿Desea eliminar al empleado "+employeeSelected.getEmployeeName() + " "+employeeSelected.getEmployeeLastname()+"?","Eliminar empleado", JOptionPane.WARNING_MESSAGE);
+            if(JOptionPane.YES_OPTION == res){
+            if (ec.deleteEmployee(employeeSelected)) {
+                JOptionPane.showMessageDialog(rootPane, "El empleado ha sido eliminado", "Empleado eliminado", JOptionPane.INFORMATION_MESSAGE);
+                showEmployees();
+            }
+            else{
+                 JOptionPane.showMessageDialog(rootPane, "El empleado no ha sido eliminado", "Empleado no eliminado", JOptionPane.ERROR_MESSAGE);
+            }
+             }
+            else{ 
+                JOptionPane.showMessageDialog(rootPane, "El empleado no ha sido eliminado", "Empleado no eliminado", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un empleado a eliminar", "Empleado No seleccionado", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import sv.edu.udb.controllers.DeparmentController;
 import sv.edu.udb.controllers.EmployeeController;
 import sv.edu.udb.controllers.RolController;
+import sv.edu.udb.controllers.EmployeeController;
 import sv.edu.udb.models.Employee;
 
 /**
@@ -20,9 +21,27 @@ public class EditUser extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditUser
      */
+    private Employee employee = new Employee();
+    private EmployeeController ec= new EmployeeController();
     public EditUser() {
         initComponents();
     }
+    
+        public EditUser(Employee em) {
+        initComponents();
+        this.employee = em;
+        employee = ec.getEmployeeById(employee.getEmployeeId());
+        fillInputs();
+    }
+        
+        public void fillInputs(){
+            txtName.setText(employee.getEmployeeName());
+            txtLastname.setText(employee.getEmployeeLastname());
+            txtUsuario.setText(employee.getUsername());
+            txtContra.setText(employee.getPassword());
+        }
+        
+        
 
     /**
      * This method is called from within the constructor to initialize the form.

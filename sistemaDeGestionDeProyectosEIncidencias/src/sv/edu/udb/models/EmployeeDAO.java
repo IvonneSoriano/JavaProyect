@@ -141,7 +141,7 @@ public class EmployeeDAO implements Dao<Employee> {
     }
 
     @Override
-    public void delete(Employee t) {
+    public boolean delete(Employee t) {
         try {
             Connect connection = new Connect();
 
@@ -150,12 +150,15 @@ public class EmployeeDAO implements Dao<Employee> {
 
             if (result <= 0) {
                 logger.error("DELETE to Employees table has failed");
+                return false;
             } else {
                 logger.info("DELETO to Employees table has successfully completed!");
+                return true;
             }
-
+            
         } catch (Exception e) {
             logger.error("Error processing DELETE query in save method. Message: " + e.getMessage());
+            return false;
         }
     }
 
@@ -181,6 +184,30 @@ public class EmployeeDAO implements Dao<Employee> {
             logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
         }
         return Optional.ofNullable(foundEmployee);
+    }
+    
+    public Employee getEmployeeById(int id) {
+        Employee foundEmployee = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE EMPLOYEEID=" + id + ";");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                foundEmployee = new Employee();
+                foundEmployee.setEmployeeId(employees.getInt("EmployeeID"));
+                foundEmployee.setRolId(employees.getInt("ROLID"));
+                foundEmployee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                foundEmployee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                foundEmployee.setUsername(employees.getString("USERNAME"));
+                foundEmployee.setPassword(employees.getString("PASSWORD"));
+
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
+        }
+        return foundEmployee;
     }
     
     public List<Employee> getAllByRol(int rol) {

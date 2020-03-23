@@ -206,7 +206,7 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnVerTicket;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
-    private javax.swing.JDesktopPane desktopPane;
+    public static javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu employeeMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu helpMenu;

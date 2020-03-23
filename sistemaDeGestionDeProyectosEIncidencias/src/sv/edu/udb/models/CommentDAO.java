@@ -35,7 +35,7 @@ public class CommentDAO implements Dao<Comment> {
     }
 
     @Override
-    public void delete(Comment t) {
+    public boolean delete(Comment t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
