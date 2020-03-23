@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import sv.edu.udb.util.Connect;
 
@@ -66,7 +67,7 @@ public class EmployeeDAO implements Dao<Employee> {
     }
 
     @Override
-    public void save(Employee t) {
+    public boolean save(Employee t) {
         try {
             Connect connection = new Connect();
 
@@ -79,12 +80,15 @@ public class EmployeeDAO implements Dao<Employee> {
 
             if (result <= 0) {
                 logger.error("INSERT to Employees table has failed");
+                return false;
             } else {
                 logger.info("INSERT to Employees table has successfully completed!");
+                return true;
             }
 
         } catch (Exception e) {
             logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+            return false;
         }
     }
 
@@ -137,7 +141,7 @@ public class EmployeeDAO implements Dao<Employee> {
     }
 
     @Override
-    public void delete(Employee t) {
+    public boolean delete(Employee t) {
         try {
             Connect connection = new Connect();
 
@@ -146,12 +150,15 @@ public class EmployeeDAO implements Dao<Employee> {
 
             if (result <= 0) {
                 logger.error("DELETE to Employees table has failed");
+                return false;
             } else {
                 logger.info("DELETO to Employees table has successfully completed!");
+                return true;
             }
-
+            
         } catch (Exception e) {
             logger.error("Error processing DELETE query in save method. Message: " + e.getMessage());
+            return false;
         }
     }
 
@@ -178,4 +185,181 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         return Optional.ofNullable(foundEmployee);
     }
+    
+    public Employee getEmployeeById(int id) {
+        Employee foundEmployee = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE EMPLOYEEID=" + id + ";");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                foundEmployee = new Employee();
+                foundEmployee.setEmployeeId(employees.getInt("EmployeeID"));
+                foundEmployee.setRolId(employees.getInt("ROLID"));
+                foundEmployee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                foundEmployee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                foundEmployee.setUsername(employees.getString("USERNAME"));
+                foundEmployee.setPassword(employees.getString("PASSWORD"));
+
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
+        }
+        return foundEmployee;
+    }
+    
+    public List<Employee> getAllByRol(int rol) {
+
+        Connect connection = null;
+        List<Employee> employeesFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+        } catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+        try {
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID ="+ rol +" ;");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                Employee employee = new Employee();
+                employee.setEmployeeId(employees.getInt("EmployeeID"));
+                employee.setRolId(employees.getInt("ROLID"));
+                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                employee.setUsername(employees.getString("USERNAME"));
+                employee.setPassword(employees.getString("PASSWORD"));
+                employeesFound.add(employee);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return employeesFound;
+    }
+    
+    public List<Employee> getAllByRolAndDepto(int rol, int depto) {
+
+        Connect connection = null;
+        List<Employee> employeesFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+        } catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+        try {
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID ="+ rol +" AND DEPARMENTID = "+depto+";");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                Employee employee = new Employee();
+                employee.setEmployeeId(employees.getInt("EmployeeID"));
+                employee.setRolId(employees.getInt("ROLID"));
+                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                employee.setUsername(employees.getString("USERNAME"));
+                employee.setPassword(employees.getString("PASSWORD"));
+                employeesFound.add(employee);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return employeesFound;
+    }
+    
+     public List<Employee> getAllEmployees() {
+
+        Connect connection = null;
+        List<Employee> employeesFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+        } catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+        try {
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID = 2 OR ROLID=4;");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                Employee employee = new Employee();
+                employee.setEmployeeId(employees.getInt("EmployeeID"));
+                employee.setRolId(employees.getInt("ROLID"));
+                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                employee.setUsername(employees.getString("USERNAME"));
+                employee.setPassword(employees.getString("PASSWORD"));
+                employeesFound.add(employee);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return employeesFound;
+    }
+     
+      public List<Employee> getAllSupervisors() {
+
+        Connect connection = null;
+        List<Employee> employeesFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+        } catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+        try {
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID = 1 OR ROLID=3;");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                Employee employee = new Employee();
+                employee.setEmployeeId(employees.getInt("EmployeeID"));
+                employee.setRolId(employees.getInt("ROLID"));
+                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                employee.setUsername(employees.getString("USERNAME"));
+                employee.setPassword(employees.getString("PASSWORD"));
+                employeesFound.add(employee);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return employeesFound;
+    }
+
 }

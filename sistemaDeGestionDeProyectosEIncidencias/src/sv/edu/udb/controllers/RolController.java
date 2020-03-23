@@ -24,4 +24,9 @@ public class RolController {
         RolDAO dao = new RolDAO();
         return dao.getAll();
     }
+      
+        public int showID(String rol){
+          RolDAO dao = new RolDAO();
+          return dao.getId(rol);
+      }
 }

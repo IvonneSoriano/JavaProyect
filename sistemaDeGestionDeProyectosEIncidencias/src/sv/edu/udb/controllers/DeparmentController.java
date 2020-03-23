@@ -27,5 +27,4 @@ public class DeparmentController {
         DeparmentDAO dao = new DeparmentDAO();
         return dao.getAll();
     }
-      
 }

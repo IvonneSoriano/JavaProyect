@@ -69,7 +69,7 @@ public class ProjectDAO implements Dao<Project> {
     }
 
     @Override
-    public void save(Project t) {
+    public boolean save(Project t) {
         
          try {
             Connect connection = new Connect();
@@ -82,12 +82,15 @@ public class ProjectDAO implements Dao<Project> {
 
             if (result <= 0) {
                 logger.error("INSERT to Projects table has failed");
+                return false;
             } else {
                 logger.info("INSERT to Projects table has successfully completed!");
+                return true;
             }
 
         } catch (Exception e) {
             logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+            return false;
         }
     }
 
@@ -97,7 +100,7 @@ public class ProjectDAO implements Dao<Project> {
     }
 
     @Override
-    public void delete(Project t) {
+    public boolean delete(Project t) {
        try {
             Connect connection = new Connect();
 
@@ -106,12 +109,15 @@ public class ProjectDAO implements Dao<Project> {
 
             if (result <= 0) {
                 logger.error("DELETE to Projects table has failed");
+                return false;
             } else {
                 logger.info("DELETO to Projects table has successfully completed!");
+                return true;
             }
 
         } catch (Exception e) {
             logger.error("Error processing DELETE query in save method. Message: " + e.getMessage());
+            return false;
         }
     }
     public List<Project> getProjbyDepto() {
