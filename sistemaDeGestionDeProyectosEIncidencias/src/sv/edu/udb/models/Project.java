@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package sv.edu.udb.models;
-
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -15,7 +15,7 @@ public class Project {
 
     private int id, departmentId;
     private String name, description;
-    private Date creationDate;
+    private Timestamp creationDate;
 
     public Project() {
     }
@@ -52,11 +52,11 @@ public class Project {
         return description;
     }
 
-    public void setCreationDate(Date date) {
+    public void setCreationDate(Timestamp date) {
         this.creationDate = date;
     }
 
-    public Date getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 

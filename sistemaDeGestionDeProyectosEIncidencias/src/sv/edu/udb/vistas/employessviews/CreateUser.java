@@ -194,13 +194,14 @@ public class CreateUser extends javax.swing.JInternalFrame {
         DeparmentController depto = new DeparmentController();
         RolController rolUser = new RolController();
         EmployeeController ec = new EmployeeController();
-        
+        Deparment d = new Deparment();
         user.setEmployeeName(txtName.getText());
         user.setEmployeeLastname(txtLastname.getText());
         user.setEmployeeLastname(txtLastname.getText());
         user.setUsername(txtUsuario.getText());
         user.setPassword(txtContra.getText());
-        user.setDepartmentId(depto.showID(cmbbxDepoto.getSelectedItem().toString()));
+        d=depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
+        user.setDepartmentId(d.getDepartmentId());
         user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
         if(ec.insertEmployee(user)){
             JOptionPane.showMessageDialog(null, "El usuario se ha insertado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );

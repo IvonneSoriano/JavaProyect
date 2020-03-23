@@ -8,6 +8,7 @@ package sv.edu.udb.vistas;
 import org.apache.log4j.Logger;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.vistas.employessviews.CreateUser;
+import sv.edu.udb.vistas.projectviews.*;
 import sv.edu.udb.vistas.employessviews.ShowUsers;
 
 
@@ -51,9 +52,12 @@ public class Contenedor extends javax.swing.JFrame {
         btnVerEmp = new javax.swing.JMenuItem();
         btnEditarEmp = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        projectMenu = new javax.swing.JMenu();
+        insertProject = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuBorrar = new javax.swing.JMenuItem();
+        jListMenu = new javax.swing.JMenuItem();
+        editProject = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,18 +119,42 @@ public class Contenedor extends javax.swing.JFrame {
 
         menuBar.add(employeeMenu);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
+        projectMenu.setMnemonic('h');
+        projectMenu.setText("Proyectos");
 
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
+        insertProject.setMnemonic('c');
+        insertProject.setText("Insertar");
+        insertProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertProjectActionPerformed(evt);
+            }
+        });
+        projectMenu.add(insertProject);
 
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
+        jMenuBorrar.setText("Borrar");
+        jMenuBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuBorrarActionPerformed(evt);
+            }
+        });
+        projectMenu.add(jMenuBorrar);
 
-        menuBar.add(helpMenu);
+        jListMenu.setText("Lista");
+        jListMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jListMenuActionPerformed(evt);
+            }
+        });
+        projectMenu.add(jListMenu);
+
+        editProject.setMnemonic('a');
+        editProject.setText("Editar");
+        projectMenu.add(editProject);
+
+        menuBar.add(projectMenu);
+
+        jMenu1.setText("jMenu1");
+        menuBar.add(jMenu1);
 
         setJMenuBar(menuBar);
 
@@ -161,6 +189,28 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(su);
         su.show();
     }//GEN-LAST:event_btnVerEmpActionPerformed
+    private void insertProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjectActionPerformed
+        // TODO add your handling code here:
+        ProjectInsert insert = new ProjectInsert();
+        desktopPane.add(insert);
+        insert.show();
+    }//GEN-LAST:event_insertProjectActionPerformed
+
+    private void jMenuBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBorrarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuBorrarActionPerformed
+
+    private void jListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListMenuActionPerformed
+        // TODO add your handling code here:
+        try {
+           ProjectList list = new ProjectList();
+           desktopPane.add(list);
+           list.show(); 
+        } catch (Exception e) {
+        }
+        
+    }//GEN-LAST:event_jListMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,19 +248,21 @@ public class Contenedor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem btnAgregarEmp;
     private javax.swing.JMenuItem btnEditarEmp;
     private javax.swing.JMenuItem btnNewTicket;
     private javax.swing.JMenuItem btnVerEmp;
     private javax.swing.JMenuItem btnVerTicket;
-    private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     public static javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JMenuItem editProject;
     private javax.swing.JMenu employeeMenu;
     private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem insertProject;
+    private javax.swing.JMenuItem jListMenu;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu projectMenu;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenu ticketMenu;
     // End of variables declaration//GEN-END:variables

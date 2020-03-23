@@ -107,9 +107,7 @@ try {
         }
         return department;
     }
-    
-    
-    public int getId(String depto){
+    public Deparment getOneByName(String nombre){
         Connect connection = null;
          Deparment department = new Deparment();
 try {
@@ -118,11 +116,12 @@ try {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
 try {
-            connection.setRs("SELECT DEPARMENTID FROM `departments` WHERE departments.deparmentname = '" + depto + "';");
+            connection.setRs("SELECT * FROM departments WHERE departments.deparmentname='" + nombre + "';");
             ResultSet departmentFound = (ResultSet) connection.getRs();
 
             while (departmentFound.next()) {
                 department.setDepartmentId(departmentFound.getInt("DEPARMENTID"));
+                department.setDepartmentName(departmentFound.getString("DEPARMENTNAME"));
             }
 
         } catch (SQLException e) {
@@ -135,6 +134,6 @@ try {
             }
 
         }
-        return department.getDepartmentId();
+        return department;
     }
 }

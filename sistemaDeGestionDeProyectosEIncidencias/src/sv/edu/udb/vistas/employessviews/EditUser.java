@@ -10,6 +10,7 @@ import sv.edu.udb.controllers.DeparmentController;
 import sv.edu.udb.controllers.EmployeeController;
 import sv.edu.udb.controllers.RolController;
 import sv.edu.udb.controllers.EmployeeController;
+import sv.edu.udb.models.Deparment;
 import sv.edu.udb.models.Employee;
 
 /**
@@ -172,17 +173,18 @@ public class EditUser extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        Employee user = new Employee();
+       Employee user = new Employee();
         DeparmentController depto = new DeparmentController();
         RolController rolUser = new RolController();
         EmployeeController ec = new EmployeeController();
-
+        Deparment d = new Deparment();
         user.setEmployeeName(txtName.getText());
         user.setEmployeeLastname(txtLastname.getText());
         user.setEmployeeLastname(txtLastname.getText());
         user.setUsername(txtUsuario.getText());
         user.setPassword(txtContra.getText());
-        user.setDepartmentId(depto.showID(cmbbxDepoto.getSelectedItem().toString()));
+        d=depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
+        user.setDepartmentId(d.getDepartmentId());
         user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
         if(ec.insertEmployee(user)){
             JOptionPane.showMessageDialog(null, "El usuario se ha insertado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
