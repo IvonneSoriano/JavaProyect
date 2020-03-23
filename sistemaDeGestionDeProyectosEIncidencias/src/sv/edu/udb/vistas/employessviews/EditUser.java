@@ -5,6 +5,8 @@
  */
 package sv.edu.udb.vistas.employessviews;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import sv.edu.udb.controllers.DeparmentController;
 import sv.edu.udb.controllers.EmployeeController;
@@ -12,6 +14,9 @@ import sv.edu.udb.controllers.RolController;
 import sv.edu.udb.controllers.EmployeeController;
 import sv.edu.udb.models.Deparment;
 import sv.edu.udb.models.Employee;
+import sv.edu.udb.models.Rol;
+import sv.edu.udb.models.Session;
+import sv.edu.udb.util.Roles;
 
 /**
  *
@@ -22,14 +27,25 @@ public class EditUser extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditUser
      */
-    private Employee employee = new Employee();
-    private EmployeeController ec= new EmployeeController();
+   DeparmentController dep = new DeparmentController();
+    RolController rol = new RolController();
+    List<Deparment> listaDep = new ArrayList<>();
+    Deparment liDep = new Deparment();
+    List<Rol> listaRol = new ArrayList<>();
+    Rol liRol = new Rol();
+    Employee employee = new Employee();
+    EmployeeController ec = new EmployeeController();
+    
     public EditUser() {
         initComponents();
+        cmbbxDepoto.removeAllItems();
+        cmbbxTipoEmpleado.removeAllItems();
+        
     }
     
         public EditUser(Employee em) {
         initComponents();
+        fillCombos();
         this.employee = em;
         employee = ec.getEmployeeById(employee.getEmployeeId());
         fillInputs();
@@ -40,6 +56,36 @@ public class EditUser extends javax.swing.JInternalFrame {
             txtLastname.setText(employee.getEmployeeLastname());
             txtUsuario.setText(employee.getUsername());
             txtContra.setText(employee.getPassword());
+            
+//            if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
+//            cmbbxDepoto.setSelectedItem();    
+//            }
+            
+        }
+        public  void fillCombos(){
+            if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
+            listaDep = dep.showDeparment();
+            listaRol = rol.showRol();
+            JOptionPane.showMessageDialog(rootPane, "Muestra los empleados");
+        } else {
+            liDep = dep.showDeparment(Session.deparmentId);
+            liRol = rol.showRol(Session.employeeType);
+            JOptionPane.showMessageDialog(rootPane, "Muestra los empleados 2");
+        }
+        cmbbxDepoto.removeAllItems();
+        cmbbxTipoEmpleado.removeAllItems();
+
+        if (listaDep.isEmpty()) {
+            cmbbxDepoto.addItem(liDep.getDepartmentName());
+            cmbbxTipoEmpleado.addItem(liRol.getRolName());
+        } else {
+            listaDep.forEach((deparment) -> {
+                cmbbxDepoto.addItem(deparment.getDepartmentName());
+            });
+            listaRol.forEach((rol) -> {
+                cmbbxTipoEmpleado.addItem(rol.getRolName());
+            });
+        }
         }
         
         
@@ -73,7 +119,7 @@ public class EditUser extends javax.swing.JInternalFrame {
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitulo.setText("Editar Empleado");
 
-        btnEditar.setText("Ingresar");
+        btnEditar.setText("Editar");
         btnEditar.setToolTipText("");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

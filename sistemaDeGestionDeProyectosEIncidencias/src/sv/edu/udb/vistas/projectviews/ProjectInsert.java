@@ -13,6 +13,7 @@ import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.models.Deparment;
 import sv.edu.udb.models.Project;
 import sv.edu.udb.models.Session;
+import sv.edu.udb.util.Roles;
 
 
 
@@ -34,13 +35,13 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     Project proOb = new Project();
     public ProjectInsert() {
         initComponents();
-        if (Session.employeeType == 5) {
-                listDep = depto.showDeparment();
-               
-            } else {
-                deptOb = depto.showDeparment(Session.deparmentId);
-               
-            }
+         if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
+            listDep = depto.showDeparment();
+            
+        } else {
+            deptOb = depto.showDeparment(Session.deparmentId);
+            
+        }
            cmbDepartment.removeAllItems();
            
             
@@ -103,8 +104,8 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -114,7 +115,7 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,11 +130,11 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
                     .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(jButton1)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         pack();

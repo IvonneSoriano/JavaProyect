@@ -26,7 +26,7 @@ public class Contenedor extends javax.swing.JFrame {
     public Contenedor() {
         initComponents();
         setExtendedState(Contenedor.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+//        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
                 || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
             employeeMenu.setVisible(false);

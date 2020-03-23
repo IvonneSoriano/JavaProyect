@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import sv.edu.udb.models.Deparment;
 import sv.edu.udb.models.Employee;
 import sv.edu.udb.models.Rol;
+import sv.edu.udb.util.Roles;
+
 /**
  *
  * @author kiss_
@@ -25,40 +27,37 @@ public class CreateUser extends javax.swing.JInternalFrame {
     /**
      * Creates new form CreateUser
      */
-    DeparmentController dep = new DeparmentController();
-    RolController rol = new RolController();
-    List<Deparment> listaDep = new ArrayList<>();
-    Deparment liDep = new Deparment();
-    List<Rol> listaRol = new ArrayList<>();
-    Rol liRol = new Rol();
-    
-    
+   private DeparmentController dep = new DeparmentController();
+   private RolController rol = new RolController();
+   private List<Deparment> listaDep = new ArrayList<>();
+   private Deparment liDep = new Deparment();
+   private List<Rol> listaRol = new ArrayList<>();
+   private Rol liRol = new Rol();
+
     public CreateUser() {
         initComponents();
-        
-           
-            if (Session.employeeType == 5) {
-                listaDep = dep.showDeparment();
-                listaRol = rol.showRol();
-            } else {
-                liDep = dep.showDeparment(Session.deparmentId);
-                liRol = rol.showRol(Session.employeeType);
-            }
-            cmbbxDepoto.removeAllItems();
-            cmbbxTipoEmpleado.removeAllItems();
-            
-            if(listaDep.isEmpty()){
-                cmbbxDepoto.addItem(liDep.getDepartmentName());
-                cmbbxTipoEmpleado.addItem(liRol.getRolName());
-            }
-            else{
-                listaDep.forEach((deparment) -> {
-                    cmbbxDepoto.addItem(deparment.getDepartmentName());
+
+        if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
+            listaDep = dep.showDeparment();
+            listaRol = rol.showRol();
+        } else {
+            liDep = dep.showDeparment(Session.deparmentId);
+            liRol = rol.showRol(Session.employeeType);
+        }
+        cmbbxDepoto.removeAllItems();
+        cmbbxTipoEmpleado.removeAllItems();
+
+        if (listaDep.isEmpty()) {
+            cmbbxDepoto.addItem(liDep.getDepartmentName());
+            cmbbxTipoEmpleado.addItem(liRol.getRolName());
+        } else {
+            listaDep.forEach((deparment) -> {
+                cmbbxDepoto.addItem(deparment.getDepartmentName());
             });
-                listaRol.forEach((rol) -> {
-                    cmbbxTipoEmpleado.addItem(rol.getRolName());
+            listaRol.forEach((rol) -> {
+                cmbbxTipoEmpleado.addItem(rol.getRolName());
             });
-            }
+        }
     }
 
     /**
@@ -200,27 +199,26 @@ public class CreateUser extends javax.swing.JInternalFrame {
         user.setEmployeeLastname(txtLastname.getText());
         user.setUsername(txtUsuario.getText());
         user.setPassword(txtContra.getText());
-        d=depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
+        d = depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
         user.setDepartmentId(d.getDepartmentId());
         user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
-        if(ec.insertEmployee(user)){
-            JOptionPane.showMessageDialog(null, "El usuario se ha insertado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
+        if (ec.insertEmployee(user)) {
+            JOptionPane.showMessageDialog(null, "El usuario se ha insertado correctamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
             clearForm();
+        } else {
+            JOptionPane.showMessageDialog(null, "El usuario no se ha insertado correctamente", "Operacion fallida", JOptionPane.ERROR_MESSAGE);
         }
-        else{
-            JOptionPane.showMessageDialog(null, "El usuario no se ha insertado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
-        }
-        
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
-    private void clearForm(){
+    private void clearForm() {
         txtName.setText("");
         txtLastname.setText("");
         txtUsuario.setText("");
         txtContra.setText("");
-        
+
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
