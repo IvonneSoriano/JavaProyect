@@ -24,5 +24,12 @@ ALTER TABLE `gestion_tickets`.`employees` AUTO_INCREMENT = 0;
 INSERT INTO `gestion_tickets`.`employees` (`ROLID`, `DEPARMENTID`, `EMPLOYEENAME`, `EMPLOYEELASTNAME`, `USERNAME`, `PASSWORD`) 
 VALUES ('1', '1', 'Administrador', 'I', 'admin1', 'admin1');
 
+INSERT INTO `projects` (`PROJECTID`, `DEPARMENTID`, `PROJECTNAME`, `PROJECTDESCRIPTION`, `CREATIONDATE`) VALUES
+(1, 4, 'Proyecto', 'Un Proyecto', '2020-03-19 05:46:30'),
+(2, 2, 'Otro proyecto', 'Bien bonito el proyecto.', '2020-03-19 19:07:18'),
+(4, 3, 'Otro proyecto Facturas', 'Bien bonito el proyecto 2.', '2020-03-19 19:09:02'),
+(5, 2, 'Otro proyecto Facturas 3', 'Bien bonito el proyecto 2.', '2020-03-19 19:09:40');
+
+
 
 
