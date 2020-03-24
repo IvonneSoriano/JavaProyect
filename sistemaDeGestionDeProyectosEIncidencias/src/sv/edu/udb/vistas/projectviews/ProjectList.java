@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import sv.edu.udb.util.Connect;
 import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.models.Project;
@@ -205,8 +206,14 @@ public class ProjectList extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
         proOb.setProjectsId(Integer.parseInt(lblId.getText()));
-        procControl.deleteProject(proOb);
+        if (procControl.deleteProject(proOb)) {
+            JOptionPane.showMessageDialog(null, "El proyecto se ha eliminado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "El proyecto no se ha eliminado","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+        }
         loadData();
     }//GEN-LAST:event_jButton1ActionPerformed
 
