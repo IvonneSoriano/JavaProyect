@@ -94,51 +94,56 @@ public class EmployeeDAO implements Dao<Employee> {
 
     // THIS METHOD CAN BE DONE BY SUPERVISOR  
     @Override
-    public void update(Employee t, String[] params) {
+    public boolean update(Employee t, String[] params) {
         try {
             Connect connection = new Connect();
 
-            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
-                    + "`ROLID` = " + t.getRolId()
-                    + ", `EMPLOYEENAME` = " + t.getEmployeeName()
-                    + ", `EMPLOYEELASTNAME` = " + t.getEmployeeLastname()
-                    + ", `USERNAME` = " + t.getUsername()
-                    + "WHERE `EmployeeID` = " + t.getEmployeeId() + "';");
-
+             int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
+                    + "`ROLID` = '" + t.getRolId()
+                    + "', `DEPARMENTID` = '" + t.getDepartmentId()
+                    + "', `EMPLOYEENAME` = '" + t.getEmployeeName()
+                    + "', `EMPLOYEELASTNAME` = '" + t.getEmployeeLastname()
+                    + "', `USERNAME` = '" + t.getUsername()
+                    + "', `PASSWORD` = '" + t.getPassword()
+                    + " ' WHERE `EmployeeID` = " + t.getEmployeeId() + ";"
+            );
             if (result <= 0) {
                 logger.error("UPDATE to Employees table has failed");
+                return false;
             } else {
                 logger.info("UPDATE to Employees table has successfully completed!");
+                return true;
             }
         } catch (Exception e) {
             logger.error("Error processing UPDATE query in save method. Message: " + e.getMessage());
+            return false;
         }
     }
 
     //THIS METHOD CAN BE DONE BY THE SA
-    public void updateSA(Employee t, String[] params) {
-        try {
-            Connect connection = new Connect();
-
-            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
-                    + "`ROLID` = " + t.getRolId()
-                    + ", `DEPARMENTID` = " + t.getDepartmentId()
-                    + ", `EMPLOYEENAME` = " + t.getEmployeeName()
-                    + ", `EMPLOYEELASTNAME` = " + t.getEmployeeLastname()
-                    + ", `USERNAME` = " + t.getUsername()
-                    + ", `PASSWORD` = " + t.getPassword()
-                    + "WHERE `EmployeeID` = " + t.getEmployeeId() + "';"
-            );
-
-            if (result <= 0) {
-                logger.error("UPDATE to Employees table has failed");
-            } else {
-                logger.info("UPDATE to Employees table has successfully completed!");
-            }
-        } catch (Exception e) {
-            logger.error("Error processing UPDATE query in save method. Message: " + e.getMessage());
-        }
-    }
+//    public boolean updateSA(Employee t, String[] params) {
+//        try {
+//            Connect connection = new Connect();
+//
+//            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
+//                    + "`ROLID` = " + t.getRolId()
+//                    + ", `DEPARMENTID` = " + t.getDepartmentId()
+//                    + ", `EMPLOYEENAME` = " + t.getEmployeeName()
+//                    + ", `EMPLOYEELASTNAME` = " + t.getEmployeeLastname()
+//                    + ", `USERNAME` = " + t.getUsername()
+//                    + ", `PASSWORD` = " + t.getPassword()
+//                    + "WHERE `EmployeeID` = " + t.getEmployeeId() + "';"
+//            );
+//
+//            if (result <= 0) {
+//                logger.error("UPDATE to Employees table has failed");
+//            } else {
+//                logger.info("UPDATE to Employees table has successfully completed!");
+//            }
+//        } catch (Exception e) {
+//            logger.error("Error processing UPDATE query in save method. Message: " + e.getMessage());
+//        }
+//    }
 
     @Override
     public boolean delete(Employee t) {

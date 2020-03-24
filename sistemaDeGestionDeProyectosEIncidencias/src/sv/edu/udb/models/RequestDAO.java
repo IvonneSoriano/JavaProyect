@@ -30,7 +30,7 @@ public class RequestDAO implements Dao<Request> {
     }
 
     @Override
-    public void update(Request t, String[] params) {
+    public boolean update(Request t, String[] params) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

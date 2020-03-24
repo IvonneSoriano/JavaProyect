@@ -68,4 +68,10 @@ public class EmployeeController {
 
         return foundEmp;
     }
+    
+    public boolean updateEmployee(Employee e, String[] p){
+         EmployeeDAO dao = new EmployeeDAO();
+         return dao.update(e,p);
+        
+    }
 }

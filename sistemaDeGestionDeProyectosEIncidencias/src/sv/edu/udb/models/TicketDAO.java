@@ -30,7 +30,7 @@ public class TicketDAO implements Dao<Ticket>{
     }
 
     @Override
-    public void update(Ticket t, String[] params) {
+    public boolean update(Ticket t, String[] params) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
