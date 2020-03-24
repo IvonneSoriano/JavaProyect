@@ -30,7 +30,7 @@ public class CommentDAO implements Dao<Comment> {
     }
 
     @Override
-    public void update(Comment t, String[] params) {
+    public boolean update(Comment t, String[] params) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

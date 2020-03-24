@@ -95,7 +95,7 @@ public class ProjectDAO implements Dao<Project> {
     }
 
     @Override
-    public void update(Project t, String[] params) {
+    public boolean update(Project t, String[] params) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

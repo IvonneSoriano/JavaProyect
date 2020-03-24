@@ -20,6 +20,10 @@ public class RolController {
         return dao.getOne(id);
     }
       
+       public Rol getRol(int id) {
+        RolDAO dao = new RolDAO();
+        return dao.getRol(id);
+    }
       public List<Rol> showRol() {
         RolDAO dao = new RolDAO();
         return dao.getAll();

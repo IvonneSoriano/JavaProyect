@@ -22,36 +22,23 @@ public class ShowUsers extends javax.swing.JInternalFrame {
     /**
      * Creates new form ShowUsers
      */
-   private  List<Employee> supervisores;
-   private List<Employee> empleados;
-   private EmployeeController ec = new EmployeeController();
-   private Employee employeeSelected = new Employee();
-   private int employeeId = -1;
+    private List<Employee> supervisores;
+    private List<Employee> empleados;
+    private EmployeeController ec = new EmployeeController();
+    private Employee employeeSelected = new Employee();
+    private int employeeId = -1;
 
     public ShowUsers() {
         initComponents();
 //        Aqui se deben inicializar los 
 
+        loadData();
         if (Session.employeeType != 5) {
             panedUsers.setEnabledAt(1, false);
+        } else {
+            showSupervisors();
         }
-        switch (Session.employeeType) {
-            case 1:
-                empleados = ec.findEmployee(2, Session.deparmentId);
-                break;
-
-            case 3:
-                empleados = ec.findEmployee(4, Session.deparmentId);
-                break;
-
-            case 5:
-                empleados = ec.findEmployees();
-                break;
-        }
-        supervisores = ec.findSupervisors();
-
         showEmployees();
-        showSupervisors();
     }
 
     public void showEmployees() {
@@ -89,6 +76,24 @@ public class ShowUsers extends javax.swing.JInternalFrame {
                     "ID", "Nombre", "Apellido", "Departamento", "Usuario"
                 }
         ));
+
+    }
+
+    public void loadData() {
+        switch (Session.employeeType) {
+            case 1:
+                empleados = ec.findEmployee(2, Session.deparmentId);
+                break;
+
+            case 3:
+                empleados = ec.findEmployee(4, Session.deparmentId);
+                break;
+
+            case 5:
+                empleados = ec.findEmployees();
+                supervisores = ec.findSupervisors();
+                break;
+        }
 
     }
 
@@ -222,7 +227,7 @@ public class ShowUsers extends javax.swing.JInternalFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
         if (employeeId != -1) {
-            EditUser su = new EditUser(employeeSelected);
+            EditUser su = new EditUser(employeeSelected.getEmployeeId());
             Contenedor.desktopPane.add(su);
             this.dispose();
             su.show();
@@ -235,22 +240,26 @@ public class ShowUsers extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (employeeId != -1) {
             employeeSelected.setEmployeeId(employeeId);
-            int res = JOptionPane.showConfirmDialog(rootPane,"¿Desea eliminar al empleado "+employeeSelected.getEmployeeName() + " "+employeeSelected.getEmployeeLastname()+"?","Eliminar empleado", JOptionPane.WARNING_MESSAGE);
-            if(JOptionPane.YES_OPTION == res){
-            if (ec.deleteEmployee(employeeSelected)) {
-                JOptionPane.showMessageDialog(rootPane, "El empleado ha sido eliminado", "Empleado eliminado", JOptionPane.INFORMATION_MESSAGE);
-                showEmployees();
-            }
-            else{
-                 JOptionPane.showMessageDialog(rootPane, "El empleado no ha sido eliminado", "Empleado no eliminado", JOptionPane.ERROR_MESSAGE);
-            }
-             }
-            else{ 
+            int res = JOptionPane.showConfirmDialog(rootPane, "¿Desea eliminar al empleado " + employeeSelected.getEmployeeName() + " " + employeeSelected.getEmployeeLastname() + "?", "Eliminar empleado", JOptionPane.WARNING_MESSAGE);
+            if (JOptionPane.YES_OPTION == res) {
+                if (ec.deleteEmployee(employeeSelected)) {
+                    JOptionPane.showMessageDialog(rootPane, "El empleado ha sido eliminado", "Empleado eliminado", JOptionPane.INFORMATION_MESSAGE);
+                    showEmployees();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "El empleado no ha sido eliminado", "Empleado no eliminado", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "El empleado no ha sido eliminado", "Empleado no eliminado", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un empleado a eliminar", "Empleado No seleccionado", JOptionPane.WARNING_MESSAGE);
         }
+        loadData();
+        showEmployees();
+        if (Session.employeeType != 5) {
+            showSupervisors();
+        }
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
 

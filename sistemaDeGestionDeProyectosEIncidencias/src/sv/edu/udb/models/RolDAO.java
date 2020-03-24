@@ -66,7 +66,7 @@ public class RolDAO implements Dao<Rol> {
 
     // THIS METHOD CAN BE DONE BY SUPERVISOR  
     @Override
-    public void update(Rol t, String[] params) {
+    public boolean update(Rol t, String[] params) {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -98,6 +98,37 @@ try {
                     connection.setRs("SELECT * FROM `roles` WHERE roles.rolid = 4");
                     break;
             }
+            ResultSet rolFound = (ResultSet) connection.getRs();
+
+            while (rolFound.next()) {
+                rol.setRolId(rolFound.getInt("ROLID"));
+                rol.setRolName(rolFound.getString("ROLNAME"));
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return rol;
+    }
+    
+    public Rol getRol(int id){
+        Connect connection = null;
+         Rol rol = new Rol();
+try {
+            connection = new Connect();
+        }catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+try {
+     
+                    connection.setRs("SELECT * FROM `roles` WHERE roles.rolid ="+id+";");
             ResultSet rolFound = (ResultSet) connection.getRs();
 
             while (rolFound.next()) {

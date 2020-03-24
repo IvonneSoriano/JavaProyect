@@ -20,7 +20,7 @@ public interface Dao<T> {
 
     boolean save(T t);
 
-    void update(T t, String[] params);
+    boolean update(T t, String[] params);
 
     boolean delete(T t);
 }

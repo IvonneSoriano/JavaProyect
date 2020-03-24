@@ -29,12 +29,12 @@ public class EditUser extends javax.swing.JInternalFrame {
      */
    DeparmentController dep = new DeparmentController();
     RolController rol = new RolController();
-    List<Deparment> listaDep = new ArrayList<>();
     Deparment liDep = new Deparment();
-    List<Rol> listaRol = new ArrayList<>();
     Rol liRol = new Rol();
     Employee employee = new Employee();
     EmployeeController ec = new EmployeeController();
+    Deparment d = new Deparment();
+    Rol r = new Rol();
     
     public EditUser() {
         initComponents();
@@ -43,51 +43,45 @@ public class EditUser extends javax.swing.JInternalFrame {
         
     }
     
-        public EditUser(Employee em) {
+        public EditUser(int id) {
         initComponents();
+        this.employee = ec.getEmployeeById(id);
         fillCombos();
-        this.employee = em;
-        employee = ec.getEmployeeById(employee.getEmployeeId());
         fillInputs();
+        
     }
         
         public void fillInputs(){
+            d= dep.showDeparment(employee.getDepartmentId());
+        r = rol.getRol(employee.getRolId());
             txtName.setText(employee.getEmployeeName());
             txtLastname.setText(employee.getEmployeeLastname());
             txtUsuario.setText(employee.getUsername());
             txtContra.setText(employee.getPassword());
-            
-//            if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
-//            cmbbxDepoto.setSelectedItem();    
-//            }
+             cmbbxDepoto.setSelectedIndex(0);
+             cmbbxTipoEmpleado.setSelectedIndex(0);
+
             
         }
         public  void fillCombos(){
-            if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
-            listaDep = dep.showDeparment();
-            listaRol = rol.showRol();
-            JOptionPane.showMessageDialog(rootPane, "Muestra los empleados");
-        } else {
+           
             liDep = dep.showDeparment(Session.deparmentId);
-            liRol = rol.showRol(Session.employeeType);
-            JOptionPane.showMessageDialog(rootPane, "Muestra los empleados 2");
-        }
+            liRol = rol.getRol(employee.getRolId());
+           
         cmbbxDepoto.removeAllItems();
         cmbbxTipoEmpleado.removeAllItems();
 
-        if (listaDep.isEmpty()) {
+       
             cmbbxDepoto.addItem(liDep.getDepartmentName());
-            cmbbxTipoEmpleado.addItem(liRol.getRolName());
-        } else {
-            listaDep.forEach((deparment) -> {
-                cmbbxDepoto.addItem(deparment.getDepartmentName());
-            });
-            listaRol.forEach((rol) -> {
-                cmbbxTipoEmpleado.addItem(rol.getRolName());
-            });
-        }
+            cmbbxTipoEmpleado.addItem(liRol.getRolName());       
         }
         
+        public void hidePassword(){
+            if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
+            lblContra.setVisible(false);
+            txtContra.setVisible(false);
+            }
+        }
         
 
     /**
@@ -219,25 +213,30 @@ public class EditUser extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+        
        Employee user = new Employee();
         DeparmentController depto = new DeparmentController();
         RolController rolUser = new RolController();
-        EmployeeController ec = new EmployeeController();
-        Deparment d = new Deparment();
+        Deparment d;
+        user.setEmployeeId(employee.getEmployeeId());
+        String[] p ={"Name","Lastname"};
         user.setEmployeeName(txtName.getText());
         user.setEmployeeLastname(txtLastname.getText());
         user.setEmployeeLastname(txtLastname.getText());
         user.setUsername(txtUsuario.getText());
         user.setPassword(txtContra.getText());
         d=depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
+        
         user.setDepartmentId(d.getDepartmentId());
         user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
-        if(ec.insertEmployee(user)){
-            JOptionPane.showMessageDialog(null, "El usuario se ha insertado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
-            
+        
+//        JOptionPane.showMessageDialog(rootPane, d.getDepartmentName());
+        
+        if(ec.updateEmployee(user, p)){
+            JOptionPane.showMessageDialog(null, "El usuario se ha editado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
         }
         else{
-            JOptionPane.showMessageDialog(null, "El usuario no se ha insertado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog(null, "El usuario no se ha editado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
         }
 
     }//GEN-LAST:event_btnEditarActionPerformed

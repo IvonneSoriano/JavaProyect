@@ -66,7 +66,7 @@ public class DeparmentDAO implements Dao<Deparment>{
 
     // THIS METHOD CAN BE DONE BY SUPERVISOR  
     @Override
-    public void update(Deparment t, String[] params) {
+    public boolean update(Deparment t, String[] params) {
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
