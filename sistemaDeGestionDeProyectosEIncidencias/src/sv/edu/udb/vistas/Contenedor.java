@@ -10,7 +10,7 @@ import sv.edu.udb.models.Session;
 import sv.edu.udb.util.Roles;
 import sv.edu.udb.vistas.employessviews.CreateUser;
 import sv.edu.udb.vistas.projectviews.*;
-import sv.edu.udb.vistas.employessviews.ShowUsers;
+import sv.edu.udb.vistas.employessviews.*;
 
 /**
  *
@@ -113,6 +113,11 @@ public class Contenedor extends javax.swing.JFrame {
 
         btnEditarEmp.setMnemonic('p');
         btnEditarEmp.setText("Editar Empleados");
+        btnEditarEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarEmpActionPerformed(evt);
+            }
+        });
         employeeMenu.add(btnEditarEmp);
 
         deleteMenuItem.setMnemonic('d');
@@ -216,6 +221,14 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(cu);
         cu.show();
     }//GEN-LAST:event_btnVerEmpActionPerformed
+
+    private void btnEditarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEmpActionPerformed
+        // TODO add your handling code here:
+        closeForms();
+        EditUser eu = new EditUser();
+        desktopPane.add(eu);
+        eu.show();
+    }//GEN-LAST:event_btnEditarEmpActionPerformed
 
     /**
      * @param args the command line arguments
