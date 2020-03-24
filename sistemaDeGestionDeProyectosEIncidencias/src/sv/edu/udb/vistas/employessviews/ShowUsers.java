@@ -228,6 +228,8 @@ public class ShowUsers extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (employeeId != -1) {
             EditUser su = new EditUser(employeeSelected.getEmployeeId());
+            Contenedor.desktopPane.removeAll();
+            Contenedor.desktopPane.updateUI();
             Contenedor.desktopPane.add(su);
             this.dispose();
             su.show();

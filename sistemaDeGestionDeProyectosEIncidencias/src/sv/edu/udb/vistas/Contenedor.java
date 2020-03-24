@@ -177,8 +177,13 @@ public class Contenedor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cerrarSesionMenuItemActionPerformed
 
+    public void closeForms(){
+        desktopPane.removeAll();
+        desktopPane.updateUI();
+    }
     private void btnAgregarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpActionPerformed
         // TODO add your handling code here:
+        closeForms();
         CreateUser cu = new CreateUser();
         desktopPane.add(cu);
         cu.show();
@@ -186,6 +191,7 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void insertProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjectActionPerformed
         // TODO add your handling code here:
+        closeForms();
         ProjectInsert insert = new ProjectInsert();
         desktopPane.add(insert);
         insert.show();
@@ -193,6 +199,7 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void jListMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListMenuActionPerformed
         // TODO add your handling code here:
+        closeForms();
         try {
             ProjectList list = new ProjectList();
             desktopPane.add(list);
@@ -204,6 +211,7 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
         // TODO add your handling code here:
+        closeForms();
          ShowUsers cu = new ShowUsers();
         desktopPane.add(cu);
         cu.show();

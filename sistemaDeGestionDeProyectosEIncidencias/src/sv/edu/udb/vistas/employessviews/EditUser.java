@@ -17,6 +17,7 @@ import sv.edu.udb.models.Employee;
 import sv.edu.udb.models.Rol;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.util.Roles;
+import sv.edu.udb.vistas.Contenedor;
 
 /**
  *
@@ -234,6 +235,12 @@ public class EditUser extends javax.swing.JInternalFrame {
         
         if(ec.updateEmployee(user, p)){
             JOptionPane.showMessageDialog(null, "El usuario se ha editado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
+             ShowUsers su = new ShowUsers();
+            Contenedor.desktopPane.removeAll();
+            Contenedor.desktopPane.updateUI();
+            Contenedor.desktopPane.add(su);
+            this.dispose();
+            su.show();
         }
         else{
             JOptionPane.showMessageDialog(null, "El usuario no se ha editado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
