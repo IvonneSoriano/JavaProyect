@@ -4,49 +4,60 @@
  * and open the template in the editor.
  */
 package sv.edu.udb.models;
-
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
  *
  * @author Imer Palma
  */
-public class Projects {
+public class Project {
+
     private int id, departmentId;
     private String name, description;
-    private Date creationDate;
-    
-    public Projects(){}
-    
-    public void setProjectsId(int projectsId){
+    private Timestamp creationDate;
+
+    public Project() {
+    }
+
+    public void setProjectsId(int projectsId) {
         this.id = projectsId;
     }
-    public int getProjectsId(){
+
+    public int getProjectsId() {
         return id;
     }
-    public void setDepartmentId(int departmentId){
+
+    public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
-    public int getDepartmentId(){
+
+    public int getDepartmentId() {
         return departmentId;
     }
-    public void setProjectName(String name){
+
+    public void setProjectName(String name) {
         this.name = name;
     }
-    public String getProjectName(){
+
+    public String getProjectName() {
         return name;
     }
-    public void setProjectDescription(String description){
+
+    public void setProjectDescription(String description) {
         this.description = description;
     }
-    public String getProjectDescription(){
+
+    public String getProjectDescription() {
         return description;
     }
-    public void setCreationDate(Date date){
+
+    public void setCreationDate(Timestamp date) {
         this.creationDate = date;
     }
-    public Date getCreationDate(){
+
+    public Timestamp getCreationDate() {
         return creationDate;
     }
-    
+
 }

@@ -4,53 +4,68 @@
  * and open the template in the editor.
  */
 package sv.edu.udb.models;
+
 import java.util.Date;
+
 /**
  *
  * @author Imer Palma
  */
-public class Comments {
+public class Comment {
+
     private int id, employeeId, departmentId, requestId;
     private String commentText;
     private Date commentDate;
-    
-    public Comments(){}
-    public void setCommentId(int commentId){
+
+    public Comment() {
+    }
+
+    public void setCommentId(int commentId) {
         this.id = commentId;
     }
-    public int getCommentId(){
+
+    public int getCommentId() {
         return id;
     }
-    public void setEmployeeId(int employeeId){
+
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
-    public int getEmployeeId(){
+
+    public int getEmployeeId() {
         return employeeId;
     }
-    public void setDepartmentId(int department){
+
+    public void setDepartmentId(int department) {
         this.departmentId = department;
     }
-    public int getDepartmentId(){
+
+    public int getDepartmentId() {
         return departmentId;
     }
-    public void setRequestId(int request){
+
+    public void setRequestId(int request) {
         this.requestId = request;
     }
-    public int getRequestId(){
+
+    public int getRequestId() {
         return requestId;
     }
-    public void setCommentText(String comment){
+
+    public void setCommentText(String comment) {
         this.commentText = comment;
     }
-    public String getCommentText(){
+
+    public String getCommentText() {
         return commentText;
     }
-    public void setCommentDate(Date commentDate){
+
+    public void setCommentDate(Date commentDate) {
         this.commentDate = commentDate;
     }
-    public Date getCommentDate(){
+
+    public Date getCommentDate() {
         return commentDate;
     }
-    
-    
+
 }
