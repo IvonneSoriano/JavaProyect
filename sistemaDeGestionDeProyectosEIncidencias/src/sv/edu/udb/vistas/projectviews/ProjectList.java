@@ -225,7 +225,8 @@ public class ProjectList extends javax.swing.JInternalFrame {
             lblNombre.setText(modelo1.getValueAt(fila, 1).toString());
             lblDepartamento.setText(modelo1.getValueAt(fila, 2).toString());
             lblFecha.setText(modelo1.getValueAt(fila, 3).toString());
-            
+            jTextArea1.setText("");
+            jTextArea1.setText(modelo1.getValueAt(fila, 4).toString());
         }
     }//GEN-LAST:event_jTable1MouseClicked
     public void loadData(){
