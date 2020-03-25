@@ -17,6 +17,7 @@ import sv.edu.udb.vistas.employessviews.ShowUsers;
 import sv.edu.udb.vistas.requestview.CreateRequest;
 import sv.edu.udb.vistas.employessviews.*;
 import sv.edu.udb.vistas.requestview.*;
+import sv.edu.udb.vistas.tickets.*;
 
 /**
  *
@@ -82,6 +83,11 @@ public class Contenedor extends javax.swing.JFrame {
 
         btnVerTicket.setMnemonic('s');
         btnVerTicket.setText("Ver Ticket");
+        btnVerTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerTicketActionPerformed(evt);
+            }
+        });
         ticketMenu.add(btnVerTicket);
 
         saveAsMenuItem.setMnemonic('a');
@@ -244,6 +250,14 @@ public class Contenedor extends javax.swing.JFrame {
         rl.show();
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnVerTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTicketActionPerformed
+        // TODO add your handling code here:
+        closeForms();
+        TicketsList tl = new TicketsList();
+        desktopPane.add(tl);
+        tl.show();
+    }//GEN-LAST:event_btnVerTicketActionPerformed
 
 
     /**
