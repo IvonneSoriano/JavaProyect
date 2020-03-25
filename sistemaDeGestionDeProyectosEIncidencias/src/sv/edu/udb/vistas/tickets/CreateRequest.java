@@ -6,6 +6,7 @@
 package sv.edu.udb.vistas.tickets;
 
 import java.awt.Dimension;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import sv.edu.udb.controllers.ProjectsController;
@@ -181,10 +182,10 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         // mostrar dialogo con ID
         int requestTypeID = Integer.parseInt(String.valueOf(
                 cbTipoSolicitud.getSelectedItem()).split("(")[1].replace(")", "").trim());
-        
+        Timestamp tp = null;
         Request r = new Request();
         r.setIdTypeRequest(requestTypeID);
-        r.setRequestDate(new Date());
+        r.setRequestDate(tp = new Timestamp(System.currentTimeMillis()));
         r.setRequestDescription(txtDescripcionRequerimiento.getText());
         r.setRequestStatus(RequestStatus.EN_ESPERA.name());
         
