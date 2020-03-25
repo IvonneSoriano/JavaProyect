@@ -6,9 +6,16 @@
 package sv.edu.udb.vistas.tickets;
 
 import java.awt.Dimension;
+import java.util.Date;
 import java.util.List;
+import sv.edu.udb.controllers.ProjectsController;
+import sv.edu.udb.controllers.RequestController;
 import sv.edu.udb.controllers.RequestTypeController;
+import sv.edu.udb.models.Project;
+import sv.edu.udb.models.Request;
 import sv.edu.udb.models.RequestType;
+import sv.edu.udb.util.RequestStatus;
+import sv.edu.udb.util.RequestTypes;
 import static sv.edu.udb.vistas.Contenedor.desktopPane;
 
 /**
@@ -31,19 +38,27 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         this.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
     }
-
+    
     private void cargarTiposSolicitud() {
         RequestTypeController controller = new RequestTypeController();
         List<RequestType> types = controller.findRequestTypes();
-
+        
         cbTipoSolicitud.removeAllItems();
         for (RequestType type : types) {
             cbTipoSolicitud.addItem(type.getRequestTypeName());
         }
+        cbTipoSolicitud.setSelectedIndex(1);
     }
     
     private void cargarProyectosExistentesPorDepartamento() {
-         cbProyectosExistentes.removeAllItems();
+        ProjectsController controller = new ProjectsController();
+        List<Project> projects = controller.projectsByDepto();
+        
+        cbProyectosExistentes.removeAllItems();
+        for (Project project : projects) {
+            cbProyectosExistentes.addItem(project.getProjectName() + " ("
+                    + project.getProjectsId() + ")");
+        }
     }
 
     /**
@@ -71,6 +86,11 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         setTitle("Nuevo Requerimiento");
 
         cbTipoSolicitud.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTipoSolicitud.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTipoSolicitudItemStateChanged(evt);
+            }
+        });
 
         lblTipoSolicitud.setText("Tipo de solicitud: ");
 
@@ -152,16 +172,37 @@ public class CreateRequest extends javax.swing.JInternalFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         txtDescripcionRequerimiento.setText("");
         cbProyectosExistentes.setSelectedIndex(0);
-        cbTipoSolicitud.setSelectedIndex(0);               
+        cbTipoSolicitud.setSelectedIndex(0);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // enviar notificacion a jefe de desarrollo del area
         // setear estado a: en espera de respuesta
-        // obtener ultimo id disponible de solicitud
-        // persistir datos
         // mostrar dialogo con ID
+        int requestTypeID = Integer.parseInt(String.valueOf(
+                cbTipoSolicitud.getSelectedItem()).split("(")[1].replace(")", "").trim());
+        
+        Request r = new Request();
+        r.setIdTypeRequest(requestTypeID);
+        r.setRequestDate(new Date());
+        r.setRequestDescription(txtDescripcionRequerimiento.getText());
+        r.setRequestStatus(RequestStatus.EN_ESPERA.name());
+        
+        RequestController controller = new RequestController();
+        controller.insertRequest(r);
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void cbTipoSolicitudItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoSolicitudItemStateChanged
+        String selectedItemText = String.valueOf(cbTipoSolicitud.getSelectedItem());
+        if (selectedItemText.contains(RequestTypes.NUEVA_FUNCIONALIDAD.name())
+                || selectedItemText.contains(RequestTypes.CORRECION.name())) {
+            cbProyectosExistentes.setSelectedIndex(0);
+            cbProyectosExistentes.setEnabled(true);
+        } else {
+            cbProyectosExistentes.setSelectedIndex(-1);
+            cbProyectosExistentes.setEnabled(false);
+        }
+    }//GEN-LAST:event_cbTipoSolicitudItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

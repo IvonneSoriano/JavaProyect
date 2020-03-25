@@ -19,8 +19,9 @@ import java.sql.Timestamp;
  * @author Rick
  */
 public class ProjectDAO implements Dao<Project> {
-     private static Logger logger = Logger.getLogger(ProjectDAO.class);
-     
+
+    private static Logger logger = Logger.getLogger(ProjectDAO.class);
+
     @Override
     public Optional<Project> get(long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -28,7 +29,7 @@ public class ProjectDAO implements Dao<Project> {
 
     @Override
     public List<Project> getAll() {
-        
+
         Connect connection = null;
         List<Project> projectFound = new ArrayList<>();
         try {
@@ -50,8 +51,7 @@ public class ProjectDAO implements Dao<Project> {
                 project.setCreationDate(projectSet.getTimestamp("CREATIONDATE"));
 
                 projectFound.add(project);
-                
-                
+
             }
 
         } catch (SQLException e) {
@@ -65,13 +65,13 @@ public class ProjectDAO implements Dao<Project> {
 
         }
         return projectFound;
-        
+
     }
 
     @Override
     public boolean save(Project t) {
-        
-         try {
+
+        try {
             Connect connection = new Connect();
             int result = connection.setQuery("INSERT INTO `gestion_tickets`.`projects` "
                     + "( `DEPARMENTID`, `PROJECTNAME`, `PROJECTDESCRIPTION`, `CREATIONDATE`) "
@@ -101,7 +101,7 @@ public class ProjectDAO implements Dao<Project> {
 
     @Override
     public boolean delete(Project t) {
-       try {
+        try {
             Connect connection = new Connect();
 
             int result = connection.setQuery("DELETE FROM `gestion_tickets`.`projects` WHERE `ProjectID` = "
@@ -120,8 +120,9 @@ public class ProjectDAO implements Dao<Project> {
             return false;
         }
     }
+
     public List<Project> getProjbyDepto() {
-        
+
         Connect connection = null;
         List<Project> projectFound = new ArrayList<>();
         try {
@@ -131,7 +132,7 @@ public class ProjectDAO implements Dao<Project> {
         }
         try {
 
-            connection.setRs("SELECT * FROM PROJECTS WHERE DEPARMENTID = "+Session.deparmentId+";");
+            connection.setRs("SELECT * FROM PROJECTS WHERE DEPARMENTID = " + Session.deparmentId + ";");
             ResultSet projectSet = (ResultSet) connection.getRs();
 
             while (projectSet.next()) {
@@ -143,8 +144,7 @@ public class ProjectDAO implements Dao<Project> {
                 project.setCreationDate(projectSet.getTimestamp("CREATIONDATE"));
 
                 projectFound.add(project);
-                
-                
+
             }
 
         } catch (SQLException e) {
@@ -158,7 +158,7 @@ public class ProjectDAO implements Dao<Project> {
 
         }
         return projectFound;
-        
+
     }
 
 }
