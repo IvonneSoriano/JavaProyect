@@ -14,7 +14,7 @@ import sv.edu.udb.util.Roles;
 import sv.edu.udb.vistas.employessviews.CreateUser;
 import sv.edu.udb.vistas.projectviews.*;
 import sv.edu.udb.vistas.employessviews.ShowUsers;
-import sv.edu.udb.vistas.requestview.CreateRequest;
+import sv.edu.udb.vistas.tickets.CreateRequest;
 import sv.edu.udb.vistas.employessviews.*;
 import sv.edu.udb.vistas.requestview.*;
 import sv.edu.udb.vistas.tickets.*;

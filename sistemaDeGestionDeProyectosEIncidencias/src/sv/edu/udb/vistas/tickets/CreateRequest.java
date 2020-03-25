@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sv.edu.udb.vistas.requestview;
+package sv.edu.udb.vistas.tickets;
 
 import java.awt.Dimension;
 import java.sql.Timestamp;
