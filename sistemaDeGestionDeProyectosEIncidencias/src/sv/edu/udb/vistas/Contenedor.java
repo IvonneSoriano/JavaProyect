@@ -57,8 +57,6 @@ public class Contenedor extends javax.swing.JFrame {
         employeeMenu = new javax.swing.JMenu();
         btnAgregarEmp = new javax.swing.JMenuItem();
         btnVerEmp = new javax.swing.JMenuItem();
-        btnEditarEmp = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
         projectMenu = new javax.swing.JMenu();
         insertProject = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuBorrar = new javax.swing.JMenuItem();
@@ -120,19 +118,6 @@ public class Contenedor extends javax.swing.JFrame {
             }
         });
         employeeMenu.add(btnVerEmp);
-
-        btnEditarEmp.setMnemonic('p');
-        btnEditarEmp.setText("Editar Empleados");
-        btnEditarEmp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarEmpActionPerformed(evt);
-            }
-        });
-        employeeMenu.add(btnEditarEmp);
-
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        employeeMenu.add(deleteMenuItem);
 
         menuBar.add(employeeMenu);
 
@@ -197,14 +182,6 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.removeAll();
         desktopPane.updateUI();
     }
-    private void btnAgregarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpActionPerformed
-        // TODO add your handling code here:
-        closeForms();
-        CreateUser cu = new CreateUser();
-        desktopPane.add(cu);
-        cu.show();
-    }//GEN-LAST:event_btnAgregarEmpActionPerformed
-
     private void insertProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjectActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -225,6 +202,13 @@ public class Contenedor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jListMenuActionPerformed
 
+    private void btnNewTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTicketActionPerformed
+        closeForms();
+        CreateRequest r = new CreateRequest();
+        desktopPane.add(r);
+        r.show();
+    }//GEN-LAST:event_btnNewTicketActionPerformed
+
     private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -233,20 +217,13 @@ public class Contenedor extends javax.swing.JFrame {
         cu.show();
     }//GEN-LAST:event_btnVerEmpActionPerformed
 
-    private void btnNewTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTicketActionPerformed
-        closeForms();
-        CreateRequest r = new CreateRequest();
-        desktopPane.add(r);
-        r.show();
-    }//GEN-LAST:event_btnNewTicketActionPerformed
-
-    private void btnEditarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEmpActionPerformed
+    private void btnAgregarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpActionPerformed
         // TODO add your handling code here:
-//        closeForms();
-//        EditUser eu = new EditUser();
-//        desktopPane.add(eu);
-//        eu.show();
-    }//GEN-LAST:event_btnEditarEmpActionPerformed
+        closeForms();
+        CreateUser cu = new CreateUser();
+        desktopPane.add(cu);
+        cu.show();
+    }//GEN-LAST:event_btnAgregarEmpActionPerformed
 
 
     /**
@@ -286,12 +263,10 @@ public class Contenedor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnAgregarEmp;
-    private javax.swing.JMenuItem btnEditarEmp;
     private javax.swing.JMenuItem btnNewTicket;
     private javax.swing.JMenuItem btnVerEmp;
     private javax.swing.JMenuItem btnVerTicket;
     private javax.swing.JMenuItem cerrarSesionMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
     public static javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem editProject;
     private javax.swing.JMenu employeeMenu;
