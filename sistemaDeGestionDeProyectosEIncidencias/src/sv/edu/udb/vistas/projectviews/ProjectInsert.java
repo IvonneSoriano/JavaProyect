@@ -8,12 +8,14 @@ package sv.edu.udb.vistas.projectviews;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import sv.edu.udb.controllers.DeparmentController;
 import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.models.Deparment;
 import sv.edu.udb.models.Project;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.util.Roles;
+import sv.edu.udb.util.Validations;
 
 
 
@@ -33,6 +35,7 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     ProjectsController procControl = new ProjectsController();
     List<Project> listPro = new ArrayList<>();
     Project proOb = new Project();
+    Validations valid=new Validations();
     public ProjectInsert() {
         initComponents();
          if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
@@ -77,19 +80,31 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaDescripcion = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        lblTitulo = new javax.swing.JLabel();
 
+        jLabel1.setForeground(new java.awt.Color(0, 41, 250));
         jLabel1.setText("Departamento:");
 
+        jLabel2.setForeground(new java.awt.Color(0, 41, 250));
         jLabel2.setText("Nombre:");
 
+        jLabel3.setForeground(new java.awt.Color(0, 41, 250));
         jLabel3.setText("Descripcion:");
 
         cmbDepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtnameKeyPressed(evt);
+            }
+        });
 
         txtAreaDescripcion.setColumns(20);
         txtAreaDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtAreaDescripcion);
 
+        jButton1.setBackground(new java.awt.Color(35, 10, 89));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Insertar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,30 +112,41 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
             }
         });
 
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(35, 10, 89));
+        lblTitulo.setText("Registro de nuevo proyecto");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
-                        .addGap(66, 66, 66)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(183, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel1))
+                                .addGap(66, 66, 66)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addComponent(lblTitulo)))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(lblTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cmbDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,7 +160,7 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jButton1)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGap(42, 42, 42))
         );
 
         pack();
@@ -144,28 +170,33 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
 
        Timestamp tp = null;
        
+        if (!valid.emptyField(txtname.getText()) && !valid.emptyField(txtAreaDescripcion.getText())) {
+            proOb.setProjectName(txtname.getText());
+            deptOb = depto.showDepartment((String)cmbDepartment.getSelectedItem());
+            proOb.setDepartmentId(deptOb.getDepartmentId());
+            proOb.setProjectDescription(txtAreaDescripcion.getText());
+            proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
+            if (procControl.insertProject(proOb)) {
+                JOptionPane.showMessageDialog(null, "El proyecto se ha ingresado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El proyecto no se ha ingresado correctamente","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+            }
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Error al ingresar datos","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+        }
        
-       proOb.setProjectName(txtname.getText());
-       deptOb = depto.showDepartment((String)cmbDepartment.getSelectedItem());
-       proOb.setDepartmentId(deptOb.getDepartmentId());
-       proOb.setProjectDescription(txtAreaDescripcion.getText());
-       proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
-       procControl.insertProject(proOb);
 
-        // TODO add your handling code here:
-//        try {
-
-//            Connect cnx = new Connect();
-//            Timestamp date = new Timestamp(System.currentTimeMillis());
-//            String sql = "Insert Into projects values (" + cmbDepartment.getSelectedIndex() + ",'" + txtname.getText() + "','" + txtAreaDescripcion.getText() + "','" + date + "')";
-//            cnx.setQuery(sql);
-//            cnx.cerrarConexion();
-
-//        } catch (SQLException e) {
-//        }
-
+ 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtnameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnameKeyPressed
+        // TODO add your handling code here:
+        valid.numberTyped(evt);
+    }//GEN-LAST:event_txtnameKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -175,6 +206,7 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextArea txtAreaDescripcion;
     private javax.swing.JTextField txtname;
     // End of variables declaration//GEN-END:variables

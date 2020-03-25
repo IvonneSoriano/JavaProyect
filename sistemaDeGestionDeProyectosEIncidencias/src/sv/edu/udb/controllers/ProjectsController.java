@@ -26,13 +26,13 @@ public class ProjectsController {
          
          return projects;
      }
-     public void insertProject(Project p) {
+     public boolean insertProject(Project p) {
         ProjectDAO dao = new ProjectDAO();
-        dao.save(p);
+        return dao.save(p);
     }
-     public void deleteProject(Project p){
+     public boolean deleteProject(Project p){
          ProjectDAO dao = new ProjectDAO();
-         dao.delete(p);
+         return dao.delete(p);
      }
      
 }

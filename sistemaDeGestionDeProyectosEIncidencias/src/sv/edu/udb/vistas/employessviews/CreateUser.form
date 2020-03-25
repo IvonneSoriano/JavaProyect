@@ -105,6 +105,9 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblTipo">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fa" green="29" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Tipo de empleado:"/>
       </Properties>
     </Component>
@@ -125,48 +128,69 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblNombre">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fa" green="29" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Nombre:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtName">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNameKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblApellido">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fa" green="29" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Apellido:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtLastname">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtLastnameKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblUsers">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fa" green="29" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Usuario:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUsuario">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblContra">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fa" green="29" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtContra">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTitulo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="59" green="a" red="23" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Registro de nuevo empleado"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnIngresar">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="59" green="a" red="23" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ingresar"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
@@ -176,6 +200,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblDepto">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fa" green="29" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Departamento:"/>
       </Properties>
     </Component>
