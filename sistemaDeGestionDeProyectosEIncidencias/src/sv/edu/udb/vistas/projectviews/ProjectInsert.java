@@ -8,12 +8,14 @@ package sv.edu.udb.vistas.projectviews;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import sv.edu.udb.controllers.DeparmentController;
 import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.models.Deparment;
 import sv.edu.udb.models.Project;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.util.Roles;
+import sv.edu.udb.util.Validations;
 
 
 
@@ -33,6 +35,7 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     ProjectsController procControl = new ProjectsController();
     List<Project> listPro = new ArrayList<>();
     Project proOb = new Project();
+    Validations valid=new Validations();
     public ProjectInsert() {
         initComponents();
          if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
@@ -89,6 +92,12 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
         jLabel3.setText("Descripcion:");
 
         cmbDepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtnameKeyPressed(evt);
+            }
+        });
 
         txtAreaDescripcion.setColumns(20);
         txtAreaDescripcion.setRows(5);
@@ -161,28 +170,33 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
 
        Timestamp tp = null;
        
+        if (!valid.emptyField(txtname.getText()) && !valid.emptyField(txtAreaDescripcion.getText())) {
+            proOb.setProjectName(txtname.getText());
+            deptOb = depto.showDepartment((String)cmbDepartment.getSelectedItem());
+            proOb.setDepartmentId(deptOb.getDepartmentId());
+            proOb.setProjectDescription(txtAreaDescripcion.getText());
+            proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
+            if (procControl.insertProject(proOb)) {
+                JOptionPane.showMessageDialog(null, "El proyecto se ha ingresado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El proyecto no se ha ingresado correctamente","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+            }
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Error al ingresar datos","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+        }
        
-       proOb.setProjectName(txtname.getText());
-       deptOb = depto.showDepartment((String)cmbDepartment.getSelectedItem());
-       proOb.setDepartmentId(deptOb.getDepartmentId());
-       proOb.setProjectDescription(txtAreaDescripcion.getText());
-       proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
-       procControl.insertProject(proOb);
 
-        // TODO add your handling code here:
-//        try {
-
-//            Connect cnx = new Connect();
-//            Timestamp date = new Timestamp(System.currentTimeMillis());
-//            String sql = "Insert Into projects values (" + cmbDepartment.getSelectedIndex() + ",'" + txtname.getText() + "','" + txtAreaDescripcion.getText() + "','" + date + "')";
-//            cnx.setQuery(sql);
-//            cnx.cerrarConexion();
-
-//        } catch (SQLException e) {
-//        }
-
+ 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtnameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnameKeyPressed
+        // TODO add your handling code here:
+        valid.numberTyped(evt);
+    }//GEN-LAST:event_txtnameKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

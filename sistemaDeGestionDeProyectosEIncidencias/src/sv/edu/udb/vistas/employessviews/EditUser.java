@@ -17,6 +17,7 @@ import sv.edu.udb.models.Employee;
 import sv.edu.udb.models.Rol;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.util.Roles;
+import sv.edu.udb.util.Validations;
 import sv.edu.udb.vistas.Contenedor;
 
 /**
@@ -36,7 +37,7 @@ public class EditUser extends javax.swing.JInternalFrame {
     EmployeeController ec = new EmployeeController();
     Deparment d = new Deparment();
     Rol r = new Rol();
-    
+    Validations valid=new Validations();
     public EditUser() {
         initComponents();
         cmbbxDepoto.removeAllItems();
@@ -109,8 +110,6 @@ public class EditUser extends javax.swing.JInternalFrame {
         txtUsuario = new javax.swing.JTextField();
         lblContra = new javax.swing.JLabel();
 
-        txtContra.setText("jPasswordField1");
-
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(35, 10, 89));
         lblTitulo.setText("Editar Empleado");
@@ -144,7 +143,7 @@ public class EditUser extends javax.swing.JInternalFrame {
         lblUsers.setForeground(new java.awt.Color(0, 41, 250));
         lblUsers.setText("Usuario:");
 
-        txtUsuario.setText("jTextField1");
+        lblUsers.setText("Usuario:");
 
         lblContra.setForeground(new java.awt.Color(0, 41, 250));
         lblContra.setText("Contraseña:");
@@ -229,33 +228,48 @@ public class EditUser extends javax.swing.JInternalFrame {
         RolController rolUser = new RolController();
         Deparment d;
         user.setEmployeeId(employee.getEmployeeId());
-        String[] p ={"Name","Lastname"};
-        user.setEmployeeName(txtName.getText());
-        user.setEmployeeLastname(txtLastname.getText());
-        user.setEmployeeLastname(txtLastname.getText());
-        user.setUsername(txtUsuario.getText());
-        user.setPassword(txtContra.getText());
-        d=depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
         
-        user.setDepartmentId(d.getDepartmentId());
-        user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
-        
-//        JOptionPane.showMessageDialog(rootPane, d.getDepartmentName());
-        
-        if(ec.updateEmployee(user, p)){
-            JOptionPane.showMessageDialog(null, "El usuario se ha editado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
-             ShowUsers su = new ShowUsers();
-            Contenedor.desktopPane.removeAll();
-            Contenedor.desktopPane.updateUI();
-            Contenedor.desktopPane.add(su);
-            this.dispose();
-            su.show();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "El usuario no se ha editado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
-        }
+        if (valid.checkPassword(txtContra.getPassword()) &&  !valid.emptyField(txtName.getText()) && !valid.emptyField(txtLastname.getText()) && !valid.emptyField(txtUsuario.getText())){
+                    String[] p ={"Name","Lastname"};        
+                    String pass = new String(txtContra.getPassword());
+                    user.setEmployeeName(txtName.getText());
+                    user.setEmployeeLastname(txtLastname.getText());
+                    user.setUsername(txtUsuario.getText());
+                    user.setPassword(pass);
+                    d=depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
 
+                    user.setDepartmentId(d.getDepartmentId());
+                    user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
+
+
+
+                    if(ec.updateEmployee(user, p)){
+                        JOptionPane.showMessageDialog(null, "El usuario se ha editado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
+                         ShowUsers su = new ShowUsers();
+                        Contenedor.desktopPane.removeAll();
+                        Contenedor.desktopPane.updateUI();
+                        Contenedor.desktopPane.add(su);
+                        this.dispose();
+                        su.show();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "El usuario no se ha editado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
+                    }
+        }
+         else{
+                        JOptionPane.showMessageDialog(null, "El usuario no se ha editado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
+                    }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void txtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyPressed
+        // TODO add your handling code here:
+        valid.numberTyped(evt);
+    }//GEN-LAST:event_txtNameKeyPressed
+
+    private void txtLastnameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastnameKeyPressed
+        // TODO add your handling code here:
+        valid.numberTyped(evt);
+    }//GEN-LAST:event_txtLastnameKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

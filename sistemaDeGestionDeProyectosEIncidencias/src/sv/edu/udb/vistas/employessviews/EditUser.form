@@ -104,9 +104,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JPasswordField" name="txtContra">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTitulo">
       <Properties>
@@ -189,6 +186,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtName">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNameKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblApellido">
       <Properties>
@@ -199,6 +199,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtLastname">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtLastnameKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblUsers">
       <Properties>
@@ -209,9 +212,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUsuario">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblContra">
       <Properties>

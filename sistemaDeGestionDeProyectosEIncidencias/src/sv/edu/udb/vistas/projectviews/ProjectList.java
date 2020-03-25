@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import sv.edu.udb.util.Connect;
 import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.models.Project;
@@ -224,8 +225,14 @@ public class ProjectList extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
         proOb.setProjectsId(Integer.parseInt(lblId.getText()));
-        procControl.deleteProject(proOb);
+        if (procControl.deleteProject(proOb)) {
+            JOptionPane.showMessageDialog(null, "El proyecto se ha eliminado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "El proyecto no se ha eliminado","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+        }
         loadData();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -237,7 +244,8 @@ public class ProjectList extends javax.swing.JInternalFrame {
             lblNombre.setText(modelo1.getValueAt(fila, 1).toString());
             lblDepartamento.setText(modelo1.getValueAt(fila, 2).toString());
             lblFecha.setText(modelo1.getValueAt(fila, 3).toString());
-            
+            jTextArea1.setText("");
+            jTextArea1.setText(modelo1.getValueAt(fila, 4).toString());
         }
     }//GEN-LAST:event_jTable1MouseClicked
     public void loadData(){
