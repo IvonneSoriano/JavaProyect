@@ -5,32 +5,36 @@
  */
 package sv.edu.udb.vistas;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.util.Roles;
 import sv.edu.udb.vistas.employessviews.CreateUser;
 import sv.edu.udb.vistas.projectviews.*;
 import sv.edu.udb.vistas.employessviews.ShowUsers;
+import sv.edu.udb.vistas.tickets.CreateRequest;
 
 /**
  *
  * @author kiss_
  */
 public class Contenedor extends javax.swing.JFrame {
-
+    
     private static Logger logger = Logger.getLogger(Contenedor.class);
 
     /**
      * Creates new form Contenedor
      */
     public Contenedor() {
-        initComponents();
-        setExtendedState(Contenedor.MAXIMIZED_BOTH);
-//        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
-                || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
-            employeeMenu.setVisible(false);
-        }
+            initComponents();
+            setExtendedState(Contenedor.MAXIMIZED_BOTH);
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
+                    || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
+                employeeMenu.setVisible(false);
+            }
     }
 
     /**
@@ -68,6 +72,11 @@ public class Contenedor extends javax.swing.JFrame {
 
         btnNewTicket.setMnemonic('o');
         btnNewTicket.setText("Nuevo Ticket");
+        btnNewTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewTicketActionPerformed(evt);
+            }
+        });
         ticketMenu.add(btnNewTicket);
 
         btnVerTicket.setMnemonic('s');
@@ -176,8 +185,8 @@ public class Contenedor extends javax.swing.JFrame {
         return;
 
     }//GEN-LAST:event_cerrarSesionMenuItemActionPerformed
-
-    public void closeForms(){
+    
+    public void closeForms() {
         desktopPane.removeAll();
         desktopPane.updateUI();
     }
@@ -212,10 +221,17 @@ public class Contenedor extends javax.swing.JFrame {
     private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
         // TODO add your handling code here:
         closeForms();
-         ShowUsers cu = new ShowUsers();
+        ShowUsers cu = new ShowUsers();
         desktopPane.add(cu);
         cu.show();
     }//GEN-LAST:event_btnVerEmpActionPerformed
+
+    private void btnNewTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTicketActionPerformed
+        closeForms();
+        CreateRequest r = new CreateRequest();
+        desktopPane.add(r);
+        r.show();
+    }//GEN-LAST:event_btnNewTicketActionPerformed
 
     /**
      * @param args the command line arguments
