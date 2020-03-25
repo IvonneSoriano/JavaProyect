@@ -6,7 +6,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="ticketMenu">
           <Properties>
-            <Property name="mnemonic" type="int" value="102"/>
+            <Property name="mnemonic" type="int" value="84"/>
             <Property name="text" type="java.lang.String" value="Ticket"/>
           </Properties>
           <SubComponents>
@@ -83,14 +83,14 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="projectMenu">
           <Properties>
-            <Property name="mnemonic" type="int" value="104"/>
+            <Property name="mnemonic" type="int" value="80"/>
             <Property name="text" type="java.lang.String" value="Proyectos"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="insertProject">
               <Properties>
                 <Property name="mnemonic" type="int" value="99"/>
-                <Property name="text" type="java.lang.String" value="Insertar"/>
+                <Property name="text" type="java.lang.String" value="Nuevo Proyecto"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertProjectActionPerformed"/>
@@ -98,7 +98,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuBorrar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Borrar"/>
+                <Property name="text" type="java.lang.String" value="Eliminar proyecto"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
@@ -107,7 +107,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jListMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Lista"/>
+                <Property name="text" type="java.lang.String" value="Ver Proyectos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jListMenuActionPerformed"/>
@@ -116,13 +116,16 @@
             <MenuItem class="javax.swing.JMenuItem" name="editProject">
               <Properties>
                 <Property name="mnemonic" type="int" value="97"/>
-                <Property name="text" type="java.lang.String" value="Editar"/>
+                <Property name="text" type="java.lang.String" value="Editar Proyecto"/>
               </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="59" green="a" red="23" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jMenu1"/>
           </Properties>
         </Menu>

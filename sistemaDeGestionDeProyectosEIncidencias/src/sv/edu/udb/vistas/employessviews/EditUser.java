@@ -111,8 +111,11 @@ public class EditUser extends javax.swing.JInternalFrame {
         lblContra = new javax.swing.JLabel();
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(35, 10, 89));
         lblTitulo.setText("Editar Empleado");
 
+        btnEditar.setBackground(new java.awt.Color(35, 10, 89));
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("Editar");
         btnEditar.setToolTipText("");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,32 +124,28 @@ public class EditUser extends javax.swing.JInternalFrame {
             }
         });
 
+        lblDepto.setForeground(new java.awt.Color(0, 41, 250));
         lblDepto.setText("Departamento:");
 
         cmbbxDepoto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblTipo.setForeground(new java.awt.Color(0, 41, 250));
         lblTipo.setText("Tipo de empleado:");
 
         cmbbxTipoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblNombre.setForeground(new java.awt.Color(0, 41, 250));
         lblNombre.setText("Nombre:");
 
-        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNameKeyPressed(evt);
-            }
-        });
-
+        lblApellido.setForeground(new java.awt.Color(0, 41, 250));
         lblApellido.setText("Apellido:");
 
-        txtLastname.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtLastnameKeyPressed(evt);
-            }
-        });
+        lblUsers.setForeground(new java.awt.Color(0, 41, 250));
+        lblUsers.setText("Usuario:");
 
         lblUsers.setText("Usuario:");
 
+        lblContra.setForeground(new java.awt.Color(0, 41, 250));
         lblContra.setText("Contraseña:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

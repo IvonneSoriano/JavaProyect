@@ -63,7 +63,7 @@ public class Contenedor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        ticketMenu.setMnemonic('f');
+        ticketMenu.setMnemonic('T');
         ticketMenu.setText("Ticket");
 
         btnNewTicket.setMnemonic('o');
@@ -126,11 +126,11 @@ public class Contenedor extends javax.swing.JFrame {
 
         menuBar.add(employeeMenu);
 
-        projectMenu.setMnemonic('h');
+        projectMenu.setMnemonic('P');
         projectMenu.setText("Proyectos");
 
         insertProject.setMnemonic('c');
-        insertProject.setText("Insertar");
+        insertProject.setText("Nuevo Proyecto");
         insertProject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertProjectActionPerformed(evt);
@@ -138,10 +138,10 @@ public class Contenedor extends javax.swing.JFrame {
         });
         projectMenu.add(insertProject);
 
-        jMenuBorrar.setText("Borrar");
+        jMenuBorrar.setText("Eliminar proyecto");
         projectMenu.add(jMenuBorrar);
 
-        jListMenu.setText("Lista");
+        jListMenu.setText("Ver Proyectos");
         jListMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jListMenuActionPerformed(evt);
@@ -150,11 +150,12 @@ public class Contenedor extends javax.swing.JFrame {
         projectMenu.add(jListMenu);
 
         editProject.setMnemonic('a');
-        editProject.setText("Editar");
+        editProject.setText("Editar Proyecto");
         projectMenu.add(editProject);
 
         menuBar.add(projectMenu);
 
+        jMenu1.setForeground(new java.awt.Color(35, 10, 89));
         jMenu1.setText("jMenu1");
         menuBar.add(jMenu1);
 
@@ -224,10 +225,10 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void btnEditarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEmpActionPerformed
         // TODO add your handling code here:
-        closeForms();
-        EditUser eu = new EditUser();
-        desktopPane.add(eu);
-        eu.show();
+//        closeForms();
+//        EditUser eu = new EditUser();
+//        desktopPane.add(eu);
+//        eu.show();
     }//GEN-LAST:event_btnEditarEmpActionPerformed
 
     /**

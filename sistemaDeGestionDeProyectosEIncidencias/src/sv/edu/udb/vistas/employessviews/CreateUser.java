@@ -84,10 +84,12 @@ public class CreateUser extends javax.swing.JInternalFrame {
         lblDepto = new javax.swing.JLabel();
         cmbbxDepoto = new javax.swing.JComboBox<>();
 
+        lblTipo.setForeground(new java.awt.Color(0, 41, 250));
         lblTipo.setText("Tipo de empleado:");
 
         cmbbxTipoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblNombre.setForeground(new java.awt.Color(0, 41, 250));
         lblNombre.setText("Nombre:");
 
         txtName.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -104,13 +106,20 @@ public class CreateUser extends javax.swing.JInternalFrame {
             }
         });
 
+        lblUsers.setForeground(new java.awt.Color(0, 41, 250));
         lblUsers.setText("Usuario:");
 
+        txtUsuario.setText("jTextField1");
+
+        lblContra.setForeground(new java.awt.Color(0, 41, 250));
         lblContra.setText("Contraseña:");
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(35, 10, 89));
         lblTitulo.setText("Registro de nuevo empleado");
 
+        btnIngresar.setBackground(new java.awt.Color(35, 10, 89));
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");
         btnIngresar.setToolTipText("");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +128,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
             }
         });
 
+        lblDepto.setForeground(new java.awt.Color(0, 41, 250));
         lblDepto.setText("Departamento:");
 
         cmbbxDepoto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
