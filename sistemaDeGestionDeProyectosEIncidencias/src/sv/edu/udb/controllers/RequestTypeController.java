@@ -18,4 +18,8 @@ public class RequestTypeController {
         RequestTypeDAO dao = new RequestTypeDAO();
         return dao.getAll();
     }
+    public RequestType getName(int id){
+        RequestTypeDAO dao = new RequestTypeDAO();
+        return dao.getRequestTypeName(id);
+    }
 }

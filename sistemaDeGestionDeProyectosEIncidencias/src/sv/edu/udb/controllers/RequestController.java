@@ -5,6 +5,9 @@
  */
 package sv.edu.udb.controllers;
 
+import java.util.List;
+
+import sv.edu.udb.models.ProjectDAO;
 import sv.edu.udb.models.Request;
 import sv.edu.udb.models.RequestDAO;
 
@@ -18,5 +21,12 @@ public class RequestController {
         RequestDAO dao = new RequestDAO();
         boolean result = dao.save(r);
         return result;
+    }
+    public List<Request> getRequests(){
+    
+        RequestDAO dao = new RequestDAO();
+        List<Request> requests = dao.getAll();
+
+        return requests;
     }
 }
