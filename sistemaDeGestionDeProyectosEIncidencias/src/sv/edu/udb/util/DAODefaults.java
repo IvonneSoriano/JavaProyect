@@ -10,7 +10,9 @@ package sv.edu.udb.util;
  * @author Rick
  */
 public enum DAODefaults {
-    NON_EXISTING_USER("Non-existing user");
+    NON_EXISTING_USER("Non-existing user"),
+    NON_EXISTING_REQUEST_TYPE("Non-existing request type"),
+    NO_LAST_REQUEST_FOUND("No last request was found on the DB");
 
     private String defaultValue;
 
