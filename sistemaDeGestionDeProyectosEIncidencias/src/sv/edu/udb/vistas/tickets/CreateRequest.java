@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
+import org.apache.log4j.Logger;
 import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.controllers.RequestController;
 import sv.edu.udb.controllers.RequestTypeController;
@@ -25,6 +27,8 @@ import static sv.edu.udb.vistas.Contenedor.desktopPane;
  */
 public class CreateRequest extends javax.swing.JInternalFrame {
 
+    private static Logger logger = Logger.getLogger(CreateRequest.class);
+
     /**
      * Creates new form CreateRequest
      */
@@ -39,27 +43,28 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         this.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
     }
-    
+
     private void cargarTiposSolicitud() {
         RequestTypeController controller = new RequestTypeController();
         List<RequestType> types = controller.findRequestTypes();
-        
+
         cbTipoSolicitud.removeAllItems();
         for (RequestType type : types) {
             cbTipoSolicitud.addItem(type.getRequestTypeName());
         }
-        cbTipoSolicitud.setSelectedIndex(1);
+        cbTipoSolicitud.setSelectedIndex(-1);
     }
-    
+
     private void cargarProyectosExistentesPorDepartamento() {
         ProjectsController controller = new ProjectsController();
         List<Project> projects = controller.projectsByDepto();
-        
+
         cbProyectosExistentes.removeAllItems();
         for (Project project : projects) {
             cbProyectosExistentes.addItem(project.getProjectName() + " ("
                     + project.getProjectsId() + ")");
         }
+        cbProyectosExistentes.setSelectedIndex(-1);
     }
 
     /**
@@ -171,32 +176,60 @@ public class CreateRequest extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        txtDescripcionRequerimiento.setText("");
-        cbProyectosExistentes.setSelectedIndex(0);
-        cbTipoSolicitud.setSelectedIndex(0);
+        clearElements();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void clearElements() {
+        txtDescripcionRequerimiento.setText("");
+        cbProyectosExistentes.setSelectedIndex(-1);
+        cbTipoSolicitud.setSelectedIndex(-1);
+    }
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // enviar notificacion a jefe de desarrollo del area
         // setear estado a: en espera de respuesta
         // mostrar dialogo con ID
-        int requestTypeID = Integer.parseInt(String.valueOf(
-                cbTipoSolicitud.getSelectedItem()).split("(")[1].replace(")", "").trim());
-        Timestamp tp = null;
+
+        // when no option is selected in this combobox it's because there's no need
+        // for a new project
+
         Request r = new Request();
-        r.setIdTypeRequest(requestTypeID);
-        r.setRequestDate(tp = new Timestamp(System.currentTimeMillis()));
+        RequestTypeController typeController = new RequestTypeController();
+
+        if (cbProyectosExistentes.getSelectedIndex() != -1) {
+            String selectedItemText = String.valueOf(
+                    cbProyectosExistentes.getSelectedItem());
+            r.setProjectId(Integer.parseInt(selectedItemText.split("[\\\\(||\\\\)]")[1]));
+        }
+
+        r.setIdTypeRequest(typeController.findRequestTypeByName(String.valueOf(
+                cbTipoSolicitud.getSelectedItem())).getId());
+        r.setRequestDate(new Timestamp(System.currentTimeMillis()));
+
         r.setRequestDescription(txtDescripcionRequerimiento.getText());
         r.setRequestStatus(RequestStatus.EN_ESPERA.name());
-        
-        RequestController controller = new RequestController();
-        controller.insertRequest(r);
+
+        if (new RequestController().insertRequest(r)) {
+            clearElements();
+            this.dispose();
+
+            JOptionPane.showMessageDialog(null,
+                    "Requerimiento enviado satisfactoriamente al jefe de desarrollo "
+                    + "de su departamento. Por favor, espere su decisión. \n"
+                    + "El codigo del requerimiento para su seguimiento es: "
+                    + new RequestController().findLastRequest().getId(),
+                    "Nuevo Requerimiento - Exito", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Ha ocurrido un error por favor intente mas tarde. ",
+                    "Nuevo Requerimiento - Error", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void cbTipoSolicitudItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoSolicitudItemStateChanged
         String selectedItemText = String.valueOf(cbTipoSolicitud.getSelectedItem());
         if (selectedItemText.contains(RequestTypes.NUEVA_FUNCIONALIDAD.name())
-                || selectedItemText.contains(RequestTypes.CORRECION.name())) {
+                || selectedItemText.contains(RequestTypes.CORRECCION.name())) {
             cbProyectosExistentes.setSelectedIndex(0);
             cbProyectosExistentes.setEnabled(true);
         } else {

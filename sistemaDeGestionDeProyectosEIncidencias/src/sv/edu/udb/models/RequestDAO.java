@@ -55,11 +55,13 @@ public class RequestDAO implements Dao<Request> {
         try {
             Connect connection = new Connect();
 
-            int result = connection.setQuery("INSERT INTO `gestion_tickets`.`requests`"
+            String sql = "INSERT INTO `gestion_tickets`.`requests`"
                     + " (`REQUESTTYPEID`, `REQUESTDATE`, `REQUESTDESCRIPTION`,"
-                    + " `REQUESTSTATUS`) VALUES (" + t.getIdTypeRequest() + ", "
-                    + t.getRequestDate() + " , '" + t.getRequestDescription()
-                    + "',' " + t.getRequestStatus() + "');");
+                    + " `REQUESTSTATUS`, `PROJECTID`) VALUES (" + t.getIdTypeRequest() + ", '"
+                    + t.getRequestDate() + "' , '" + t.getRequestDescription()
+                    + "', '" + t.getRequestStatus() + "', " + t.getProjectId() +");";
+            logger.info(sql);
+            int result = connection.setQuery(sql);
 
             if (result <= 0) {
                 logger.warn("INSERT to Requests table has failed");
@@ -85,11 +87,11 @@ public class RequestDAO implements Dao<Request> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Optional<Request> getNextRequestId() {
+    public Optional<Request> getLastReequestId() {
         Request lastRequest = null;
         try {
             Connect connection = new Connect();
-            connection.setRs("SELECT * FROM requests ORDER BY requestid DESC LIMIT 1;;");
+            connection.setRs("SELECT * FROM requests ORDER BY requestid DESC LIMIT 1;");
             ResultSet requests = (ResultSet) connection.getRs();
 
             while (requests.next()) {

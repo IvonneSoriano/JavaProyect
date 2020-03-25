@@ -12,5 +12,5 @@ package sv.edu.udb.util;
 public enum RequestTypes {
     SISTEMA_NUEVO,
     NUEVA_FUNCIONALIDAD,
-    CORRECION
+    CORRECCION
 }
