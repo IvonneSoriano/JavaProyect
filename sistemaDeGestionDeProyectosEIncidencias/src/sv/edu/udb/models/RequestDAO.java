@@ -6,6 +6,7 @@
 package sv.edu.udb.models;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,12 +38,14 @@ public class RequestDAO implements Dao<Request> {
                 Request request = new Request();
                 request.setId(requestSet.getInt("REQUESTID"));
                 request.setIdTypeRequest(requestSet.getInt("REQUESTTYPEID"));
-                request.setRequestDate(requestSet.getDate("REQUESTDATE"));
+                request.setRequestDate(requestSet.getTimestamp("REQUESTDATE"));
                 request.setRequestDescription(requestSet.getString("REQUESTDESCRIPTION"));
                 request.setRequestStatus(requestSet.getString("REQUESTSTATUS"));
+                request.setProjectId(requestSet.getInt("PROJECTID"));
                 requestFound.add(request);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+             logger.error("Error processing SELECT query in save method. Message: " + e.getMessage());
         }
         return requestFound;
     }
