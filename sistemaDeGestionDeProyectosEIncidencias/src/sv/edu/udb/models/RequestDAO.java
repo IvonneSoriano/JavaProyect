@@ -6,6 +6,7 @@
 package sv.edu.udb.models;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.apache.log4j.Logger;
@@ -26,7 +27,24 @@ public class RequestDAO implements Dao<Request> {
 
     @Override
     public List<Request> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         Connect connection = null;
+         List<Request> requestFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+            connection.setRs("SELECT * FROM REQUEST");
+            ResultSet requestSet = connection.getRs();
+            while (requestSet.next()) {                
+                Request request = new Request();
+                request.setId(requestSet.getInt("REQUESTID"));
+                request.setIdTypeRequest(requestSet.getInt("REQUESTTYPEID"));
+                request.setRequestDate(requestSet.getDate("REQUESTDATE"));
+                request.setRequestDescription(requestSet.getString("REQUESTDESCRIPTION"));
+                request.setRequestStatus(requestSet.getString("REQUESTSTATUS"));
+                requestFound.add(request);
+            }
+        } catch (Exception e) {
+        }
+        return requestFound;
     }
 
     @Override
