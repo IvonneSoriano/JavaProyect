@@ -98,7 +98,7 @@ public class EmployeeDAO implements Dao<Employee> {
         try {
             Connect connection = new Connect();
 
-             int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
+            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
                     + "`ROLID` = '" + t.getRolId()
                     + "', `DEPARMENTID` = '" + t.getDepartmentId()
                     + "', `EMPLOYEENAME` = '" + t.getEmployeeName()
@@ -144,7 +144,6 @@ public class EmployeeDAO implements Dao<Employee> {
 //            logger.error("Error processing UPDATE query in save method. Message: " + e.getMessage());
 //        }
 //    }
-
     @Override
     public boolean delete(Employee t) {
         try {
@@ -160,7 +159,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 logger.info("DELETO to Employees table has successfully completed!");
                 return true;
             }
-            
+
         } catch (Exception e) {
             logger.error("Error processing DELETE query in save method. Message: " + e.getMessage());
             return false;
@@ -190,7 +189,7 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         return Optional.ofNullable(foundEmployee);
     }
-    
+
     public Employee getEmployeeById(int id) {
         Employee foundEmployee = null;
         try {
@@ -214,7 +213,7 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         return foundEmployee;
     }
-    
+
     public List<Employee> getAllByRol(int rol) {
 
         Connect connection = null;
@@ -225,7 +224,7 @@ public class EmployeeDAO implements Dao<Employee> {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
         try {
-            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID ="+ rol +" ;");
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID =" + rol + " ;");
             ResultSet employees = (ResultSet) connection.getRs();
 
             while (employees.next()) {
@@ -252,7 +251,7 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         return employeesFound;
     }
-    
+
     public List<Employee> getAllByRolAndDepto(int rol, int depto) {
 
         Connect connection = null;
@@ -263,7 +262,7 @@ public class EmployeeDAO implements Dao<Employee> {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
         try {
-            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID ="+ rol +" AND DEPARMENTID = "+depto+";");
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID =" + rol + " AND DEPARMENTID = " + depto + ";");
             ResultSet employees = (ResultSet) connection.getRs();
 
             while (employees.next()) {
@@ -290,8 +289,8 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         return employeesFound;
     }
-    
-     public List<Employee> getAllEmployees() {
+
+    public List<Employee> getAllEmployees() {
 
         Connect connection = null;
         List<Employee> employeesFound = new ArrayList<>();
@@ -328,8 +327,8 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         return employeesFound;
     }
-     
-      public List<Employee> getAllSupervisors() {
+
+    public List<Employee> getAllSupervisors() {
 
         Connect connection = null;
         List<Employee> employeesFound = new ArrayList<>();

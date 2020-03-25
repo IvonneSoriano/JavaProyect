@@ -5,14 +5,19 @@
  */
 package sv.edu.udb.models;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
+import org.apache.log4j.Logger;
+import sv.edu.udb.util.Connect;
 
 /**
  *
  * @author Rick
  */
 public class RequestDAO implements Dao<Request> {
+
+    private static Logger logger = Logger.getLogger(RequestDAO.class);
 
     @Override
     public Optional<Request> get(long id) {
@@ -26,7 +31,27 @@ public class RequestDAO implements Dao<Request> {
 
     @Override
     public boolean save(Request t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Connect connection = new Connect();
+
+            int result = connection.setQuery("INSERT INTO `gestion_tickets`.`requests`"
+                    + " (`REQUESTTYPEID`, `REQUESTDATE`, `REQUESTDESCRIPTION`,"
+                    + " `REQUESTSTATUS`) VALUES (" + t.getIdTypeRequest() + ", "
+                    + t.getRequestDate() + " , '" + t.getRequestDescription()
+                    + "',' " + t.getRequestStatus() + "');");
+
+            if (result <= 0) {
+                logger.warn("INSERT to Requests table has failed");
+                return false;
+            } else {
+                logger.info("INSERT to Requests table has successfully completed!");
+                return true;
+            }
+
+        } catch (Exception e) {
+            logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -38,5 +63,25 @@ public class RequestDAO implements Dao<Request> {
     public boolean delete(Request t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public Optional<Request> getNextRequestId() {
+        Request lastRequest = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM requests ORDER BY requestid DESC LIMIT 1;;");
+            ResultSet requests = (ResultSet) connection.getRs();
+
+            while (requests.next()) {
+                lastRequest = new Request();
+                lastRequest.setId(requests.getInt("REQUESTID"));
+                lastRequest.setIdTypeRequest(requests.getInt("REQUESTTYPEID"));
+                lastRequest.setRequestDate(requests.getTimestamp("REQUESTDATE"));
+                lastRequest.setRequestDescription(requests.getString("REQUESTDESCRIPTION"));
+                lastRequest.setRequestStatus(requests.getString("REQUESTSTATUS"));
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
+        }
+        return Optional.ofNullable(lastRequest);
+    }
 }
