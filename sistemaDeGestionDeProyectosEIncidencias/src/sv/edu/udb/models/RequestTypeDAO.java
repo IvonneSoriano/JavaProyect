@@ -88,4 +88,22 @@ public class RequestTypeDAO implements Dao<RequestType> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Optional<RequestType> getRequestTypeByName(String name) {
+        RequestType requestFound = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM requesttypes where requesttypename='" + name.trim() + "';");
+            ResultSet requesttypes = (ResultSet) connection.getRs();
+
+            while (requesttypes.next()) {
+                requestFound = new RequestType();
+                requestFound.setId(requesttypes.getInt("REQUESTTYPEID"));
+                requestFound.setRequestTypeName(requesttypes.getString("REQUESTTYPENAME"));
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
+        }
+        return Optional.ofNullable(requestFound);
+    }
+
 }
