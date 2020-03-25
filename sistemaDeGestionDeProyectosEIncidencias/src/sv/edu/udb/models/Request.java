@@ -22,6 +22,9 @@ public class Request {
 
     public Request() {
     }
+    public Request(String daoDefault) {
+        this.description = daoDefault;
+    }
 
     public void setId(int idRequest) {
         this.id = idRequest;

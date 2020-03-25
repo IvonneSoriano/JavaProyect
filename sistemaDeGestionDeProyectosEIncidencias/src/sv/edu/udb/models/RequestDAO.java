@@ -32,7 +32,7 @@ public class RequestDAO implements Dao<Request> {
          List<Request> requestFound = new ArrayList<>();
         try {
             connection = new Connect();
-            connection.setRs("SELECT * FROM REQUEST");
+            connection.setRs("SELECT * FROM REQUESTS");
             ResultSet requestSet = connection.getRs();
             while (requestSet.next()) {                
                 Request request = new Request();
@@ -46,6 +46,13 @@ public class RequestDAO implements Dao<Request> {
             }
         } catch (SQLException e) {
              logger.error("Error processing SELECT query in save method. Message: " + e.getMessage());
+        }finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
         }
         return requestFound;
     }

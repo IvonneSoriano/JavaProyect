@@ -61,11 +61,14 @@ public class RequestTypeDAO implements Dao<RequestType> {
         RequestType foundName = null;
         try {
             Connect connection = null;
+            String sql = "SELECT * FROM REQUESTTYPE WHERE REQUESTTYPEID=" + id + ";";
             connection.setRs("SELECT * FROM REQUESTTYPE WHERE REQUESTTYPEID=" + id + ";");
+            System.out.println(sql);
             ResultSet reType = (ResultSet) connection.getRs();
             while (reType.next()) {                
                 foundName = new  RequestType();
                 foundName.setRequestTypeName("REQUESTTYPENAME");
+                
             }
         } catch (Exception e) {
             logger.error("Error processing ResultSet in getRequestName() method. Message: " + e.getMessage());
