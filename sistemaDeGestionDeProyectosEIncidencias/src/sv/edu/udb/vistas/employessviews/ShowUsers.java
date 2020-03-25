@@ -115,6 +115,8 @@ public class ShowUsers extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSupervisor = new javax.swing.JTable();
 
+        btnEdit.setBackground(new java.awt.Color(35, 10, 89));
+        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Editar");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +124,8 @@ public class ShowUsers extends javax.swing.JInternalFrame {
             }
         });
 
+        btnDelete.setBackground(new java.awt.Color(35, 10, 89));
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("Eliminar");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,6 +134,7 @@ public class ShowUsers extends javax.swing.JInternalFrame {
         });
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(35, 10, 89));
         lblTitulo.setText("Listado de Usuarios");
 
         panedUsers.setVerifyInputWhenFocusTarget(false);

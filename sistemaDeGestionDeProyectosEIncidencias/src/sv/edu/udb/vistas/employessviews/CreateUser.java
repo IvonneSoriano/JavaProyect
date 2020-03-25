@@ -9,7 +9,7 @@ import sv.edu.udb.controllers.DeparmentController;
 import sv.edu.udb.controllers.RolController;
 import sv.edu.udb.controllers.EmployeeController;
 import javax.swing.*;
-import sv.edu.udb.util.Connect;
+import sv.edu.udb.util.*;
 import sv.edu.udb.models.Session;
 import java.util.List;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
    private Deparment liDep = new Deparment();
    private List<Rol> listaRol = new ArrayList<>();
    private Rol liRol = new Rol();
-
+   Validations valid=new Validations();
     public CreateUser() {
         initComponents();
 
@@ -84,25 +84,42 @@ public class CreateUser extends javax.swing.JInternalFrame {
         lblDepto = new javax.swing.JLabel();
         cmbbxDepoto = new javax.swing.JComboBox<>();
 
+        lblTipo.setForeground(new java.awt.Color(0, 41, 250));
         lblTipo.setText("Tipo de empleado:");
 
         cmbbxTipoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblNombre.setForeground(new java.awt.Color(0, 41, 250));
         lblNombre.setText("Nombre:");
+
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNameKeyTyped(evt);
+            }
+        });
 
         lblApellido.setText("Apellido:");
 
+        txtLastname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLastnameKeyTyped(evt);
+            }
+        });
+
+        lblUsers.setForeground(new java.awt.Color(0, 41, 250));
         lblUsers.setText("Usuario:");
 
         txtUsuario.setText("jTextField1");
 
+        lblContra.setForeground(new java.awt.Color(0, 41, 250));
         lblContra.setText("Contraseña:");
 
-        txtContra.setText("jPasswordField1");
-
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(35, 10, 89));
         lblTitulo.setText("Registro de nuevo empleado");
 
+        btnIngresar.setBackground(new java.awt.Color(35, 10, 89));
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");
         btnIngresar.setToolTipText("");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +128,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
             }
         });
 
+        lblDepto.setForeground(new java.awt.Color(0, 41, 250));
         lblDepto.setText("Departamento:");
 
         cmbbxDepoto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -194,22 +212,46 @@ public class CreateUser extends javax.swing.JInternalFrame {
         RolController rolUser = new RolController();
         EmployeeController ec = new EmployeeController();
         Deparment d = new Deparment();
-        user.setEmployeeName(txtName.getText());
-        user.setEmployeeLastname(txtLastname.getText());
-        user.setEmployeeLastname(txtLastname.getText());
-        user.setUsername(txtUsuario.getText());
-        user.setPassword(txtContra.getText());
-        d = depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
-        user.setDepartmentId(d.getDepartmentId());
-        user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
-        if (ec.insertEmployee(user)) {
-            JOptionPane.showMessageDialog(null, "El usuario se ha insertado correctamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-            clearForm();
-        } else {
-            JOptionPane.showMessageDialog(null, "El usuario no se ha insertado correctamente", "Operacion fallida", JOptionPane.ERROR_MESSAGE);
+       
+       
+        
+        if ( valid.checkPassword(txtContra.getPassword()) &&  !valid.emptyField(txtName.getText()) && !valid.emptyField(txtLastname.getText())) {
+            String pass = new String(txtContra.getPassword());
+            user.setEmployeeName(txtName.getText());
+            user.setEmployeeLastname(txtLastname.getText());
+            user.setUsername(txtUsuario.getText());
+            user.setPassword(pass);
+            d = depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
+            user.setDepartmentId(d.getDepartmentId());
+            user.setRolId(rolUser.showID(cmbbxTipoEmpleado.getSelectedItem().toString()));
+        
+            if (ec.insertEmployee(user)) {
+                JOptionPane.showMessageDialog(null, "El usuario se ha insertado correctamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                clearForm();
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario no se ha insertado correctamente", "Operacion fallida", JOptionPane.ERROR_MESSAGE);
+                
+            }
         }
+        else {
+                JOptionPane.showMessageDialog(null, "Datos ingresados incorrectamente", "Operacion fallida", JOptionPane.ERROR_MESSAGE);
+                clearForm();
+            }
+        
 
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void txtNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyTyped
+        // TODO add your handling code here:
+       
+        valid.numberTyped(evt);
+    }//GEN-LAST:event_txtNameKeyTyped
+
+    private void txtLastnameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastnameKeyTyped
+        // TODO add your handling code here:
+       
+        valid.numberTyped(evt);
+    }//GEN-LAST:event_txtLastnameKeyTyped
 
     private void clearForm() {
         txtName.setText("");
@@ -218,6 +260,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
         txtContra.setText("");
 
     }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
