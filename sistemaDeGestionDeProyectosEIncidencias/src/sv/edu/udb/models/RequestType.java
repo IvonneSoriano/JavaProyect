@@ -17,6 +17,10 @@ public class RequestType {
     public RequestType() {
     }
 
+    public RequestType(String daoDefault) {
+        this.requestName = daoDefault;
+    }
+
     public void setId(int idRequest) {
         this.id = idRequest;
     }

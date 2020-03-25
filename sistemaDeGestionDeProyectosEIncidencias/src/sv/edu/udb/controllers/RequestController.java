@@ -5,8 +5,10 @@
  */
 package sv.edu.udb.controllers;
 
+import java.util.Optional;
 import sv.edu.udb.models.Request;
 import sv.edu.udb.models.RequestDAO;
+import sv.edu.udb.util.DAODefaults;
 
 /**
  *
@@ -18,5 +20,10 @@ public class RequestController {
         RequestDAO dao = new RequestDAO();
         boolean result = dao.save(r);
         return result;
+    }
+    public Request findLastRequest(){
+        RequestDAO dao = new RequestDAO();
+        Optional<Request> req = dao.getLastReequestId();
+        return req.orElseGet(() -> new Request(DAODefaults.NO_LAST_REQUEST_FOUND.getDefaultValue()));
     }
 }
