@@ -59,7 +59,7 @@ public class EditUser extends javax.swing.JInternalFrame {
             txtName.setText(employee.getEmployeeName());
             txtLastname.setText(employee.getEmployeeLastname());
             txtUsuario.setText(employee.getUsername());
-            txtContra.setText(employee.getPassword());
+//            txtContra.setText(employee.getPassword());
              cmbbxDepoto.setSelectedIndex(0);
              cmbbxTipoEmpleado.setSelectedIndex(0);
 
@@ -109,6 +109,8 @@ public class EditUser extends javax.swing.JInternalFrame {
         lblUsers = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblContra = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtNcontra = new javax.swing.JPasswordField();
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(35, 10, 89));
@@ -137,33 +139,48 @@ public class EditUser extends javax.swing.JInternalFrame {
         lblNombre.setForeground(new java.awt.Color(0, 41, 250));
         lblNombre.setText("Nombre:");
 
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNameKeyPressed(evt);
+            }
+        });
+
         lblApellido.setForeground(new java.awt.Color(0, 41, 250));
         lblApellido.setText("Apellido:");
+
+        txtLastname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtLastnameKeyPressed(evt);
+            }
+        });
 
         lblUsers.setForeground(new java.awt.Color(0, 41, 250));
         lblUsers.setText("Usuario:");
 
-        lblUsers.setText("Usuario:");
-
         lblContra.setForeground(new java.awt.Color(0, 41, 250));
         lblContra.setText("Contraseña:");
+
+        jLabel1.setForeground(new java.awt.Color(0, 40, 250));
+        jLabel1.setText("Nueva contraseña:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(148, Short.MAX_VALUE)
+                .addContainerGap(143, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblUsers)
                         .addComponent(lblApellido)
                         .addComponent(lblNombre))
+                    .addComponent(lblDepto)
+                    .addComponent(lblTipo)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(lblContra))
-                    .addComponent(lblDepto)
-                    .addComponent(lblTipo))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(lblContra))))
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cmbbxTipoEmpleado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -171,16 +188,17 @@ public class EditUser extends javax.swing.JInternalFrame {
                     .addComponent(txtLastname)
                     .addComponent(txtName)
                     .addComponent(txtUsuario)
-                    .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtContra, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                    .addComponent(txtNcontra, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
                 .addGap(141, 141, 141))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
-                        .addComponent(btnEditar))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(204, 204, 204)
-                        .addComponent(lblTitulo)))
+                        .addComponent(lblTitulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(232, 232, 232)
+                        .addComponent(btnEditar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -212,9 +230,13 @@ public class EditUser extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblContra))
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNcontra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(btnEditar)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addGap(53, 53, 53))
         );
 
         pack();
@@ -229,7 +251,7 @@ public class EditUser extends javax.swing.JInternalFrame {
         Deparment d;
         user.setEmployeeId(employee.getEmployeeId());
         
-        if (valid.checkPassword(txtContra.getPassword()) &&  !valid.emptyField(txtName.getText()) && !valid.emptyField(txtLastname.getText()) && !valid.emptyField(txtUsuario.getText())){
+        if (validationTxt()){
                     String[] p ={"Name","Lastname"};        
                     String pass = new String(txtContra.getPassword());
                     user.setEmployeeName(txtName.getText());
@@ -272,12 +294,20 @@ public class EditUser extends javax.swing.JInternalFrame {
         valid.numberTyped(evt);
         txtName.setText("");
     }//GEN-LAST:event_txtLastnameKeyPressed
-
+    public boolean validationTxt(){
+        if (valid.checkPassword(txtContra.getPassword()) && valid.checkPassword(txtNcontra.getPassword()) &&  !valid.emptyField(txtName.getText()) && !valid.emptyField(txtLastname.getText()) && !valid.emptyField(txtUsuario.getText()) && !valid.emptyField(txtContra.getText())) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JComboBox<String> cmbbxDepoto;
     private javax.swing.JComboBox<String> cmbbxTipoEmpleado;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblContra;
     private javax.swing.JLabel lblDepto;
@@ -288,6 +318,7 @@ public class EditUser extends javax.swing.JInternalFrame {
     private javax.swing.JPasswordField txtContra;
     private javax.swing.JTextField txtLastname;
     private javax.swing.JTextField txtName;
+    private javax.swing.JPasswordField txtNcontra;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
