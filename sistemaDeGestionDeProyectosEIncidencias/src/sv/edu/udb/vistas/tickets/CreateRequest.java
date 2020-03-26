@@ -188,6 +188,7 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         // enviar notificacion a jefe de desarrollo del area
         // setear estado a: en espera de respuesta
         // mostrar dialogo con ID
+
         // when no option is selected in this combobox it's because there's no need
         // for a new project
 
@@ -203,6 +204,8 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         r.setIdTypeRequest(typeController.findRequestTypeByName(String.valueOf(
                 cbTipoSolicitud.getSelectedItem())).getId());
         r.setRequestDate(new Timestamp(System.currentTimeMillis()));
+
+
         r.setRequestDescription(txtDescripcionRequerimiento.getText());
         r.setRequestStatus(RequestStatus.EN_ESPERA.name());
 

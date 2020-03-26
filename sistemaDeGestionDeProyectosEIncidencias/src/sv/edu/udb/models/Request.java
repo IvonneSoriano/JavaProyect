@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,25 +9,24 @@ package sv.edu.udb.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.sql.*;
 /**
  *
  * @author Imer
  */
 public class Request {
 
-    private int id, typeId;
+    private int id, typeId, projectId;
     private String description, status;
-    private Date requestDate;
-    private int projectId; // this is not mandatory
+    private Timestamp requestDate;
     private List<Comment> commentsList = new ArrayList<>();
 
     public Request() {
     }
-
     public Request(String daoDefault) {
         this.description = daoDefault;
     }
+
     public void setId(int idRequest) {
         this.id = idRequest;
     }
@@ -34,7 +34,12 @@ public class Request {
     public int getId() {
         return id;
     }
-
+    public void setProjectId(int projectId){
+        this.projectId = projectId;
+    }
+    public int getProjectId(){
+        return projectId;
+    }
     public void setIdTypeRequest(int typeRequest) {
         this.typeId = typeRequest;
     }
@@ -59,11 +64,11 @@ public class Request {
         return status;
     }
 
-    public void setRequestDate(Date requestDate) {
+    public void setRequestDate(Timestamp requestDate) {
         this.requestDate = requestDate;
     }
 
-    public Date getRequestDate() {
+    public Timestamp getRequestDate() {
         return requestDate;
     }
 
@@ -74,12 +79,5 @@ public class Request {
     public void setCommentsList(List<Comment> commentsList) {
         this.commentsList = commentsList;
     }
-
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }   
+    
 }

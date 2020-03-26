@@ -15,6 +15,8 @@ import sv.edu.udb.vistas.employessviews.CreateUser;
 import sv.edu.udb.vistas.projectviews.*;
 import sv.edu.udb.vistas.employessviews.ShowUsers;
 import sv.edu.udb.vistas.tickets.CreateRequest;
+import sv.edu.udb.vistas.employessviews.*;
+import sv.edu.udb.vistas.requestview.*;
 import sv.edu.udb.vistas.tickets.*;
 
 /**
@@ -63,6 +65,7 @@ public class Contenedor extends javax.swing.JFrame {
         jListMenu = new javax.swing.JMenuItem();
         editProject = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,6 +83,11 @@ public class Contenedor extends javax.swing.JFrame {
 
         btnVerTicket.setMnemonic('s');
         btnVerTicket.setText("Ver Ticket");
+        btnVerTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerTicketActionPerformed(evt);
+            }
+        });
         ticketMenu.add(btnVerTicket);
 
         saveAsMenuItem.setMnemonic('a');
@@ -156,7 +164,16 @@ public class Contenedor extends javax.swing.JFrame {
         menuBar.add(projectMenu);
 
         jMenu1.setForeground(new java.awt.Color(35, 10, 89));
-        jMenu1.setText("jMenu1");
+        jMenu1.setText("Peticiones");
+
+        jMenuItem1.setText("Ver peticiones");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         menuBar.add(jMenu1);
 
         setJMenuBar(menuBar);
@@ -237,6 +254,22 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(cu);
         cu.show();
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        closeForms();
+        RequestList rl = new RequestList();
+        desktopPane.add(rl);
+        rl.show();
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnVerTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTicketActionPerformed
+        // TODO add your handling code here:
+        closeForms();
+        TicketsList tl = new TicketsList();
+        desktopPane.add(tl);
+        tl.show();
+    }//GEN-LAST:event_btnVerTicketActionPerformed
 
 
     /**
@@ -286,6 +319,7 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenuItem insertProject;
     private javax.swing.JMenuItem jListMenu;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu projectMenu;
     private javax.swing.JMenuItem saveAsMenuItem;

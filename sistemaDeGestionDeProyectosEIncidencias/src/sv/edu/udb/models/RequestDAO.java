@@ -6,6 +6,8 @@
 package sv.edu.udb.models;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.apache.log4j.Logger;
@@ -26,7 +28,33 @@ public class RequestDAO implements Dao<Request> {
 
     @Override
     public List<Request> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         Connect connection = null;
+         List<Request> requestFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+            connection.setRs("SELECT * FROM REQUESTS");
+            ResultSet requestSet = connection.getRs();
+            while (requestSet.next()) {                
+                Request request = new Request();
+                request.setId(requestSet.getInt("REQUESTID"));
+                request.setIdTypeRequest(requestSet.getInt("REQUESTTYPEID"));
+                request.setRequestDate(requestSet.getTimestamp("REQUESTDATE"));
+                request.setRequestDescription(requestSet.getString("REQUESTDESCRIPTION"));
+                request.setRequestStatus(requestSet.getString("REQUESTSTATUS"));
+                request.setProjectId(requestSet.getInt("PROJECTID"));
+                requestFound.add(request);
+            }
+        } catch (SQLException e) {
+             logger.error("Error processing SELECT query in save method. Message: " + e.getMessage());
+        }finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return requestFound;
     }
 
     @Override
