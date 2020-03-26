@@ -51,10 +51,34 @@ public class TicketDAO implements Dao<Ticket>{
         return ticketFound;
     }
 
-    @Override
+     @Override
     public boolean save(Ticket t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Connect connection = new Connect();
+
+            String sql = "INSERT INTO `gestion_tickets`.`tickets` (`REQUESTID`, "
+                    + "`PROJECTID`, `ID_PROGRAMADOR`, `ID_TESTER`, `TICKET_STATUS`,"
+                    + "`INTERNALCODE`, `STARTDATE`, `ENDDATE`) VALUES("
+                    + t.getRequestId() + ", " + t.getProjectID() + ", "
+                    + t.getIdProgrammer() + ", " + t.getIdTester() + ", '"
+                    + t.getTicketStatus() + "', '" + t.getInternalCode() + "', '"
+                    + t.getStartDate() + "', '" + t.getEndDate() + "');";
+            int result = connection.setQuery(sql);
+
+            if (result <= 0) {
+                logger.warn("INSERT to tickets table has failed");
+                return false;
+            } else {
+                logger.info("INSERT to tickets table has successfully completed!");
+                return true;
+            }
+
+        } catch (Exception e) {
+            logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+            return false;
+        }
     }
+
 
     @Override
     public boolean update(Ticket t, String[] params) {

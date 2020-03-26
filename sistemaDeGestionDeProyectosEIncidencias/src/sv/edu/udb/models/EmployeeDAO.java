@@ -45,7 +45,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 Employee employee = new Employee();
                 employee.setEmployeeId(employees.getInt("EmployeeID"));
                 employee.setRolId(employees.getInt("ROLID"));
-                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setDepartmentId(employees.getInt("DEPARTMENTID"));
                 employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
                 employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 employee.setUsername(employees.getString("USERNAME"));
@@ -54,12 +54,12 @@ public class EmployeeDAO implements Dao<Employee> {
             }
 
         } catch (SQLException e) {
-            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
         } finally {
             try {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
-                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+                logger.error("Error closing conecction. Message: " + ex.getMessage());
             }
 
         }
@@ -72,7 +72,7 @@ public class EmployeeDAO implements Dao<Employee> {
             Connect connection = new Connect();
 
             int result = connection.setQuery("INSERT INTO `gestion_tickets`.`employees` "
-                    + "(`ROLID`, `DEPARMENTID`, `EMPLOYEENAME`, `EMPLOYEELASTNAME`, `USERNAME`, `PASSWORD`) "
+                    + "(`ROLID`, `DEPARTMENTID`, `EMPLOYEENAME`, `EMPLOYEELASTNAME`, `USERNAME`, `PASSWORD`) "
                     + "VALUES ('" + t.getRolId() + "', '" + t.getDepartmentId()
                     + "', '" + t.getEmployeeName() + "', '"
                     + t.getEmployeeLastname() + "', '"
@@ -100,7 +100,7 @@ public class EmployeeDAO implements Dao<Employee> {
 
             int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
                     + "`ROLID` = '" + t.getRolId()
-                    + "', `DEPARMENTID` = '" + t.getDepartmentId()
+                    + "', `DEPARTMENTID` = '" + t.getDepartmentId()
                     + "', `EMPLOYEENAME` = '" + t.getEmployeeName()
                     + "', `EMPLOYEELASTNAME` = '" + t.getEmployeeLastname()
                     + "', `USERNAME` = '" + t.getUsername()
@@ -127,7 +127,7 @@ public class EmployeeDAO implements Dao<Employee> {
 //
 //            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
 //                    + "`ROLID` = " + t.getRolId()
-//                    + ", `DEPARMENTID` = " + t.getDepartmentId()
+//                    + ", `DEPARTMENTID` = " + t.getDepartmentId()
 //                    + ", `EMPLOYEENAME` = " + t.getEmployeeName()
 //                    + ", `EMPLOYEELASTNAME` = " + t.getEmployeeLastname()
 //                    + ", `USERNAME` = " + t.getUsername()
@@ -178,7 +178,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 foundEmployee = new Employee();
                 foundEmployee.setEmployeeId(employees.getInt("EmployeeID"));
                 foundEmployee.setRolId(employees.getInt("ROLID"));
-                foundEmployee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                foundEmployee.setDepartmentId(employees.getInt("DEPARTMENTID"));
                 foundEmployee.setEmployeeName(employees.getString("EMPLOYEENAME"));
                 foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 foundEmployee.setUsername(employees.getString("USERNAME"));
@@ -202,7 +202,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 foundEmployee = new Employee();
                 foundEmployee.setEmployeeId(employees.getInt("EmployeeID"));
                 foundEmployee.setRolId(employees.getInt("ROLID"));
-                foundEmployee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                foundEmployee.setDepartmentId(employees.getInt("DEPARTMENTID"));
                 foundEmployee.setEmployeeName(employees.getString("EMPLOYEENAME"));
                 foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 foundEmployee.setUsername(employees.getString("USERNAME"));
@@ -232,7 +232,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 Employee employee = new Employee();
                 employee.setEmployeeId(employees.getInt("EmployeeID"));
                 employee.setRolId(employees.getInt("ROLID"));
-                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setDepartmentId(employees.getInt("DEPARTMENTID"));
                 employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
                 employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 employee.setUsername(employees.getString("USERNAME"));
@@ -241,12 +241,12 @@ public class EmployeeDAO implements Dao<Employee> {
             }
 
         } catch (SQLException e) {
-            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
         } finally {
             try {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
-                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+                logger.error("Error closing conecction. Message: " + ex.getMessage());
             }
 
         }
@@ -263,14 +263,14 @@ public class EmployeeDAO implements Dao<Employee> {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
         try {
-            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID =" + rol + " AND DEPARMENTID = " + depto + ";");
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID =" + rol + " AND DEPARTMENTID = " + depto + ";");
             ResultSet employees = (ResultSet) connection.getRs();
 
             while (employees.next()) {
                 Employee employee = new Employee();
                 employee.setEmployeeId(employees.getInt("EmployeeID"));
                 employee.setRolId(employees.getInt("ROLID"));
-                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setDepartmentId(employees.getInt("DEPARTMENTID"));
                 employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
                 employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 employee.setUsername(employees.getString("USERNAME"));
@@ -279,12 +279,12 @@ public class EmployeeDAO implements Dao<Employee> {
             }
 
         } catch (SQLException e) {
-            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
         } finally {
             try {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
-                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+                logger.error("Error closing conecction. Message: " + ex.getMessage());
             }
 
         }
@@ -308,7 +308,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 Employee employee = new Employee();
                 employee.setEmployeeId(employees.getInt("EmployeeID"));
                 employee.setRolId(employees.getInt("ROLID"));
-                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setDepartmentId(employees.getInt("DEPARTMENTID"));
                 employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
                 employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 employee.setUsername(employees.getString("USERNAME"));
@@ -317,12 +317,12 @@ public class EmployeeDAO implements Dao<Employee> {
             }
 
         } catch (SQLException e) {
-            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
         } finally {
             try {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
-                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+                logger.error("Error closing conecction. Message: " + ex.getMessage());
             }
 
         }
@@ -346,7 +346,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 Employee employee = new Employee();
                 employee.setEmployeeId(employees.getInt("EmployeeID"));
                 employee.setRolId(employees.getInt("ROLID"));
-                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setDepartmentId(employees.getInt("DEPARTMENTID"));
                 employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
                 employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 employee.setUsername(employees.getString("USERNAME"));
@@ -355,12 +355,12 @@ public class EmployeeDAO implements Dao<Employee> {
             }
 
         } catch (SQLException e) {
-            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
         } finally {
             try {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
-                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+                logger.error("Error closing conecction. Message: " + ex.getMessage());
             }
 
         }

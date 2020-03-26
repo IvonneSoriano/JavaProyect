@@ -6,6 +6,7 @@
 package sv.edu.udb.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import sv.edu.udb.models.Project;
 import sv.edu.udb.models.ProjectDAO;
 import sv.edu.udb.util.DAODefaults;
@@ -21,7 +22,6 @@ public class ProjectsController {
         List<Project> projectsByDepto = dao.getProjbyDepto();
 
         return projectsByDepto;
-
     }
 
     public List<Project> getProjects() {
@@ -40,6 +40,13 @@ public class ProjectsController {
         ProjectDAO dao = new ProjectDAO();
         return dao.delete(p);
     }
+
+    public Project findById(int id) {
+        ProjectDAO dao = new ProjectDAO();
+        Optional<Project> projectFound = dao.get(id);
+        return projectFound.orElseGet(() -> new Project(DAODefaults.NO_PROJECT_FOUND.getDefaultValue()));
+    }
+
     public Project getProjectName(int id){
         ProjectDAO dao = new ProjectDAO();
         return  dao.getProjectName(id);

@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,6 +18,7 @@ public class Request {
     private int id, typeId, projectId;
     private String description, status;
     private Timestamp requestDate;
+     private int departmentId;
     private List<Comment> commentsList = new ArrayList<>();
 
     public Request() {
@@ -79,5 +79,13 @@ public class Request {
     public void setCommentsList(List<Comment> commentsList) {
         this.commentsList = commentsList;
     }
-    
+  
+  
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }    
 }
