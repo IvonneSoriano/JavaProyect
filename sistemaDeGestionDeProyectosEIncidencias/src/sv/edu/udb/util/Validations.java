@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 public class Validations {
     public void numberTyped(KeyEvent ke){
         char c=ke.getKeyChar();
-        if (!Character.isLetter(c)) {
+        if (Character.isDigit(c)) {
             ke.consume();
             JOptionPane.showMessageDialog(null, "Error en el ingreso de datos");
             

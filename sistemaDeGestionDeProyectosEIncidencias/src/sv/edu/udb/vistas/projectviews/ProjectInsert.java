@@ -178,14 +178,17 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
             proOb.setCreationDate(tp = new Timestamp(System.currentTimeMillis()));
             if (procControl.insertProject(proOb)) {
                 JOptionPane.showMessageDialog(null, "El proyecto se ha ingresado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
+                cleanTxt();
             }
             else{
                 JOptionPane.showMessageDialog(null, "El proyecto no se ha ingresado correctamente","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+                cleanTxt();
             }
             
         }
         else{
             JOptionPane.showMessageDialog(null, "Error al ingresar datos","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+            cleanTxt();
         }
        
 
@@ -196,8 +199,12 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     private void txtnameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnameKeyPressed
         // TODO add your handling code here:
         valid.numberTyped(evt);
-    }//GEN-LAST:event_txtnameKeyPressed
 
+    }//GEN-LAST:event_txtnameKeyPressed
+    public void cleanTxt(){
+        txtname.setText("");
+         txtAreaDescripcion.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbDepartment;
