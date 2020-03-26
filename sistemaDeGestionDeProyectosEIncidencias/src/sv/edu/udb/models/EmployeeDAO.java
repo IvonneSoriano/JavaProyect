@@ -189,6 +189,30 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         return Optional.ofNullable(foundEmployee);
     }
+    
+     public Employee getEmployeeByFullName(String name, String last) {
+        Employee foundEmployee = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE 	EMPLOYEENAME='" + name + "' and EMPLOYEELASTNAME ='"+ last +"' ;");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                foundEmployee = new Employee();
+                foundEmployee.setEmployeeId(employees.getInt("EmployeeID"));
+                foundEmployee.setRolId(employees.getInt("ROLID"));
+                foundEmployee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                foundEmployee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                foundEmployee.setUsername(employees.getString("USERNAME"));
+                foundEmployee.setPassword(employees.getString("PASSWORD"));
+
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getEmployeeByFullname() method. Message: " + e.getMessage());
+        }
+        return foundEmployee;
+    }
 
     public Employee getEmployeeById(int id) {
         Employee foundEmployee = null;
@@ -209,7 +233,7 @@ public class EmployeeDAO implements Dao<Employee> {
 
             }
         } catch (Exception e) {
-            logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet in getEmployeeById() method. Message: " + e.getMessage());
         }
         return foundEmployee;
     }
@@ -339,6 +363,51 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         try {
             connection.setRs("SELECT * FROM EMPLOYEES WHERE ROLID = 1 OR ROLID=3;");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                Employee employee = new Employee();
+                employee.setEmployeeId(employees.getInt("EmployeeID"));
+                employee.setRolId(employees.getInt("ROLID"));
+                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                employee.setUsername(employees.getString("USERNAME"));
+                employee.setPassword(employees.getString("PASSWORD"));
+                employeesFound.add(employee);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return employeesFound;
+    }
+    
+     public List<Employee> getAll(int rol, int depto) {
+
+        Connect connection = null;
+        List<Employee> employeesFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+        } catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+        try {
+            connection.setRs("SELECT employees.EmployeeID, "
+                    + "employees.EMPLOYEENAME,"
+                    + "employees.EMPLOYEELASTNAME "
+                    + "FROM `employees` INNER JOIN tickets "
+                    + "ON employees.EmployeeID = tickets.ID_PROGRAMADOR  "
+                    + "WHERE employees.ROLID = " 
+                    + rol + " AND employees.DEPARMENTID = " + depto
+                    + " AND NOT tickets.TICKET_STATUS = \"DESARROLLO\" ");
             ResultSet employees = (ResultSet) connection.getRs();
 
             while (employees.next()) {

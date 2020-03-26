@@ -74,4 +74,16 @@ public class EmployeeController {
          return dao.update(e,p);
         
     }
+    
+    public List<Employee> findByRolAndDepto(int rol, int depto) {
+        EmployeeDAO dao = new EmployeeDAO();
+        List<Employee> foundEmp = dao.getAll(rol, depto);
+        return foundEmp;
+    }
+    
+    public Employee getEmployee(String name, String last) {
+        EmployeeDAO dao = new EmployeeDAO();
+        return  dao.getEmployeeByFullName(name, last);
+       
+    }
 }

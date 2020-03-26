@@ -98,12 +98,13 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`projects` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 0;
 
+
 CREATE TABLE IF NOT EXISTS `gestion_tickets`.`tickets` (
   `TICKETID` SMALLINT NOT NULL AUTO_INCREMENT,
   `REQUESTID` SMALLINT NOT NULL,
   `PROJECTID` SMALLINT NOT NULL,
-  `ID_PROGRAMADOR` SMALLINT NOT NULL,
-  `ID_TESTER` SMALLINT NOT NULL,
+  `ID_PROGRAMADOR` SMALLINT NOT NULL DEFAULT 0,
+  `ID_TESTER` SMALLINT NOT NULL DEFAULT -1,
   `TICKET_STATUS` VARCHAR(16) NOT NULL,
   `INTERNALCODE` VARCHAR(24) NOT NULL,
   `STARTDATE` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -114,13 +115,8 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`tickets` (
         REFERENCES `gestion_tickets`.`requests` (`REQUESTID`),
  CONSTRAINT `fk_tickets_projectid`
         FOREIGN KEY (`PROJECTID`)
-        REFERENCES `gestion_tickets`.`projects` (`PROJECTID`),
- CONSTRAINT `fk_tickets_programmer`
-        FOREIGN KEY (`ID_PROGRAMADOR`)
-        REFERENCES `gestion_tickets`.`employees` (`EmployeeID`),
-CONSTRAINT `fk_tickets_tester`
-        FOREIGN KEY (`ID_TESTER`)
-        REFERENCES `gestion_tickets`.`employees` (`EmployeeID`)
+        REFERENCES `gestion_tickets`.`projects` (`PROJECTID`)
+
         ON DELETE CASCADE
         ON UPDATE NO ACTION)
 ENGINE = InnoDB

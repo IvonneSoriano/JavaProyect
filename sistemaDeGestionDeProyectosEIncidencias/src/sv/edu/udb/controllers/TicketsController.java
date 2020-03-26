@@ -18,4 +18,18 @@ public class TicketsController {
         return dao.getOne(id);
     }
     
+    public boolean showStatusTicket (int p, String par){
+        TicketDAO dao = new TicketDAO();
+        return dao.checkEmployee(p,par);
+    }
+    
+    public boolean updateP(int t, int p){
+        TicketDAO dao = new TicketDAO();
+        return dao.updateProgrammer(t, p);
+    }
+       public boolean updateT(int t, int p){
+        TicketDAO dao = new TicketDAO();
+        return dao.updateQA(t, p);
+    }
+    
 }
