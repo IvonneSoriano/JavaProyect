@@ -254,10 +254,11 @@ public class EditUser extends javax.swing.JInternalFrame {
         if (validationTxt()){
                     String[] p ={"Name","Lastname"};        
                     String pass = new String(txtContra.getPassword());
+                    String npass = new String(txtNcontra.getPassword());
                     user.setEmployeeName(txtName.getText());
                     user.setEmployeeLastname(txtLastname.getText());
                     user.setUsername(txtUsuario.getText());
-                    user.setPassword(pass);
+                    user.setPassword(npass);
                     d=depto.showDepartment(cmbbxDepoto.getSelectedItem().toString());
 
                     user.setDepartmentId(d.getDepartmentId());
@@ -265,7 +266,7 @@ public class EditUser extends javax.swing.JInternalFrame {
 
 
 
-                    if(ec.updateEmployee(user, p)){
+                    if(ec.updateEmployee(user, p, pass)){
                         JOptionPane.showMessageDialog(null, "El usuario se ha editado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
                          ShowUsers su = new ShowUsers();
                         Contenedor.desktopPane.removeAll();

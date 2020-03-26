@@ -69,9 +69,9 @@ public class EmployeeController {
         return foundEmp;
     }
     
-    public boolean updateEmployee(Employee e, String[] p){
+    public boolean updateEmployee(Employee e, String[] p, String pass){
          EmployeeDAO dao = new EmployeeDAO();
-         return dao.update(e,p);
+         return dao.updateUser(e,p, pass);
         
     }
 }
