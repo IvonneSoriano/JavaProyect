@@ -93,7 +93,7 @@ public class EmployeeDAO implements Dao<Employee> {
     }
 
     // THIS METHOD CAN BE DONE BY SUPERVISOR  
-    @Override
+   
     public boolean update(Employee t, String[] params) {
         try {
             Connect connection = new Connect();
@@ -107,6 +107,40 @@ public class EmployeeDAO implements Dao<Employee> {
                     + "', `PASSWORD` = SHA2('" + t.getPassword()
                     + " ',256) WHERE `EmployeeID` = " + t.getEmployeeId() + ";"
             );
+            if (result <= 0) {
+                logger.error("UPDATE to Employees table has failed");
+                return false;
+            } else {
+                logger.info("UPDATE to Employees table has successfully completed!");
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("Error processing UPDATE query in save method. Message: " + e.getMessage());
+            return false;
+        }
+    }
+    public boolean updateUser(Employee t, String[] params, String pass) {
+        try {
+            Connect connection = new Connect();
+
+            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
+                    + "`ROLID` = '" + t.getRolId()
+                    + "', `DEPARTMENTID` = '" + t.getDepartmentId()
+                    + "', `EMPLOYEENAME` = '" + t.getEmployeeName()
+                    + "', `EMPLOYEELASTNAME` = '" + t.getEmployeeLastname()
+                    + "', `USERNAME` = '" + t.getUsername()
+                    + "', `PASSWORD` = SHA2('" + t.getPassword()
+                    + "',256) WHERE `EmployeeID` = " + t.getEmployeeId() + " and `PASSWORD` = SHA2('"+pass+"',256);"
+                   
+            );
+            JOptionPane.showConfirmDialog(null, "UPDATE `gestion_tickets`.`employees` SET "
+                    + "`ROLID` = '" + t.getRolId()
+                    + "', `DEPARTMENTID` = '" + t.getDepartmentId()
+                    + "', `EMPLOYEENAME` = '" + t.getEmployeeName()
+                    + "', `EMPLOYEELASTNAME` = '" + t.getEmployeeLastname()
+                    + "', `USERNAME` = '" + t.getUsername()
+                    + "', `PASSWORD` = SHA2('" + t.getPassword()
+                    + " ',256) WHERE `EmployeeID` = " + t.getEmployeeId() + " and `PASSWORD` = SHA2('"+pass+"',256);");
             if (result <= 0) {
                 logger.error("UPDATE to Employees table has failed");
                 return false;
@@ -173,7 +207,7 @@ public class EmployeeDAO implements Dao<Employee> {
              String pass = new String(password);
             connection.setRs("SELECT * FROM EMPLOYEES WHERE username='" + username + "' and PASSWORD= SHA2('"+ pass +"',256);");
             ResultSet employees = (ResultSet) connection.getRs();
-
+             JOptionPane.showMessageDialog(null, "SELECT * FROM EMPLOYEES WHERE username='" + username + "' and PASSWORD= SHA2('"+ pass +"',256);");
             while (employees.next()) {
                 foundEmployee = new Employee();
                 foundEmployee.setEmployeeId(employees.getInt("EmployeeID"));
@@ -183,7 +217,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 foundEmployee.setUsername(employees.getString("USERNAME"));
                 foundEmployee.setPassword(employees.getString("PASSWORD"));
-                
+               
             }
         } catch (Exception e) {
             logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
