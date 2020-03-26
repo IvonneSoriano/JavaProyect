@@ -91,5 +91,12 @@ public class Employee {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    public String getFullName(){
+        return name + " " + lastname;       
+    }
+    public String getName(String f){
+        String[] onlyName = f.split("");
+        return onlyName[1];
+    }
+    
 }

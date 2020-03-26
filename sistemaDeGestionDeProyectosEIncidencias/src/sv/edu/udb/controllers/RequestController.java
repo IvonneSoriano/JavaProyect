@@ -26,4 +26,8 @@ public class RequestController {
         Optional<Request> req = dao.getLastReequestId();
         return req.orElseGet(() -> new Request(DAODefaults.NO_LAST_REQUEST_FOUND.getDefaultValue()));
     }
+    public Request getRequest(int id){
+         RequestDAO dao = new RequestDAO();
+         return dao.getOneById(id);
+    }
 }
