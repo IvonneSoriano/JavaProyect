@@ -114,4 +114,25 @@ public class RequestDAO implements Dao<Request> {
         }
         return Optional.ofNullable(lastRequest);
     }
+    
+    public Request getOneById(int id){
+      Request request = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM requests WHERE REQUESTID = " + id +";");
+            ResultSet requests = (ResultSet) connection.getRs();
+
+            while (requests.next()) {
+                request = new Request();
+                request.setId(requests.getInt("REQUESTID"));
+                request.setIdTypeRequest(requests.getInt("REQUESTTYPEID"));
+                request.setRequestDate(requests.getTimestamp("REQUESTDATE"));
+                request.setRequestDescription(requests.getString("REQUESTDESCRIPTION"));
+                request.setRequestStatus(requests.getString("REQUESTSTATUS"));
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getOneById() method. Message: " + e.getMessage());
+        }
+        return request;   
+    }
 }

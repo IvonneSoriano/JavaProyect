@@ -5,6 +5,18 @@
  */
 package sv.edu.udb.vistas.tickets;
 
+import javax.swing.JOptionPane;
+import sv.edu.udb.models.Employee;
+import sv.edu.udb.models.Ticket;
+import sv.edu.udb.models.Request;
+import sv.edu.udb.controllers.EmployeeController;
+import sv.edu.udb.controllers.TicketsController;
+import sv.edu.udb.controllers.RequestController;
+import sv.edu.udb.models.Session;
+import sv.edu.udb.util.Roles;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author kiss_
@@ -14,8 +26,51 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     /**
      * Creates new form ViewTicket
      */
+    TicketsController tController = new TicketsController();
+    Ticket ticket = new Ticket();
+    Request request = new Request();
+    RequestController rController = new RequestController();
+    EmployeeController eController = new EmployeeController();
+    boolean isJTI = false;
+
     public ViewTicket() {
+        initComponents();        
+    }
+    
+    public ViewTicket(int id) {
         initComponents();
+        ticket = tController.showTicket(id);
+        request = rController.getRequest(ticket.getRequestId());
+        isJTI = (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId());
+        fillData();
+        fillProgrammers();
+        inputsState();
+    }
+    
+    public void fillData() {
+        lvlTicketName.setText(ticket.getInternalCode());
+        lblTDes.setText(request.getRequestDescription());
+        JOptionPane.showMessageDialog(rootPane, ticket.getIdTicket());
+    }
+    
+    public void inputsState() {
+//         if(Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId()){
+        cmbEstado.setEnabled(isJTI);
+        chkbxQA.setEnabled(isJTI);
+        cmbProgr.setEnabled(isJTI);
+//             if(chkbxQA.get)
+        cmbQA.setEnabled(!isJTI);
+//         }
+    }
+    
+    public void fillProgrammers(){
+        cmbProgr.removeAllItems();
+        List<Employee> p =  new ArrayList<>();
+        p = eController.findEmployee(4, Session.deparmentId);
+        for (Employee employee : p) {
+            cmbProgr.addItem(employee.getFullName());
+        }
+        
     }
 
     /**
@@ -42,6 +97,8 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         lblFechaFinal = new javax.swing.JLabel();
         txtFechaStart = new javax.swing.JTextField();
         txtFechaFinal = new javax.swing.JTextField();
+        lblProgra = new javax.swing.JLabel();
+        cmbProgr = new javax.swing.JComboBox<>();
         lvlTicketName = new javax.swing.JLabel();
         lblTDes = new javax.swing.JLabel();
         lblDescripcionAd = new javax.swing.JLabel();
@@ -73,13 +130,17 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 
         cmbQA.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblFechaStart.setText("jLabel1");
+        lblFechaStart.setText("Fecha de inicio");
 
-        lblFechaFinal.setText("jLabel2");
+        lblFechaFinal.setText("Fecha de finalización");
 
         txtFechaStart.setText("jTextField1");
 
         txtFechaFinal.setText("jTextField2");
+
+        lblProgra.setText("Programador asignado");
+
+        cmbProgr.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout pnlInfoTicketLayout = new javax.swing.GroupLayout(pnlInfoTicket);
         pnlInfoTicket.setLayout(pnlInfoTicketLayout);
@@ -88,25 +149,24 @@ public class ViewTicket extends javax.swing.JInternalFrame {
             .addGroup(pnlInfoTicketLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFechaStart)
                     .addComponent(lblFechaFinal)
-                    .addComponent(cmbQA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chkbxQA)
                     .addComponent(lblSuperFunc)
                     .addComponent(lblSupervisorProgra)
                     .addComponent(lblTituloSup)
-                    .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblEstado)
-                        .addComponent(txtAvance)
-                        .addComponent(lblAvance)
-                        .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(pnlInfoTicketLayout.createSequentialGroup()
-                            .addComponent(lblFechaStart)
-                            .addGap(87, 87, 87))
-                        .addComponent(lblTituloSuper)
-                        .addComponent(txtFechaStart, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                    .addComponent(lblEstado)
+                    .addComponent(txtAvance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAvance)
+                    .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtFechaFinal, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtFechaStart, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cmbQA, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbProgr, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblProgra, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblTituloSuper)
+                    .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
         pnlInfoTicketLayout.setVerticalGroup(
             pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,6 +188,10 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblSuperFunc)
                 .addGap(18, 18, 18)
+                .addComponent(lblProgra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbProgr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
                 .addComponent(chkbxQA)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmbQA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,11 +201,13 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                 .addComponent(txtFechaStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblFechaFinal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lvlTicketName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lvlTicketName.setForeground(new java.awt.Color(35, 10, 89));
         lvlTicketName.setText("Nombre del Ticket");
 
         lblTDes.setText("Descripcion");
@@ -168,20 +234,20 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         );
         pnlComentariosLayout.setVerticalGroup(
             pnlComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
+            .addGap(0, 317, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(216, 216, 216)
                         .addComponent(lvlTicketName)
-                        .addGap(18, 184, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -197,7 +263,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                                             .addComponent(lblActividad)
                                             .addComponent(lblTDes))
                                         .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addGap(18, 18, 18)))
+                        .addGap(50, 50, 50)))
                 .addComponent(pnlInfoTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -227,32 +293,21 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComentario;
-    private javax.swing.JCheckBox chckbQA;
     private javax.swing.JCheckBox chkbxQA;
     private javax.swing.JComboBox<String> cmbEstado;
-    private javax.swing.JComboBox<String> cmbProgramador;
+    private javax.swing.JComboBox<String> cmbProgr;
     private javax.swing.JComboBox<String> cmbQA;
-    private javax.swing.JComboBox<String> cmbTester;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblActividad;
     private javax.swing.JLabel lblAvance;
     private javax.swing.JLabel lblDescripcionAd;
     private javax.swing.JLabel lblEstado;
-    private javax.swing.JLabel lblFecgaFin;
     private javax.swing.JLabel lblFechaFinal;
-    private javax.swing.JLabel lblFechaInicio;
     private javax.swing.JLabel lblFechaStart;
+    private javax.swing.JLabel lblProgra;
     private javax.swing.JLabel lblSuperFunc;
-    private javax.swing.JLabel lblSupervisorFunc;
     private javax.swing.JLabel lblSupervisorProgra;
-    private javax.swing.JLabel lblSupervisorTI;
     private javax.swing.JLabel lblTDes;
-    private javax.swing.JLabel lblTitleProgramador1;
-    private javax.swing.JLabel lblTitleStatus;
-    private javax.swing.JLabel lblTitleStatus1;
-    private javax.swing.JLabel lblTitleSupervisor;
-    private javax.swing.JLabel lblTitleSupervisor1;
     private javax.swing.JLabel lblTituloSup;
     private javax.swing.JLabel lblTituloSuper;
     private javax.swing.JLabel lvlTicketName;
@@ -260,11 +315,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pnlInfoTicket;
     private javax.swing.JTextField txtAvance;
     private javax.swing.JTextArea txtComentario;
-    private javax.swing.JFormattedTextField txtFechaFin;
     private javax.swing.JTextField txtFechaFinal;
-    private javax.swing.JFormattedTextField txtFechaInicio;
     private javax.swing.JTextField txtFechaStart;
-    private javax.swing.JFormattedTextField txtPorcentaje;
-    private javax.swing.JTextField txtStatus;
     // End of variables declaration//GEN-END:variables
 }

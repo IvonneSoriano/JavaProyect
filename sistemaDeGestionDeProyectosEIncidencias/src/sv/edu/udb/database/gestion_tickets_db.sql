@@ -161,7 +161,16 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`tickets` (
   PRIMARY KEY (`TICKETID`, `REQUESTID`),
   CONSTRAINT `fk_tickets_requests1`
         FOREIGN KEY (`REQUESTID`)
-        REFERENCES `gestion_tickets`.`requests` (`REQUESTID`)
+        REFERENCES `gestion_tickets`.`requests` (`REQUESTID`),
+ CONSTRAINT `fk_tickets_projectid`
+        FOREIGN KEY (`PROJECTID`)
+        REFERENCES `gestion_tickets`.`projects` (`PROJECTID`),
+ CONSTRAINT `fk_tickets_programmer`
+        FOREIGN KEY (`ID_PROGRAMADOR`)
+        REFERENCES `gestion_tickets`.`employees` (`EmployeeID`),
+CONSTRAINT `fk_tickets_tester`
+        FOREIGN KEY (`ID_TESTER`)
+        REFERENCES `gestion_tickets`.`employees` (`EmployeeID`)
         ON DELETE CASCADE
         ON UPDATE NO ACTION)
 ENGINE = InnoDB

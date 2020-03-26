@@ -93,6 +93,11 @@ public class Contenedor extends javax.swing.JFrame {
         saveAsMenuItem.setMnemonic('a');
         saveAsMenuItem.setText("Save As ...");
         saveAsMenuItem.setDisplayedMnemonicIndex(5);
+        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAsMenuItemActionPerformed(evt);
+            }
+        });
         ticketMenu.add(saveAsMenuItem);
 
         cerrarSesionMenuItem.setMnemonic('x');
@@ -242,6 +247,13 @@ public class Contenedor extends javax.swing.JFrame {
         cu.show();
     }//GEN-LAST:event_btnAgregarEmpActionPerformed
 
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+        // TODO add your handling code here:
+         closeForms();
+         ViewTicket cu = new ViewTicket(1);
+        desktopPane.add(cu);
+        cu.show();
+    }//GEN-LAST:event_saveAsMenuItemActionPerformed
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         closeForms();

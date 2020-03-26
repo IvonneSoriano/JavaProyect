@@ -37,6 +37,8 @@ public class RequestController {
 
         return requests;
     }
-
-   
+    public Request getRequest(int id){
+         RequestDAO dao = new RequestDAO();
+         return dao.getOneById(id);
+    }
 }
