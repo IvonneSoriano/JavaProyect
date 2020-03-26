@@ -274,26 +274,29 @@ public class EditUser extends javax.swing.JInternalFrame {
                         Contenedor.desktopPane.add(su);
                         this.dispose();
                         su.show();
+                        cleanTxt();
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "El usuario no se ha editado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
+                        cleanTxt();
                     }
         }
          else{
                         JOptionPane.showMessageDialog(null, "El usuario no se ha editado correctamente","Operacion fallida",JOptionPane.ERROR_MESSAGE );
-                    }
+                        cleanTxt();
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void txtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyPressed
         // TODO add your handling code here:
         valid.numberTyped(evt);
-        txtName.setText("");
+       
     }//GEN-LAST:event_txtNameKeyPressed
 
     private void txtLastnameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastnameKeyPressed
         // TODO add your handling code here:
         valid.numberTyped(evt);
-        txtName.setText("");
+       
     }//GEN-LAST:event_txtLastnameKeyPressed
     public boolean validationTxt(){
         if (valid.checkPassword(txtContra.getPassword()) && valid.checkPassword(txtNcontra.getPassword()) &&  !valid.emptyField(txtName.getText()) && !valid.emptyField(txtLastname.getText()) && !valid.emptyField(txtUsuario.getText()) && !valid.emptyField(txtContra.getText())) {
@@ -303,7 +306,13 @@ public class EditUser extends javax.swing.JInternalFrame {
             return false;
         }
     }
-
+     public void cleanTxt(){
+         txtName.setText("");
+         txtLastname.setText("");
+         txtContra.setText("");
+         txtNcontra.setText("");
+         txtUsuario.setText("");
+   }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JComboBox<String> cmbbxDepoto;
