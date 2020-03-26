@@ -160,7 +160,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        if (txtUser.getText().equals("") || txtPassword.getPassword().length == 0) {
+         if (txtUser.getText().equals("") || txtPassword.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "Favor llenar todos los campos",
                     "Error - Campo vacio",
                     JOptionPane.WARNING_MESSAGE);
@@ -195,13 +195,13 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnEntrar.doClick();
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        txtUser.setText("");
+            txtUser.setText("");
         txtPassword.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 

@@ -199,7 +199,7 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
     private void txtnameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnameKeyPressed
         // TODO add your handling code here:
         valid.numberTyped(evt);
-       
+
     }//GEN-LAST:event_txtnameKeyPressed
     public void cleanTxt(){
         txtname.setText("");

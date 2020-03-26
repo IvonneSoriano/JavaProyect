@@ -252,7 +252,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
        
         valid.numberTyped(evt);
-       
+
     }//GEN-LAST:event_txtLastnameKeyTyped
 
     private void clearForm() {

@@ -95,7 +95,12 @@ public class Employee {
         return name + " " + lastname;       
     }
     public String getName(String f){
-        String[] onlyName = f.split("");
+        String[] onlyName = f.split(" ");
+        return onlyName[0];
+    }
+    
+     public String getLastname(String f){
+        String[] onlyName = f.split(" ");
         return onlyName[1];
     }
     

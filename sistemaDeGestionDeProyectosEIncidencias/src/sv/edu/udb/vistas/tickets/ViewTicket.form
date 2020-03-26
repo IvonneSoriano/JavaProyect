@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -36,7 +36,10 @@
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="pnlComentarios" max="32767" attributes="0"/>
-                                  <Component id="lblDescripcionAd" alignment="1" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblDescripcionAd" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                                  </Group>
                                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -94,26 +97,25 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblFechaStart" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblFechaFinal" min="-2" max="-2" attributes="0"/>
-                      <Component id="chkbxQA" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblSuperFunc" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblSupervisorProgra" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblTituloSup" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtAvance" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblAvance" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="txtFechaFinal" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFechaStart" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cmbQA" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cmbProgr" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblProgra" alignment="0" max="32767" attributes="0"/>
+                      <Component id="cmbEstado" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblFechaStart" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblFechaFinal" min="-2" max="-2" attributes="0"/>
+                              <Component id="chkbxQA" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtAvance" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblAvance" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblProgra" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="102" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="lblTituloSuper" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="cmbEstado" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                      <Component id="cmbProgr" alignment="0" max="32767" attributes="0"/>
+                      <Component id="cmbQA" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtFechaStart" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtFechaFinal" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="99" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -128,29 +130,21 @@
                   <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="cmbEstado" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblTituloSup" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="lblSupervisorProgra" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblTituloSuper" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="lblSuperFunc" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Component id="lblProgra" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="cmbProgr" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="chkbxQA" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="cmbQA" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                   <Component id="lblFechaStart" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Component id="txtFechaStart" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="lblFechaFinal" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="txtFechaFinal" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -184,34 +178,21 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbEstadoItemStateChanged"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmbEstadoFocusLost"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblTituloSup">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Supervisor de TI"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblSupervisorProgra">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblTituloSuper">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Supervisor administrativo"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblSuperFunc">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkbxQA">
           <Properties>
             <Property name="text" type="java.lang.String" value="Q/A Asignado"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkbxQAActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbQA">
           <Properties>
@@ -224,6 +205,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmbQAFocusLost"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -236,16 +220,6 @@
         <Component class="javax.swing.JLabel" name="lblFechaFinal">
           <Properties>
             <Property name="text" type="java.lang.String" value="Fecha de finalizaci&#xf3;n"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtFechaStart">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtFechaFinal">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblProgra">
@@ -264,9 +238,26 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmbProgrFocusLost"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="txtFechaStart">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+              <Format format="dd-MM-YYYY" subtype="-1" type="1"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="txtFechaFinal">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+              <Format format="dd-MM-YY" subtype="-1" type="1"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -331,7 +322,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="317" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="359" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

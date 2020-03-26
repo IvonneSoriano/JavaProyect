@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import sv.edu.udb.controllers.TicketController;
+import sv.edu.udb.controllers.TicketsController;
 import sv.edu.udb.models.Ticket;
 /**
  *
@@ -19,9 +19,9 @@ public class TicketsList extends javax.swing.JInternalFrame {
 
     ResultSet tabla;
     Ticket tickOb = new Ticket();
-    TicketController ticketController = new TicketController();
+    TicketsController ticketController = new TicketsController();
     List<Ticket> tList = new ArrayList<>();
-    TicketController proTicket = new TicketController();
+    TicketsController proTicket = new TicketsController();
     DefaultTableModel modelo1;
     /** Creates new form ViewTickets */
     public TicketsList() {

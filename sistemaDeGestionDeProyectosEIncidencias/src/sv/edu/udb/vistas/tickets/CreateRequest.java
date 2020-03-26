@@ -7,6 +7,8 @@ package sv.edu.udb.vistas.tickets;
 
 import java.awt.Dimension;
 import java.sql.Timestamp;
+import java.time.Year;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,7 +17,7 @@ import sv.edu.udb.controllers.CommentController;
 import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.controllers.RequestController;
 import sv.edu.udb.controllers.RequestTypeController;
-import sv.edu.udb.controllers.TicketController;
+import sv.edu.udb.controllers.TicketsController;
 import sv.edu.udb.models.Comment;
 import sv.edu.udb.models.CommentDAO;
 import sv.edu.udb.models.Project;
@@ -29,6 +31,9 @@ import sv.edu.udb.util.RequestTypes;
 import sv.edu.udb.util.Roles;
 import sv.edu.udb.vistas.Contenedor;
 import static sv.edu.udb.vistas.Contenedor.desktopPane;
+import sv.edu.udb.controllers.DeparmentController;
+import sv.edu.udb.models.Deparment;
+import sv.edu.udb.models.Session;
 
 /**
  *
@@ -295,7 +300,13 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         cbProyectosExistentes.setSelectedIndex(-1);
         cbTipoSolicitud.setSelectedIndex(-1);
     }
-    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerforme
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        // enviar notificacion a jefe de desarrollo del area
+        // setear estado a: en espera de respuesta
+        // mostrar dialogo con ID
+
+        // when no option is selected in this combobox it's because there's no need
+        // for a new project
         Request r = new Request();
         RequestTypeController typeController = new RequestTypeController();
 
@@ -308,7 +319,6 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         r.setIdTypeRequest(typeController.findRequestTypeByName(String.valueOf(
                 cbTipoSolicitud.getSelectedItem())).getId());
         r.setRequestDate(new Timestamp(System.currentTimeMillis()));
-
 
         r.setRequestDescription(txtDescripcionRequerimiento.getText());
         r.setRequestStatus(RequestStatus.EN_ESPERA.name());
@@ -329,6 +339,8 @@ public class CreateRequest extends javax.swing.JInternalFrame {
                     "Ha ocurrido un error por favor intente mas tarde. ",
                     "Nuevo Requerimiento - Error", JOptionPane.WARNING_MESSAGE);
         }
+        
+        
 
         // actualizando contenedor - how?
         desktopPane.updateUI();
@@ -351,6 +363,12 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         RequestController rc = new RequestController();
         String requestID = this.getTitle().split(":")[1].trim();
         Ticket nuevoTicket = new Ticket();
+        
+//        PARA EL GENERADOR DE CODIGO
+        Deparment d = new Deparment();
+        DeparmentController dc = new DeparmentController();
+        d = dc.showDeparment(Session.deparmentId);
+//        JOptionPane.showMessageDialog(rootPane, generateInternalCode(d.getDepartmentName()));
         nuevoTicket.setRequestId(Integer.parseInt(requestID));
         if (cbProyectosExistentes.getSelectedIndex() != -1) {
             String selectedItemText = String.valueOf(
@@ -360,10 +378,10 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         nuevoTicket.setIdProgrammer(0);
         nuevoTicket.setIdTester(0);
         nuevoTicket.setTicketStatus(RequestStatus.ASIGNAR_PROGRAMADOR.name());
-        nuevoTicket.setInternalCode("F-I-X-T-H-I-S");
+        nuevoTicket.setInternalCode(generateInternalCode(d.getDepartmentName()));
         nuevoTicket.setStartDate(new Timestamp(System.currentTimeMillis()));
         nuevoTicket.setEndDate(new Timestamp(System.currentTimeMillis()));
-        new TicketController().saveTicket(nuevoTicket);
+        new TicketsController().saveTicket(nuevoTicket);
 
         logger.info("Agregando nuevo comentario");
         Comment nuevoComentario = new Comment();
@@ -388,7 +406,7 @@ public class CreateRequest extends javax.swing.JInternalFrame {
                 "Requerimiento Aceptado - Exito", JOptionPane.INFORMATION_MESSAGE);
 
         this.dispose();
-        desktopPane.updateUI();
+        Contenedor.desktopPane.updateUI();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnRechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRechazarActionPerformed
@@ -438,4 +456,28 @@ public class CreateRequest extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txtAreaAgregarComentario;
     private javax.swing.JTextArea txtDescripcionRequerimiento;
     // End of variables declaration//GEN-END:variables
+
+    public String generateInternalCode(String name) {
+        String code = "";
+        code = name.toUpperCase().substring(0, 3);
+        Calendar cal = Calendar.getInstance();
+        String a = Integer.toString(cal.get(1)).substring(0,2);
+        code = code + a+ramdomNum();
+        return code;
+    }
+
+    public String ramdomNum() {
+        TicketsController c = new TicketsController();
+        String num = "";
+        int n;
+        for (int i = 0; i < 3; i++) {
+//        n = Math.floor(Math.random()*9);
+            n = (int) Math.floor(Math.random() * 6 + 1);
+            num+= Integer.toString(n);
+        }
+        while(c.checkIC(num)>0){
+            num = ramdomNum();
+        }
+        return  num;
+    }
 }
