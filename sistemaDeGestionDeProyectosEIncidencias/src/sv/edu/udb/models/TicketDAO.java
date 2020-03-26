@@ -28,14 +28,14 @@ public class TicketDAO implements Dao<Ticket> {
     }
 
     @Override
-    public List<Ticket> getAll() {
+     public List<Ticket> getAll() {
         Connect connection = null;
         List<Ticket> ticketFound = new ArrayList<>();
         try {
             connection = new Connect();
             connection.setRs("SELECT * FROM TICKETS");
             ResultSet ticketSet = connection.getRs();
-            while (ticketSet.next()) {
+            while (ticketSet.next()) {                
                 Ticket ticket = new Ticket();
                 ticket.setIdTicket(ticketSet.getInt("TICKETID"));
                 ticket.setRequestId(ticketSet.getInt("REQUESTID"));
@@ -46,7 +46,7 @@ public class TicketDAO implements Dao<Ticket> {
                 ticket.setInternalCode(ticketSet.getString("INTERNALCODE"));
                 ticket.setStartDate(ticketSet.getTimestamp("STARTDATE"));
                 ticket.setEndDate(ticketSet.getTimestamp("ENDDATE"));
-
+                
             }
         } catch (Exception e) {
         }
@@ -54,8 +54,31 @@ public class TicketDAO implements Dao<Ticket> {
     }
 
     @Override
-    public boolean save(Ticket t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+ public boolean save(Ticket t) {
+        try {
+            Connect connection = new Connect();
+
+            String sql = "INSERT INTO `gestion_tickets`.`tickets` (`REQUESTID`, "
+                    + "`PROJECTID`, `ID_PROGRAMADOR`, `ID_TESTER`, `TICKET_STATUS`,"
+                    + "`INTERNALCODE`, `STARTDATE`, `ENDDATE`) VALUES("
+                    + t.getRequestId() + ", " + t.getProjectID() + ", "
+                    + t.getIdProgrammer() + ", " + t.getIdTester() + ", '"
+                    + t.getTicketStatus() + "', '" + t.getInternalCode() + "', '"
+                    + t.getStartDate() + "', '" + t.getEndDate() + "');";
+            int result = connection.setQuery(sql);
+
+            if (result <= 0) {
+                logger.warn("INSERT to tickets table has failed");
+                return false;
+            } else {
+                logger.info("INSERT to tickets table has successfully completed!");
+                return true;
+            }
+
+        } catch (Exception e) {
+            logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -216,8 +239,25 @@ public class TicketDAO implements Dao<Ticket> {
                 ticketFound.add(ticket);
             }
         } catch (Exception e) {
+            logger.error("Error processing SELECT query in verifyTesterNeeded method. Message: " + e.getMessage());
         }
         return ticketFound;
     }
 
+        public int verifyInternalCode(String c){
+        Connect connection = null;
+        int result = 0;
+        List<Ticket> ticketFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+                connection.setRs("SELECT COUNT(*) FROM tickets WHERE tickets.INTERNALCODE='"+c+"';" );
+            ResultSet ticketSet = connection.getRs();
+            while (ticketSet.next()) {
+                result = ticketSet.getInt(1);
+            }
+        } catch (Exception e) {
+            logger.error("Error processing SELECT query in verifyInternalCode method. Message: " + e.getMessage());
+        }
+        return result;
+    }
 }

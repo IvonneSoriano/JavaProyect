@@ -8,6 +8,7 @@ package sv.edu.udb.vistas;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 import sv.edu.udb.models.Session;
 import sv.edu.udb.util.Roles;
@@ -20,7 +21,12 @@ import sv.edu.udb.vistas.requestview.*;
 import sv.edu.udb.vistas.tickets.*;
 import sv.edu.udb.controllers.TicketsController;
 import java.util.List;
+import sv.edu.udb.controllers.DeparmentController;
+import sv.edu.udb.controllers.RequestController;
+import sv.edu.udb.models.Request;
+import sv.edu.udb.controllers.RequestTypeController;
 import sv.edu.udb.models.Ticket;
+import sv.edu.udb.util.RequestStatus;
 
 /**
  *
@@ -31,11 +37,13 @@ public class Contenedor extends javax.swing.JFrame {
     private static Logger logger = Logger.getLogger(Contenedor.class);
     private List<Ticket> cods= null;
     private TicketsController tController = new TicketsController();
+     private DefaultTableModel modeloTablaSolicitudes;
     /**
      * Creates new form Contenedor
      */
     public Contenedor() {
             initComponents();
+            loadData();
             setExtendedState(Contenedor.MAXIMIZED_BOTH);
             setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
             if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
@@ -52,6 +60,80 @@ public class Contenedor extends javax.swing.JFrame {
             }
     }
 
+    
+    public void loadData() {
+
+        RequestController controller = new RequestController();
+        Object[][] data = null;
+        String[] columns = {
+            "Id", "Tipo Solicitud", "Descripcion", "Status"
+        };
+        modeloTablaSolicitudes = new DefaultTableModel(data, columns);
+        this.jTblSolicitudes.setModel(modeloTablaSolicitudes);
+
+        List<Request> listFound = null;
+        if (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId()) {
+            listFound = controller.findRequestsByStatusAndDepartmentId(RequestStatus.EN_ESPERA.name(), Session.deparmentId);
+        } else {
+            listFound = controller.findRequestByDeparmentId(Session.deparmentId);
+        }
+
+        if (listFound.size() > 0) {
+            for (Request r : listFound) {
+                Object[] newRow = {
+                    r.getId(),
+                    new RequestTypeController().findRequestTypeById(r.getIdTypeRequest()).getRequestTypeName(),
+                    r.getRequestDescription(),
+                    r.getRequestStatus()
+                };
+
+                // set the column width for each column
+                this.jTblSolicitudes.getColumnModel().getColumn(0).setPreferredWidth(30);
+                this.jTblSolicitudes.getColumnModel().getColumn(1).setPreferredWidth(220);
+                this.jTblSolicitudes.getColumnModel().getColumn(2).setPreferredWidth(300);
+                this.jTblSolicitudes.getColumnModel().getColumn(3).setPreferredWidth(250);
+                modeloTablaSolicitudes.addRow(newRow);
+            }
+        } else {
+            lblSolicitudesPendientes.setVisible(false);
+            jTblSolicitudes.setVisible(false);
+            jScrollPane1.setVisible(false);
+        }
+    }
+                                                  
+    
+    public void closeForms() {
+        desktopPane.removeAll();
+        desktopPane.updateUI();
+    }
+                                        
+                                          
+
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+        // TODO add your handling code here:
+         closeForms();
+         ViewTicket cu = new ViewTicket(2);
+        desktopPane.add(cu);
+        cu.show();
+    }//GEN-LAST:event_saveAsMenuItemActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        closeForms();
+        RequestList rl = new RequestList();
+        desktopPane.add(rl);
+        rl.show();
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnVerTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTicketActionPerformed
+        // TODO add your handling code here:
+        closeForms();
+        TicketsList tl = new TicketsList();
+        desktopPane.add(tl);
+        tl.show();
+    }//GEN-LAST:event_btnVerTicketActionPerformed
+ 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,6 +144,9 @@ public class Contenedor extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTblSolicitudes = new javax.swing.JTable();
+        lblSolicitudesPendientes = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         ticketMenu = new javax.swing.JMenu();
         btnNewTicket = new javax.swing.JMenuItem();
@@ -80,6 +165,33 @@ public class Contenedor extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTblSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTblSolicitudes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblSolicitudesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTblSolicitudes);
+
+        desktopPane.add(jScrollPane1);
+        jScrollPane1.setBounds(90, 80, 490, 180);
+
+        lblSolicitudesPendientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblSolicitudesPendientes.setForeground(new java.awt.Color(255, 102, 102));
+        lblSolicitudesPendientes.setText("SOLICITUDES PENDIENTES");
+        desktopPane.add(lblSolicitudesPendientes);
+        lblSolicitudesPendientes.setBounds(220, 50, 250, 24);
 
         ticketMenu.setMnemonic('T');
         ticketMenu.setText("Ticket");
@@ -194,11 +306,11 @@ public class Contenedor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
         );
 
         pack();
@@ -211,11 +323,8 @@ public class Contenedor extends javax.swing.JFrame {
         return;
 
     }//GEN-LAST:event_cerrarSesionMenuItemActionPerformed
-    
-    public void closeForms() {
-        desktopPane.removeAll();
-        desktopPane.updateUI();
-    }
+
+ 
     private void insertProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjectActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -235,14 +344,14 @@ public class Contenedor extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jListMenuActionPerformed
-
+  
     private void btnNewTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTicketActionPerformed
-        closeForms();
+        //closeForms();
         CreateRequest r = new CreateRequest();
         desktopPane.add(r);
         r.show();
     }//GEN-LAST:event_btnNewTicketActionPerformed
-
+    
     private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -250,7 +359,7 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(cu);
         cu.show();
     }//GEN-LAST:event_btnVerEmpActionPerformed
-
+    
     private void btnAgregarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -259,30 +368,25 @@ public class Contenedor extends javax.swing.JFrame {
         cu.show();
     }//GEN-LAST:event_btnAgregarEmpActionPerformed
 
-    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
-        // TODO add your handling code here:
-         closeForms();
-         ViewTicket cu = new ViewTicket(2);
-        desktopPane.add(cu);
-        cu.show();
-    }//GEN-LAST:event_saveAsMenuItemActionPerformed
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        closeForms();
-        RequestList rl = new RequestList();
-        desktopPane.add(rl);
-        rl.show();
-        
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void jTblSolicitudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblSolicitudesMouseClicked
+        if (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId()) {
+            DeparmentController ct = new DeparmentController();
+            int rowNumber = jTblSolicitudes.getSelectedRow();
+            logger.info("Jefe de desarrollo del "
+                    + ct.showDeparment(Session.deparmentId).getDepartmentName()
+                    + " revisando solicitud con id: "
+                    + jTblSolicitudes.getValueAt(rowNumber, 0).toString());
 
-    private void btnVerTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTicketActionPerformed
-        // TODO add your handling code here:
-        closeForms();
-        TicketsList tl = new TicketsList();
-        desktopPane.add(tl);
-        tl.show();
-    }//GEN-LAST:event_btnVerTicketActionPerformed
+            CreateRequest cr = new CreateRequest();
+            desktopPane.add(cr);
 
+            RequestController rc = new RequestController();
+            Request r = rc.getRequestById(Integer.parseInt(String.valueOf(jTblSolicitudes.getValueAt(rowNumber, 0))));
+            cr.cargarSolicitudExistente(r);
+            cr.show();
+            loadData();
+        }
+    }//GEN-LAST:event_jTblSolicitudesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -332,6 +436,9 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenuItem jListMenu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTblSolicitudes;
+    private javax.swing.JLabel lblSolicitudesPendientes;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu projectMenu;
     private javax.swing.JMenuItem saveAsMenuItem;
@@ -339,3 +446,4 @@ public class Contenedor extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 }
+

@@ -17,10 +17,11 @@ public enum RequestStatus {
     EN_DESARROLLO,
     SOLICITUD_RECHAZADA,
     DEVUELTO_CON_OBSERVACIONES,
-    ESPERANDO_APROBACION_AREA_SOLICITANTE;
+    ESPERANDO_APROBACION_AREA_SOLICITANTE,
+    SOLICITUD_ACEPTADA    ;
     
     public String getStatus(RequestStatus p){
         return p.toString();
     }
-    
+   
 }

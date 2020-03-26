@@ -17,8 +17,9 @@ import sv.edu.udb.util.Connect;
  *
  * @author kiss_
  */
-public class DeparmentDAO implements Dao<Deparment>{
-      private static Logger logger = Logger.getLogger(EmployeeDAO.class);
+public class DeparmentDAO implements Dao<Deparment> {
+
+    private static Logger logger = Logger.getLogger(DeparmentDAO.class);
 
     @Override
     public Optional<Deparment> get(long id) {
@@ -33,7 +34,7 @@ public class DeparmentDAO implements Dao<Deparment>{
         try {
             connection = new Connect();
         } catch (SQLException ex) {
-            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+            logger.error("Error creating conecction. Message: " + ex.getMessage());
         }
         try {
             connection.setRs("SELECT * FROM DEPARTMENTS;");
@@ -41,18 +42,18 @@ public class DeparmentDAO implements Dao<Deparment>{
 
             while (departments.next()) {
                 Deparment department = new Deparment();
-                department.setDepartmentId(departments.getInt("deparmentid"));
-                department.setDepartmentName(departments.getString("deparmentname"));
+                department.setDepartmentId(departments.getInt("departmentid"));
+                department.setDepartmentName(departments.getString("departmentname"));
                 departmentsFound.add(department);
             }
 
         } catch (SQLException e) {
-            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
         } finally {
             try {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
-                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+                logger.error("Error closing conecction. Message: " + ex.getMessage());
             }
 
         }
@@ -61,78 +62,76 @@ public class DeparmentDAO implements Dao<Deparment>{
 
     @Override
     public boolean save(Deparment t) {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     // THIS METHOD CAN BE DONE BY SUPERVISOR  
     @Override
     public boolean update(Deparment t, String[] params) {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-   
 
     @Override
     public boolean delete(Deparment t) {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public Deparment getOne(int id){
+
+    public Deparment getOne(int id) {
         Connect connection = null;
-         Deparment department = new Deparment();
-try {
+        Deparment department = new Deparment();
+        try {
             connection = new Connect();
-        }catch (SQLException ex) {
-            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
-            
+        } catch (SQLException ex) {
+            logger.error("Error creating conecction. Message: " + ex.getMessage());
+
         }
-try {
-            connection.setRs("SELECT * FROM departments WHERE departments.deparmentid=" + id + ";");
+        try {
+            connection.setRs("SELECT * FROM departments WHERE departments.departmentid=" + id + ";");
             ResultSet departmentFound = (ResultSet) connection.getRs();
 
             while (departmentFound.next()) {
-                department.setDepartmentId(departmentFound.getInt("DEPARMENTID"));
-                department.setDepartmentName(departmentFound.getString("DEPARMENTNAME"));
+                department.setDepartmentId(departmentFound.getInt("DEPARTMENTID"));
+                department.setDepartmentName(departmentFound.getString("DEPARTMENTNAME"));
             }
 
         } catch (SQLException e) {
-            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
         } finally {
             try {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
-                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+                logger.error("Error closing conecction. Message: " + ex.getMessage());
             }
 
         }
         return department;
     }
-    public Deparment getOneByName(String nombre){
+
+    public Deparment getOneByName(String nombre) {
         Connect connection = null;
-         Deparment department = new Deparment();
-try {
+        Deparment department = new Deparment();
+        try {
             connection = new Connect();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
-try {
-            connection.setRs("SELECT * FROM departments WHERE departments.deparmentname='" + nombre + "';");
+        try {
+            connection.setRs("SELECT * FROM departments WHERE departments.departmentname='" + nombre + "';");
             ResultSet departmentFound = (ResultSet) connection.getRs();
 
             while (departmentFound.next()) {
-                department.setDepartmentId(departmentFound.getInt("DEPARMENTID"));
-                department.setDepartmentName(departmentFound.getString("DEPARMENTNAME"));
+                department.setDepartmentId(departmentFound.getInt("DEPARTMENTID"));
+                department.setDepartmentName(departmentFound.getString("DEPARTMENTNAME"));
             }
 
         } catch (SQLException e) {
-            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
         } finally {
             try {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
-                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+                logger.error("Error closing conecction. Message: " + ex.getMessage());
             }
-
         }
         return department;
     }

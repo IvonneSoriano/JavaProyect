@@ -19,6 +19,10 @@ public class Project {
 
     public Project() {
     }
+    
+    public Project(String daoDefault) {
+        this.name = daoDefault;
+    }
 
     public void setProjectsId(int projectsId) {
         this.id = projectsId;
