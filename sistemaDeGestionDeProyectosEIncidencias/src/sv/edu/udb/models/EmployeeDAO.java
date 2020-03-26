@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import sv.edu.udb.util.Connect;
 
@@ -93,7 +92,7 @@ public class EmployeeDAO implements Dao<Employee> {
     }
 
     // THIS METHOD CAN BE DONE BY SUPERVISOR  
-    @Override
+   
     public boolean update(Employee t, String[] params) {
         try {
             Connect connection = new Connect();
@@ -106,6 +105,32 @@ public class EmployeeDAO implements Dao<Employee> {
                     + "', `USERNAME` = '" + t.getUsername()
                     + "', `PASSWORD` = SHA2('" + t.getPassword()
                     + " ',256) WHERE `EmployeeID` = " + t.getEmployeeId() + ";"
+            );
+            if (result <= 0) {
+                logger.error("UPDATE to Employees table has failed");
+                return false;
+            } else {
+                logger.info("UPDATE to Employees table has successfully completed!");
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("Error processing UPDATE query in save method. Message: " + e.getMessage());
+            return false;
+        }
+    }
+    public boolean updateUser(Employee t, String[] params, String pass) {
+        try {
+            Connect connection = new Connect();
+
+            int result = connection.setQuery("UPDATE `gestion_tickets`.`employees` SET "
+                    + "`ROLID` = '" + t.getRolId()
+                    + "', `DEPARTMENTID` = '" + t.getDepartmentId()
+                    + "', `EMPLOYEENAME` = '" + t.getEmployeeName()
+                    + "', `EMPLOYEELASTNAME` = '" + t.getEmployeeLastname()
+                    + "', `USERNAME` = '" + t.getUsername()
+                    + "', `PASSWORD` = SHA2('" + t.getPassword()
+                    + "',256) WHERE `EmployeeID` = " + t.getEmployeeId() + " and `PASSWORD` = SHA2('"+pass+"',256);"
+                   
             );
             if (result <= 0) {
                 logger.error("UPDATE to Employees table has failed");
@@ -173,7 +198,6 @@ public class EmployeeDAO implements Dao<Employee> {
              String pass = new String(password);
             connection.setRs("SELECT * FROM EMPLOYEES WHERE username='" + username + "' and PASSWORD= SHA2('"+ pass +"',256);");
             ResultSet employees = (ResultSet) connection.getRs();
-
             while (employees.next()) {
                 foundEmployee = new Employee();
                 foundEmployee.setEmployeeId(employees.getInt("EmployeeID"));
@@ -183,12 +207,36 @@ public class EmployeeDAO implements Dao<Employee> {
                 foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 foundEmployee.setUsername(employees.getString("USERNAME"));
                 foundEmployee.setPassword(employees.getString("PASSWORD"));
-                
+               
             }
         } catch (Exception e) {
             logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
         }
         return Optional.ofNullable(foundEmployee);
+    }
+    
+     public Employee getEmployeeByFullName(String name, String last) {
+        Employee foundEmployee = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE 	EMPLOYEENAME='" + name + "' and EMPLOYEELASTNAME ='"+ last +"' ;");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                foundEmployee = new Employee();
+                foundEmployee.setEmployeeId(employees.getInt("EmployeeID"));
+                foundEmployee.setRolId(employees.getInt("ROLID"));
+                foundEmployee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                foundEmployee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                foundEmployee.setUsername(employees.getString("USERNAME"));
+                foundEmployee.setPassword(employees.getString("PASSWORD"));
+
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getEmployeeByFullname() method. Message: " + e.getMessage());
+        }
+        return foundEmployee;
     }
 
     public Employee getEmployeeById(int id) {
@@ -210,7 +258,7 @@ public class EmployeeDAO implements Dao<Employee> {
 
             }
         } catch (Exception e) {
-            logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
+            logger.error("Error processing ResultSet in getEmployeeById() method. Message: " + e.getMessage());
         }
         return foundEmployee;
     }
@@ -361,6 +409,51 @@ public class EmployeeDAO implements Dao<Employee> {
                 connection.cerrarConexion();
             } catch (SQLException ex) {
                 logger.error("Error closing conecction. Message: " + ex.getMessage());
+            }
+
+        }
+        return employeesFound;
+    }
+    
+     public List<Employee> getAll(int rol, int depto) {
+
+        Connect connection = null;
+        List<Employee> employeesFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+        } catch (SQLException ex) {
+            logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
+        }
+        try {
+            connection.setRs("SELECT employees.EmployeeID, "
+                    + "employees.EMPLOYEENAME,"
+                    + "employees.EMPLOYEELASTNAME "
+                    + "FROM `employees` INNER JOIN tickets "
+                    + "ON employees.EmployeeID = tickets.ID_PROGRAMADOR  "
+                    + "WHERE employees.ROLID = " 
+                    + rol + " AND employees.DEPARMENTID = " + depto
+                    + " AND NOT tickets.TICKET_STATUS = \"DESARROLLO\" ");
+            ResultSet employees = (ResultSet) connection.getRs();
+
+            while (employees.next()) {
+                Employee employee = new Employee();
+                employee.setEmployeeId(employees.getInt("EmployeeID"));
+                employee.setRolId(employees.getInt("ROLID"));
+                employee.setDepartmentId(employees.getInt("DEPARMENTID"));
+                employee.setEmployeeName(employees.getString("EMPLOYEENAME"));
+                employee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
+                employee.setUsername(employees.getString("USERNAME"));
+                employee.setPassword(employees.getString("PASSWORD"));
+                employeesFound.add(employee);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
+        } finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
             }
 
         }

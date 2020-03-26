@@ -69,9 +69,21 @@ public class EmployeeController {
         return foundEmp;
     }
     
-    public boolean updateEmployee(Employee e, String[] p){
+    public boolean updateEmployee(Employee e, String[] p, String pass){
          EmployeeDAO dao = new EmployeeDAO();
-         return dao.update(e,p);
+         return dao.updateUser(e,p, pass);
         
+    }
+    
+    public List<Employee> findByRolAndDepto(int rol, int depto) {
+        EmployeeDAO dao = new EmployeeDAO();
+        List<Employee> foundEmp = dao.getAll(rol, depto);
+        return foundEmp;
+    }
+    
+    public Employee getEmployee(String name, String last) {
+        EmployeeDAO dao = new EmployeeDAO();
+        return  dao.getEmployeeByFullName(name, last);
+       
     }
 }
