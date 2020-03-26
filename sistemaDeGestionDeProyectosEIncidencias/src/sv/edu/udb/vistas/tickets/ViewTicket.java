@@ -46,8 +46,9 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         request = rController.getRequest(ticket.getRequestId());
         isJTI = (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId());
         isJAD = (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId());
-        fillData();
         inputsState();
+        fillData();
+
     }
 
     public void refreshCP() {
@@ -55,6 +56,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         Employee e;
         e = eController.getEmployeeById(ticket.getIdProgrammer());
         cmbProgr.addItem(e.getFullName());
+        btnAPro.setVisible(false);
     }
 
     public void refreshCQA() {
@@ -62,6 +64,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         Employee e;
         e = eController.getEmployeeById(ticket.getIdTester());
         cmbQA.addItem(e.getFullName());
+        btnATest.setVisible(false);
     }
 
     public void fillData() {
@@ -93,6 +96,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
             }
         }
         fillStatus();
+        txtFechaStart.setText(ticket.getStartDDate());
 //        JOptionPane.showMessageDialog(rootPane, ticket.getIdTicket());
     }
 
@@ -102,17 +106,21 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         chkbxQA.setEnabled(false);
         cmbProgr.setEnabled(false);
         cmbQA.setEnabled(false);
+        btnAPro.setVisible(false);
+        btnATest.setVisible(false);
         if (isJTI) {
             chkbxQA.setEnabled(true);
             cmbProgr.setEnabled(true);
-        };
+            btnAPro.setVisible(true);
+        }
         if (isJAD) {
             cmbQA.setEnabled(true);
         }
         if (ticket.getIdTester() == 0) {
             chkbxQA.setSelected(true);
-            if (isJTI == false) {
+            if (isJAD) {
                 cmbQA.setEnabled(true);
+                btnATest.setVisible(true);
                 fillTesters();
             }
         }
@@ -122,24 +130,39 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 
     public void fillProgrammers() {
         cmbProgr.removeAllItems();
+        int cont = 0;
         List<Employee> p = eController.findEmployee(4, Session.deparmentId);
+
         for (Employee employee : p) {
             if (tController.showStatusTicket(employee.getEmployeeId(), "ID_PROGRAMADOR") == false) {
                 cmbProgr.addItem(employee.getFullName());
+                cont++;
             }
-
         }
+        if (cont == 0) {
+            cmbProgr.setEnabled(false);
+            btnAPro.setVisible(false);
+            JOptionPane.showMessageDialog(rootPane, "No hay programadores disponibles");
+        }
+
     }
 
     public void fillTesters() {
         cmbQA.removeAllItems();
+        int cont = 0;
         List<Employee> p = eController.findEmployee(2, Session.deparmentId);
-        for (Employee employee : p) {
-            if ((tController.showStatusTicket(employee.getEmployeeId(), "ID_TESTER")) == false) {
-                cmbQA.addItem(employee.getFullName());
-            }
-
+        
+            for (Employee employee : p) {
+                if ((tController.showStatusTicket(employee.getEmployeeId(), "ID_TESTER")) == false) {
+                    cmbQA.addItem(employee.getFullName());
+                    cont++;
+                }
         }
+            if(cont == 0){
+               cmbQA.setEnabled(false);
+               btnATest.setVisible(false);
+            JOptionPane.showMessageDialog(rootPane, "No hay empleados administrativos disponibles"); 
+            }
     }
 
     public void fillStatus() {
@@ -174,6 +197,9 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         cmbProgr = new javax.swing.JComboBox<>();
         txtFechaStart = new javax.swing.JFormattedTextField();
         txtFechaFinal = new javax.swing.JFormattedTextField();
+        btnAEstado = new javax.swing.JButton();
+        btnAPro = new javax.swing.JButton();
+        btnATest = new javax.swing.JButton();
         lvlTicketName = new javax.swing.JLabel();
         lblTDes = new javax.swing.JLabel();
         lblDescripcionAd = new javax.swing.JLabel();
@@ -192,16 +218,6 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         lblEstado.setText("Estado");
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbEstado.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbEstadoItemStateChanged(evt);
-            }
-        });
-        cmbEstado.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbEstadoFocusLost(evt);
-            }
-        });
 
         chkbxQA.setText("Q/A Asignado");
         chkbxQA.addActionListener(new java.awt.event.ActionListener() {
@@ -211,11 +227,6 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         });
 
         cmbQA.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbQA.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbQAFocusLost(evt);
-            }
-        });
 
         lblFechaStart.setText("Fecha de inicio");
 
@@ -224,38 +235,69 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         lblProgra.setText("Programador asignado");
 
         cmbProgr.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbProgr.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmbProgrFocusLost(evt);
+
+        txtFechaStart.setEditable(false);
+        txtFechaStart.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-YYYY"))));
+
+        txtFechaFinal.setEditable(false);
+        txtFechaFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-YY"))));
+
+        btnAEstado.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnAEstado.setText("Aceptar");
+        btnAEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAEstadoActionPerformed(evt);
             }
         });
 
-        txtFechaStart.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-YYYY"))));
+        btnAPro.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnAPro.setText("Aceptar");
+        btnAPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAProActionPerformed(evt);
+            }
+        });
 
-        txtFechaFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-YY"))));
+        btnATest.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnATest.setText("Aceptar");
+        btnATest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnATestActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInfoTicketLayout = new javax.swing.GroupLayout(pnlInfoTicket);
         pnlInfoTicket.setLayout(pnlInfoTicketLayout);
         pnlInfoTicketLayout.setHorizontalGroup(
             pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoTicketLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
                 .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlInfoTicketLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
                         .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFechaStart)
-                            .addComponent(lblFechaFinal)
-                            .addComponent(chkbxQA)
-                            .addComponent(lblEstado)
-                            .addComponent(txtAvance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblAvance)
-                            .addComponent(lblProgra))
-                        .addGap(0, 102, Short.MAX_VALUE))
-                    .addComponent(cmbProgr, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbQA, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtFechaStart)
-                    .addComponent(txtFechaFinal))
+                            .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlInfoTicketLayout.createSequentialGroup()
+                                .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblFechaStart)
+                                    .addComponent(lblFechaFinal)
+                                    .addComponent(chkbxQA)
+                                    .addComponent(lblEstado)
+                                    .addComponent(txtAvance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblAvance)
+                                    .addComponent(lblProgra))
+                                .addGap(0, 102, Short.MAX_VALUE))
+                            .addComponent(cmbProgr, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbQA, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtFechaStart)
+                            .addComponent(txtFechaFinal)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfoTicketLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAEstado))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfoTicketLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAPro, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnATest, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         pnlInfoTicketLayout.setVerticalGroup(
@@ -269,15 +311,21 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                 .addComponent(lblEstado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAEstado)
+                .addGap(19, 19, 19)
                 .addComponent(lblProgra)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmbProgr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAPro)
+                .addGap(9, 9, 9)
                 .addComponent(chkbxQA)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmbQA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnATest)
+                .addGap(18, 18, 18)
                 .addComponent(lblFechaStart)
                 .addGap(11, 11, 11)
                 .addComponent(txtFechaStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,7 +333,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                 .addComponent(lblFechaFinal)
                 .addGap(18, 18, 18)
                 .addComponent(txtFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
 
         lvlTicketName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -316,7 +364,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         );
         pnlComentariosLayout.setVerticalGroup(
             pnlComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 359, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -374,29 +422,6 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEstadoItemStateChanged
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_cmbEstadoItemStateChanged
-
-    private void cmbProgrFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbProgrFocusLost
-        // TODO add your handling code here:
-        if (ticket.getIdProgrammer() == 0) {
-            String nombre = (String) (cmbProgr.getSelectedItem());
-            Employee e = new Employee();
-            e = eController.getEmployee(e.getName(nombre), e.getLastname(nombre));
-            if (tController.updateP(ticket.getIdTicket(), e.getEmployeeId())) {
-                ticket.setIdProgrammer(e.getEmployeeId());
-                ticket.setTicketStatus("EN_DESARROLLO");
-                cmbEstado.setSelectedItem("EN_DESARROLLO");
-                tController.updateS(ticket.getIdTicket(), "EN_DESARROLLO");
-                refreshCP();
-                JOptionPane.showMessageDialog(rootPane, "El programador se ha seleccionado correctamente");
-            }
-        }
-
-    }//GEN-LAST:event_cmbProgrFocusLost
-
     private void chkbxQAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkbxQAActionPerformed
         // TODO add your handling code here:
         if (tController.updateT(ticket.getIdTicket(), 0)) {
@@ -410,30 +435,59 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_chkbxQAActionPerformed
 
-    private void cmbQAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbQAFocusLost
+    private void btnAEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAEstadoActionPerformed
         // TODO add your handling code here:
-        if (ticket.getIdTester() == 0) {
-            String nombre = (String) (cmbQA.getSelectedItem());
-            Employee e = new Employee();
-            e = eController.getEmployee(e.getName(nombre), e.getLastname(nombre));
-            if (tController.updateT(ticket.getIdTicket(), e.getEmployeeId())) {
-                ticket.setIdTester(e.getEmployeeId());
-                JOptionPane.showMessageDialog(rootPane, "El Tester se ha seleccionado correctamente");
-            }
-        }
-    }//GEN-LAST:event_cmbQAFocusLost
-
-    private void cmbEstadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbEstadoFocusLost
-        // TODO add your handling code here:
+//        JOptionPane.showMessageDialog(rootPane, cmbEstado.getSelectedIndex());
         String nombre = (String) (cmbEstado.getSelectedItem());
         if (tController.updateS(ticket.getIdTicket(), nombre)) {
             ticket.setTicketStatus(nombre);
             JOptionPane.showMessageDialog(rootPane, "El estado ha cambiado correctamente");
         }
-    }//GEN-LAST:event_cmbEstadoFocusLost
+    }//GEN-LAST:event_btnAEstadoActionPerformed
+
+    private void btnAProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAProActionPerformed
+        // TODO add your handling code here:
+        if (cmbProgr.getSelectedIndex() != -1) {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione algo porfi");
+        } else {
+            if (ticket.getIdProgrammer() == 0) {
+                String nombre = (String) (cmbProgr.getSelectedItem());
+                Employee e = new Employee();
+                e = eController.getEmployee(e.getName(nombre), e.getLastname(nombre));
+                if (tController.updateP(ticket.getIdTicket(), e.getEmployeeId())) {
+                    ticket.setIdProgrammer(e.getEmployeeId());
+                    ticket.setTicketStatus("EN_DESARROLLO");
+                    cmbEstado.setSelectedItem("EN_DESARROLLO");
+                    tController.updateS(ticket.getIdTicket(), "EN_DESARROLLO");
+                    refreshCP();
+                    JOptionPane.showMessageDialog(rootPane, "El programador se ha seleccionado correctamente");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnAProActionPerformed
+
+    private void btnATestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnATestActionPerformed
+        // TODO add your handling code here:
+        if (cmbProgr.getSelectedIndex() != -1) {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione algo porfi");
+        } else {
+            if (ticket.getIdTester() == 0) {
+                String nombre = (String) (cmbQA.getSelectedItem());
+                Employee e = new Employee();
+                e = eController.getEmployee(e.getName(nombre), e.getLastname(nombre));
+                if (tController.updateT(ticket.getIdTicket(), e.getEmployeeId())) {
+                    ticket.setIdTester(e.getEmployeeId());
+                    JOptionPane.showMessageDialog(rootPane, "El Tester se ha seleccionado correctamente");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnATestActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAEstado;
+    private javax.swing.JButton btnAPro;
+    private javax.swing.JButton btnATest;
     private javax.swing.JButton btnComentario;
     private javax.swing.JCheckBox chkbxQA;
     private javax.swing.JComboBox<String> cmbEstado;
