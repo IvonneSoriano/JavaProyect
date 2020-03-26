@@ -101,9 +101,9 @@ public class TicketsList extends javax.swing.JInternalFrame {
     private void tblTicketsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTicketsMouseClicked
         // TODO add your handling code here:
         int rowNumber = tblTickets.getSelectedRow();
-        JOptionPane.showMessageDialog(rootPane, rowNumber);
+//        JOptionPane.showMessageDialog(rootPane, rowNumber);
         String cod = tblTickets.getValueAt(rowNumber, 0).toString();
-        JOptionPane.showMessageDialog(rootPane, Integer.parseInt(cod));
+//        JOptionPane.showMessageDialog(rootPane, Integer.parseInt(cod));
         ViewTicket vt = new ViewTicket(Integer.parseInt(cod));
             Contenedor.desktopPane.removeAll();
             Contenedor.desktopPane.updateUI();

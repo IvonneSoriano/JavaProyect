@@ -70,6 +70,11 @@ public class Ticket {
     public Timestamp getStartDate() {
         return startDate;
     }
+    
+    public String getStartDDate() {
+        String[] f = startDate.toString().split(" ");
+        return f[0];
+    }
 
     public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
