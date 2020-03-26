@@ -225,6 +225,34 @@ public class TicketDAO implements Dao<Ticket> {
             return false;
         }
     }
+        
+        public boolean updateAvance(int idTicket, float a){
+       try {
+            Connect connection = new Connect();
+            float avance=0;
+            
+            connection.setRs("SELECT AVANCE FROM `tickets` WHERE TICKETID = " + idTicket + ";");
+            ResultSet isExist = connection.getRs();
+            while (isExist.next()){
+                avance = isExist.getFloat(1);
+            }
+            avance = a + avance;
+            int result = connection.setQuery("UPDATE `gestion_tickets`.`TICKETS` SET "
+                    + "AVANCE = "+ avance
+                    + " WHERE TICKETID = " + idTicket+ ";"
+            );
+            if (result <= 0) {
+                logger.error("UPDATE to Tickets table has failed");
+                return false;
+            } else {
+                logger.info("UPDATE to Tickets table has successfully completed!");
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("Error processing UPDATE query in updateAvance method. Message: " + e.getMessage());
+            return false;
+        }
+    }
 
      public List<Ticket> verifyTesterNeeded(int id){
         Connect connection = null;
@@ -260,6 +288,24 @@ public class TicketDAO implements Dao<Ticket> {
         }
         return result;
     }
+        
+        
+          public float getAvance(int id){
+        Connect connection = null;
+        float result = 0;
+        try {
+            connection = new Connect();
+                connection.setRs("SELECT AVANCE FROM tickets WHERE tickets.TICKETID= "+id+";" );
+            ResultSet ticketSet = connection.getRs();
+            while (ticketSet.next()) {
+                result = ticketSet.getInt(1);
+            }
+        } catch (Exception e) {
+            logger.error("Error processing SELECT query in verifyInternalCode method. Message: " + e.getMessage());
+        }
+        return result;
+    }
+
         
         public List<Ticket> getAll(int dep) {
         Connect connection = null;

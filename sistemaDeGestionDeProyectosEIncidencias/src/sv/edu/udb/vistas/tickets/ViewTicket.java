@@ -5,6 +5,7 @@
  */
 package sv.edu.udb.vistas.tickets;
 
+import java.sql.Timestamp;
 import javax.swing.JOptionPane;
 import sv.edu.udb.models.Employee;
 import sv.edu.udb.models.Ticket;
@@ -16,6 +17,8 @@ import sv.edu.udb.models.Session;
 import sv.edu.udb.util.Roles;
 import java.util.ArrayList;
 import java.util.List;
+import sv.edu.udb.controllers.CommentController;
+import sv.edu.udb.models.Comment;
 import sv.edu.udb.util.RequestStatus;
 
 /**
@@ -35,11 +38,11 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     private boolean isJTI = false;
     private boolean isJAD = false;
     private RequestStatus rs;
-
+    
     public ViewTicket() {
         initComponents();
     }
-
+    
     public ViewTicket(int id) {
         initComponents();
         ticket = tController.showTicket(id);
@@ -48,9 +51,9 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         isJAD = (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId());
         inputsState();
         fillData();
-
+        
     }
-
+    
     public void refreshCP() {
         cmbProgr.removeAllItems();
         Employee e;
@@ -58,7 +61,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         cmbProgr.addItem(e.getFullName());
         btnAPro.setVisible(false);
     }
-
+    
     public void refreshCQA() {
         cmbQA.removeAllItems();
         Employee e;
@@ -66,11 +69,11 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         cmbQA.addItem(e.getFullName());
         btnATest.setVisible(false);
     }
-
+    
     public void fillData() {
         Employee e;
         lvlTicketName.setText(ticket.getInternalCode());
-        lblTDes.setText(request.getRequestDescription());
+        lblDescripcionAd.setText(request.getRequestDescription());
         if (isJTI) {
             if (ticket.getIdProgrammer() == 0) {
                 fillProgrammers();
@@ -83,11 +86,11 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 //JOptionPane.showMessageDialog(rootPane, "Hola");
             }
         }
-
-        if (!isJTI) {
+        
+        if (isJAD) {
             if (ticket.getIdTester() == 0) {
                 fillTesters();
-            } else {
+            } else if (ticket.getIdTester() > 0) {
                 refreshCQA();
             }
         } else {
@@ -98,8 +101,9 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         fillStatus();
         txtFechaStart.setText(ticket.getStartDDate());
 //        JOptionPane.showMessageDialog(rootPane, ticket.getIdTicket());
+fillAvance();
     }
-
+    
     public void inputsState() {
 //        cmbEstado.setEnabled(isJTI);
 
@@ -108,6 +112,8 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         cmbQA.setEnabled(false);
         btnAPro.setVisible(false);
         btnATest.setVisible(false);
+        lblPorcentaje.setVisible(false);
+        txtPorcentaje.setVisible(false);
         if (isJTI) {
             chkbxQA.setEnabled(true);
             cmbProgr.setEnabled(true);
@@ -115,6 +121,10 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         }
         if (isJAD) {
             cmbQA.setEnabled(true);
+        }
+        if (Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
+            lblPorcentaje.setVisible(true);
+            txtPorcentaje.setVisible(true);
         }
         if (ticket.getIdTester() == 0) {
             chkbxQA.setSelected(true);
@@ -127,12 +137,12 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 
 //         }
     }
-
+    
     public void fillProgrammers() {
         cmbProgr.removeAllItems();
         int cont = 0;
         List<Employee> p = eController.findEmployee(4, Session.deparmentId);
-
+        
         for (Employee employee : p) {
             if (tController.showStatusTicket(employee.getEmployeeId(), "ID_PROGRAMADOR") == false) {
                 cmbProgr.addItem(employee.getFullName());
@@ -144,27 +154,27 @@ public class ViewTicket extends javax.swing.JInternalFrame {
             btnAPro.setVisible(false);
             JOptionPane.showMessageDialog(rootPane, "No hay programadores disponibles");
         }
-
+        
     }
-
+    
     public void fillTesters() {
         cmbQA.removeAllItems();
         int cont = 0;
         List<Employee> p = eController.findEmployee(2, Session.deparmentId);
         
-            for (Employee employee : p) {
-                if ((tController.showStatusTicket(employee.getEmployeeId(), "ID_TESTER")) == false) {
-                    cmbQA.addItem(employee.getFullName());
-                    cont++;
-                }
-        }
-            if(cont == 0){
-               cmbQA.setEnabled(false);
-               btnATest.setVisible(false);
-            JOptionPane.showMessageDialog(rootPane, "No hay empleados administrativos disponibles"); 
+        for (Employee employee : p) {
+            if ((tController.showStatusTicket(employee.getEmployeeId(), "ID_TESTER")) == false) {
+                cmbQA.addItem(employee.getFullName());
+                cont++;
             }
+        }
+        if (cont == 0) {
+            cmbQA.setEnabled(false);
+            btnATest.setVisible(false);
+            JOptionPane.showMessageDialog(rootPane, "No hay empleados administrativos disponibles");
+        }
     }
-
+    
     public void fillStatus() {
         cmbEstado.removeAllItems();
         cmbEstado.addItem(RequestStatus.ASIGNAR_PROGRAMADOR.toString());
@@ -173,6 +183,11 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         cmbEstado.addItem(RequestStatus.VENCIDO.toString());
         cmbEstado.addItem(RequestStatus.DEVUELTO_CON_OBSERVACIONES.toString());
         cmbEstado.setSelectedItem(ticket.getTicketStatus());
+    }
+    public void fillAvance(){
+        float r = new TicketsController().getAvance(ticket.getIdTicket());
+        String c = r + "%";
+        txtAvance.setText(c);
     }
 
     /**
@@ -208,12 +223,12 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         lblActividad = new javax.swing.JLabel();
         btnComentario = new javax.swing.JButton();
         pnlComentarios = new javax.swing.JPanel();
+        txtPorcentaje = new javax.swing.JFormattedTextField();
+        lblPorcentaje = new javax.swing.JLabel();
 
         pnlInfoTicket.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblAvance.setText("Avance");
-
-        txtAvance.setText("jTextField1");
 
         lblEstado.setText("Estado");
 
@@ -276,20 +291,20 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                         .addGap(33, 33, 33)
                         .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbProgr, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbQA, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtFechaStart)
+                            .addComponent(txtFechaFinal)
                             .addGroup(pnlInfoTicketLayout.createSequentialGroup()
                                 .addGroup(pnlInfoTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblFechaStart)
                                     .addComponent(lblFechaFinal)
                                     .addComponent(chkbxQA)
                                     .addComponent(lblEstado)
-                                    .addComponent(txtAvance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblAvance)
-                                    .addComponent(lblProgra))
-                                .addGap(0, 102, Short.MAX_VALUE))
-                            .addComponent(cmbProgr, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbQA, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtFechaStart)
-                            .addComponent(txtFechaFinal)))
+                                    .addComponent(lblProgra)
+                                    .addComponent(txtAvance, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 96, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfoTicketLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAEstado))
@@ -333,7 +348,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                 .addComponent(lblFechaFinal)
                 .addGap(18, 18, 18)
                 .addComponent(txtFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(369, Short.MAX_VALUE))
         );
 
         lvlTicketName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -353,6 +368,11 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 
         btnComentario.setText("Insertar comentarios");
         btnComentario.setActionCommand("");
+        btnComentario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComentarioActionPerformed(evt);
+            }
+        });
 
         pnlComentarios.setAutoscrolls(true);
 
@@ -364,8 +384,12 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         );
         pnlComentariosLayout.setVerticalGroup(
             pnlComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
         );
+
+        txtPorcentaje.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##,#0%"))));
+
+        lblPorcentaje.setText("Avance");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -374,28 +398,31 @@ public class ViewTicket extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(216, 216, 216)
-                        .addComponent(lvlTicketName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnComentario))
+                                .addComponent(btnComentario)
+                                .addGap(20, 20, 20))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(pnlComentarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblDescripcionAd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(113, 113, 113))
                                     .addComponent(jScrollPane1)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblPorcentaje)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(lblActividad)
-                                            .addComponent(lblTDes))
+                                            .addComponent(lblTDes)
+                                            .addComponent(lblDescripcionAd, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addGap(50, 50, 50)))
+                        .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(lvlTicketName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(pnlInfoTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -407,12 +434,16 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addComponent(lblTDes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblDescripcionAd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDescripcionAd, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPorcentaje))
+                .addGap(19, 19, 19)
                 .addComponent(btnComentario)
-                .addGap(17, 17, 17)
+                .addGap(33, 33, 33)
                 .addComponent(lblActividad)
                 .addGap(18, 18, 18)
                 .addComponent(pnlComentarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -477,11 +508,37 @@ public class ViewTicket extends javax.swing.JInternalFrame {
                 e = eController.getEmployee(e.getName(nombre), e.getLastname(nombre));
                 if (tController.updateT(ticket.getIdTicket(), e.getEmployeeId())) {
                     ticket.setIdTester(e.getEmployeeId());
-                    JOptionPane.showMessageDialog(rootPane, "El Tester se ha seleccionado correctamente");
+                    fillAvance();
                 }
             }
         }
     }//GEN-LAST:event_btnATestActionPerformed
+
+    private void btnComentarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComentarioActionPerformed
+        // TODO add your handling code here:
+        Comment nuevoComentario = new Comment();
+        nuevoComentario.setEmployeeId(Session.employeeId);
+        nuevoComentario.setCommentDate(new Timestamp(System.currentTimeMillis()));
+        nuevoComentario.setCommentText(txtComentario.getText());
+        nuevoComentario.setDepartmentId(Session.deparmentId);
+        nuevoComentario.setRequestId(ticket.getRequestId());
+        
+        if (Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
+            if ((!txtComentario.getText().equals("") || !txtComentario.getText().equals(" ")) && (!txtPorcentaje.getText().equals(" ") || !txtPorcentaje.getText().equals(""))) {
+                new CommentController().saveComment(nuevoComentario);
+                if (new TicketsController().updateAvance(ticket.getIdTicket(), Float.parseFloat(txtPorcentaje.getText()))) {
+                    ticket.setAvance(new TicketsController().getAvance(ticket.getIdTicket()));
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "no");
+            }
+        } else {
+            if (!txtComentario.getText().equals("") && !txtComentario.getText().equals(" ")) {
+                new CommentController().saveComment(nuevoComentario);
+            }            
+        }
+        
+    }//GEN-LAST:event_btnComentarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -500,6 +557,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblFechaFinal;
     private javax.swing.JLabel lblFechaStart;
+    private javax.swing.JLabel lblPorcentaje;
     private javax.swing.JLabel lblProgra;
     private javax.swing.JLabel lblTDes;
     private javax.swing.JLabel lvlTicketName;
@@ -509,5 +567,6 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txtComentario;
     private javax.swing.JFormattedTextField txtFechaFinal;
     private javax.swing.JFormattedTextField txtFechaStart;
+    private javax.swing.JFormattedTextField txtPorcentaje;
     // End of variables declaration//GEN-END:variables
 }
