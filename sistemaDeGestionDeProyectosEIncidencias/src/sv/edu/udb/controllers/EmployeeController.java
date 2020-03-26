@@ -22,9 +22,9 @@ public class EmployeeController {
         return dao.save(e);
     }
 
-    public Employee findEmployee(String username) {
+    public Employee findEmployee(String username, char [] password) {
         EmployeeDAO dao = new EmployeeDAO();
-        Optional<Employee> foundEmp = dao.getEmployeeByUsername(username);
+        Optional<Employee> foundEmp = dao.getEmployeeByUsername(username, password);
 
         return foundEmp.orElseGet(() -> new Employee(DAODefaults.NON_EXISTING_USER.getDefaultValue()));
     }

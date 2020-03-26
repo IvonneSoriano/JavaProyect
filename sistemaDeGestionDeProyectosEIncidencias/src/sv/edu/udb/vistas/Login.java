@@ -167,10 +167,10 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
-        Employee e = controller.findEmployee(txtUser.getText());
-
+        Employee e = controller.findEmployee(txtUser.getText(), txtPassword.getPassword());
+        
         if (!e.getUsername().equals(DAODefaults.NON_EXISTING_USER.getDefaultValue())) {
-            if (e.getPassword().equals(new String(txtPassword.getPassword()))) {
+            if (!e.getPassword().equals(DAODefaults.NON_EXISTING_USER.getDefaultValue())) {
                 JOptionPane.showMessageDialog(null, "Bienvenido: "
                         + e.getEmployeeName() + " "
                         + e.getEmployeeLastname());
