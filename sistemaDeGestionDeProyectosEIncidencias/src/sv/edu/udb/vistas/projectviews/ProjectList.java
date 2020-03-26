@@ -14,6 +14,7 @@ import sv.edu.udb.util.Connect;
 import sv.edu.udb.controllers.ProjectsController;
 import sv.edu.udb.models.Project;
 import sv.edu.udb.models.Session;
+import sv.edu.udb.util.Roles;
 
 /**
  *
@@ -24,18 +25,16 @@ public class ProjectList extends javax.swing.JInternalFrame {
     /**
      * Creates new form ProjectList
      */
-    Connect cnx = new Connect();
-    ResultSet tabla;
-
     Project proOb = new Project();
     ProjectsController procControl = new ProjectsController();
     List<Project> listPro = new ArrayList<>();
-    
-     DefaultTableModel modelo1;
+
+    DefaultTableModel modelo1;
+
     public ProjectList() throws SQLException {
         initComponents();
         loadData();
-           
+
     }
 
     /**
@@ -225,13 +224,12 @@ public class ProjectList extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         proOb.setProjectsId(Integer.parseInt(lblId.getText()));
         if (procControl.deleteProject(proOb)) {
-            JOptionPane.showMessageDialog(null, "El proyecto se ha eliminado correctamente","Operacion exitosa",JOptionPane.INFORMATION_MESSAGE );
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "El proyecto no se ha eliminado","Operacion fallida",JOptionPane.INFORMATION_MESSAGE );
+            JOptionPane.showMessageDialog(null, "El proyecto se ha eliminado correctamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "El proyecto no se ha eliminado", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
         }
         loadData();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -248,35 +246,31 @@ public class ProjectList extends javax.swing.JInternalFrame {
             jTextArea1.setText(modelo1.getValueAt(fila, 4).toString());
         }
     }//GEN-LAST:event_jTable1MouseClicked
-    public void loadData(){
-       
+    public void loadData() {
+
         Object[][] data = null;
         String[] columns = {
             "Id Proyecto", "Nombre de proyecto", "Departamento", "Fecha de creacion", "Descripcion"
         };
         modelo1 = new DefaultTableModel(data, columns);
         this.jTable1.setModel(modelo1);
-       
-       if (Session.employeeType == 5) {
-                listPro = procControl.getProjects();
-               
-            } 
-       else {
-                listPro = procControl.projectsByDepto();
-                jPanelAdmin.setVisible(false);
-            }
-            for (Project projects : listPro) {
-                   Object[] newRow = { projects.getProjectsId(), projects.getProjectName(),
-                   projects.getDepartmentId(), projects.getCreationDate(), projects.getProjectDescription()};
-                  
-                   modelo1.addRow(newRow);  
-            } 
-           
-               
-               
-        
+
+        if (Session.employeeType == Roles.ADMINISTRADOR.getRolId()) {
+            listPro = procControl.getProjects();
+
+        } else {
+            listPro = procControl.projectsByDepto();
+            jPanelAdmin.setVisible(false);
+        }
+        for (Project projects : listPro) {
+            Object[] newRow = {projects.getProjectsId(), projects.getProjectName(),
+                projects.getDepartmentId(), projects.getCreationDate(), projects.getProjectDescription()};
+
+            modelo1.addRow(newRow);
+        }
+
     }
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

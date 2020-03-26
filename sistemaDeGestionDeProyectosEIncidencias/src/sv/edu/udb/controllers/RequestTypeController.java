@@ -27,4 +27,10 @@ public class RequestTypeController {
         Optional<RequestType> req = dao.getRequestTypeByName(name);
         return req.orElseGet(() -> new RequestType(DAODefaults.NON_EXISTING_REQUEST_TYPE.getDefaultValue()));
     }
+
+    public RequestType findRequestTypeById(int id) {
+        RequestTypeDAO dao = new RequestTypeDAO();
+        Optional<RequestType> req = dao.get(id);
+        return req.orElseGet(() -> new RequestType(DAODefaults.NON_EXISTING_REQUEST_TYPE.getDefaultValue()));
+    }
 }

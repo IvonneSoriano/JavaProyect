@@ -23,7 +23,21 @@ public class RequestTypeDAO implements Dao<RequestType> {
 
     @Override
     public Optional<RequestType> get(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        RequestType requestFound = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM requesttypes where requesttypeid =" + id + ";");
+            ResultSet requesttypes = (ResultSet) connection.getRs();
+
+            while (requesttypes.next()) {
+                requestFound = new RequestType();
+                requestFound.setId(requesttypes.getInt("REQUESTTYPEID"));
+                requestFound.setRequestTypeName(requesttypes.getString("REQUESTTYPENAME"));
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet. Message: " + e.getMessage());
+        }
+        return Optional.ofNullable(requestFound);
     }
 
     @Override

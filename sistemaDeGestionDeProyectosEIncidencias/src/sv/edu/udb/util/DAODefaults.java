@@ -10,9 +10,11 @@ package sv.edu.udb.util;
  * @author Rick
  */
 public enum DAODefaults {
-    NON_EXISTING_USER("Non-existing user"),
-    NON_EXISTING_REQUEST_TYPE("Non-existing request type"),
-    NO_LAST_REQUEST_FOUND("No last request was found on the DB");
+    NON_EXISTING_USER("Did not find any user that matches your query."),
+    NON_EXISTING_REQUEST_TYPE("Did not find any request type that matches your request"),
+    NO_LAST_REQUEST_FOUND("No last request was found on the DB"),
+    NO_REQUEST_FOUND("Did not find any request that matches your query"),
+    NO_PROJECT_FOUND("Did not find any project that matches your query");
 
     private String defaultValue;
 

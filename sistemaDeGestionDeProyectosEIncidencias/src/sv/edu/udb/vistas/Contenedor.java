@@ -5,37 +5,82 @@
  */
 package sv.edu.udb.vistas;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import javax.swing.JOptionPane;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
+import sv.edu.udb.controllers.DeparmentController;
+import sv.edu.udb.controllers.RequestController;
+import sv.edu.udb.controllers.RequestTypeController;
+import sv.edu.udb.models.Request;
 import sv.edu.udb.models.Session;
+import sv.edu.udb.util.RequestStatus;
 import sv.edu.udb.util.Roles;
 import sv.edu.udb.vistas.employessviews.CreateUser;
 import sv.edu.udb.vistas.projectviews.*;
 import sv.edu.udb.vistas.employessviews.ShowUsers;
 import sv.edu.udb.vistas.tickets.CreateRequest;
-import sv.edu.udb.vistas.employessviews.*;
 
 /**
  *
  * @author kiss_
  */
 public class Contenedor extends javax.swing.JFrame {
-    
+
     private static Logger logger = Logger.getLogger(Contenedor.class);
+    private DefaultTableModel modeloTablaSolicitudes;
 
     /**
      * Creates new form Contenedor
      */
     public Contenedor() {
-            initComponents();
-            setExtendedState(Contenedor.MAXIMIZED_BOTH);
-            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-            if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
-                    || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
-                employeeMenu.setVisible(false);
+        initComponents();
+        loadData();
+        setExtendedState(Contenedor.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
+                || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
+            employeeMenu.setVisible(false);
+        }
+    }
+
+    public void loadData() {
+
+        RequestController controller = new RequestController();
+        Object[][] data = null;
+        String[] columns = {
+            "Id", "Tipo Solicitud", "Descripcion", "Status"
+        };
+        modeloTablaSolicitudes = new DefaultTableModel(data, columns);
+        this.jTblSolicitudes.setModel(modeloTablaSolicitudes);
+
+        List<Request> listFound = null;
+        if (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId()) {
+            listFound = controller.findRequestsByStatusAndDepartmentId(RequestStatus.EN_ESPERA.name(), Session.deparmentId);
+        } else {
+            listFound = controller.findRequestByDeparmentId(Session.deparmentId);
+        }
+
+        if (listFound.size() > 0) {
+            for (Request r : listFound) {
+                Object[] newRow = {
+                    r.getId(),
+                    new RequestTypeController().findRequestTypeById(r.getIdTypeRequest()).getRequestTypeName(),
+                    r.getRequestDescription(),
+                    r.getRequestStatus()
+                };
+
+                // set the column width for each column
+                this.jTblSolicitudes.getColumnModel().getColumn(0).setPreferredWidth(30);
+                this.jTblSolicitudes.getColumnModel().getColumn(1).setPreferredWidth(220);
+                this.jTblSolicitudes.getColumnModel().getColumn(2).setPreferredWidth(300);
+                this.jTblSolicitudes.getColumnModel().getColumn(3).setPreferredWidth(250);
+                modeloTablaSolicitudes.addRow(newRow);
             }
+        } else {
+            lblSolicitudesPendientes.setVisible(false);
+            jTblSolicitudes.setVisible(false);
+            jScrollPane1.setVisible(false);
+        }
     }
 
     /**
@@ -48,6 +93,9 @@ public class Contenedor extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTblSolicitudes = new javax.swing.JTable();
+        lblSolicitudesPendientes = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         ticketMenu = new javax.swing.JMenu();
         btnNewTicket = new javax.swing.JMenuItem();
@@ -65,6 +113,33 @@ public class Contenedor extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTblSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTblSolicitudes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblSolicitudesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTblSolicitudes);
+
+        desktopPane.add(jScrollPane1);
+        jScrollPane1.setBounds(90, 80, 490, 180);
+
+        lblSolicitudesPendientes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblSolicitudesPendientes.setForeground(new java.awt.Color(255, 102, 102));
+        lblSolicitudesPendientes.setText("SOLICITUDES PENDIENTES");
+        desktopPane.add(lblSolicitudesPendientes);
+        lblSolicitudesPendientes.setBounds(220, 50, 250, 24);
 
         ticketMenu.setMnemonic('T');
         ticketMenu.setText("Ticket");
@@ -177,7 +252,7 @@ public class Contenedor extends javax.swing.JFrame {
         return;
 
     }//GEN-LAST:event_cerrarSesionMenuItemActionPerformed
-    
+
     public void closeForms() {
         desktopPane.removeAll();
         desktopPane.updateUI();
@@ -203,7 +278,7 @@ public class Contenedor extends javax.swing.JFrame {
     }//GEN-LAST:event_jListMenuActionPerformed
 
     private void btnNewTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTicketActionPerformed
-        closeForms();
+        //closeForms();
         CreateRequest r = new CreateRequest();
         desktopPane.add(r);
         r.show();
@@ -225,6 +300,25 @@ public class Contenedor extends javax.swing.JFrame {
         cu.show();
     }//GEN-LAST:event_btnAgregarEmpActionPerformed
 
+    private void jTblSolicitudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblSolicitudesMouseClicked
+        if (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId()) {
+            DeparmentController ct = new DeparmentController();
+            int rowNumber = jTblSolicitudes.getSelectedRow();
+            logger.info("Jefe de desarrollo del "
+                    + ct.showDeparment(Session.deparmentId).getDepartmentName()
+                    + " revisando solicitud con id: "
+                    + jTblSolicitudes.getValueAt(rowNumber, 0).toString());
+
+            CreateRequest cr = new CreateRequest();
+            desktopPane.add(cr);
+
+            RequestController rc = new RequestController();
+            Request r = rc.getRequestById(Integer.parseInt(String.valueOf(jTblSolicitudes.getValueAt(rowNumber, 0))));
+            cr.cargarSolicitudExistente(r);
+            cr.show();
+            loadData();
+        }
+    }//GEN-LAST:event_jTblSolicitudesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -273,6 +367,9 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenuItem insertProject;
     private javax.swing.JMenuItem jListMenu;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTblSolicitudes;
+    private javax.swing.JLabel lblSolicitudesPendientes;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu projectMenu;
     private javax.swing.JMenuItem saveAsMenuItem;

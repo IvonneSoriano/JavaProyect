@@ -19,6 +19,7 @@ public class Request {
     private String description, status;
     private Date requestDate;
     private int projectId; // this is not mandatory
+    private int departmentId;
     private List<Comment> commentsList = new ArrayList<>();
 
     public Request() {
@@ -82,4 +83,12 @@ public class Request {
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }   
+
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }    
 }

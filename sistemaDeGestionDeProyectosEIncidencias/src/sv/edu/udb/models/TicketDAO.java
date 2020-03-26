@@ -7,12 +7,16 @@ package sv.edu.udb.models;
 
 import java.util.List;
 import java.util.Optional;
+import org.apache.log4j.Logger;
+import sv.edu.udb.util.Connect;
 
 /**
  *
  * @author Rick
  */
-public class TicketDAO implements Dao<Ticket>{
+public class TicketDAO implements Dao<Ticket> {
+
+    private static Logger logger = Logger.getLogger(TicketDAO.class);
 
     @Override
     public Optional<Ticket> get(long id) {
@@ -26,7 +30,30 @@ public class TicketDAO implements Dao<Ticket>{
 
     @Override
     public boolean save(Ticket t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Connect connection = new Connect();
+
+            String sql = "INSERT INTO `gestion_tickets`.`tickets` (`REQUESTID`, "
+                    + "`PROJECTID`, `ID_PROGRAMADOR`, `ID_TESTER`, `TICKET_STATUS`,"
+                    + "`INTERNALCODE`, `STARTDATE`, `ENDDATE`) VALUES("
+                    + t.getRequestId() + ", " + t.getProjectID() + ", "
+                    + t.getIdProgrammer() + ", " + t.getIdTester() + ", '"
+                    + t.getTicketStatus() + "', '" + t.getInternalCode() + "', '"
+                    + t.getStartDate() + "', '" + t.getEndDate() + "');";
+            int result = connection.setQuery(sql);
+
+            if (result <= 0) {
+                logger.warn("INSERT to tickets table has failed");
+                return false;
+            } else {
+                logger.info("INSERT to tickets table has successfully completed!");
+                return true;
+            }
+
+        } catch (Exception e) {
+            logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -38,5 +65,5 @@ public class TicketDAO implements Dao<Ticket>{
     public boolean delete(Ticket t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

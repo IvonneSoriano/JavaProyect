@@ -18,7 +18,7 @@ import sv.edu.udb.util.Connect;
  * @author kiss_
  */
 public class RolDAO implements Dao<Rol> {
-    private static Logger logger = Logger.getLogger(EmployeeDAO.class);
+    private static Logger logger = Logger.getLogger(RolDAO.class);
     
     @Override
     public Optional<Rol> get(long id) {

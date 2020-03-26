@@ -19,17 +19,34 @@ import java.sql.Timestamp;
  * @author Rick
  */
 public class ProjectDAO implements Dao<Project> {
-
+    
     private static Logger logger = Logger.getLogger(ProjectDAO.class);
-
+    
     @Override
     public Optional<Project> get(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Project pr = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM projects WHERE projectid = " + id + ";");
+            ResultSet rs = (ResultSet) connection.getRs();
+            
+            while (rs.next()) {
+                pr = new Project();
+                pr.setProjectsId(rs.getInt("PROJECTID"));
+                pr.setProjectName(rs.getString("PROJECTNAME"));
+                pr.setProjectDescription(rs.getString("PROJECTDESCRIPTION"));
+                pr.setDepartmentId(rs.getInt("DEPARTMENTID"));
+                pr.setCreationDate(rs.getTimestamp("CREATIONDATE"));
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
+        }
+        return Optional.ofNullable(pr);
     }
-
+    
     @Override
     public List<Project> getAll() {
-
+        
         Connect connection = null;
         List<Project> projectFound = new ArrayList<>();
         try {
@@ -40,20 +57,20 @@ public class ProjectDAO implements Dao<Project> {
         try {
             connection.setRs("SELECT * FROM PROJECTS");
             ResultSet projectSet = (ResultSet) connection.getRs();
-
+            
             while (projectSet.next()) {
                 Project project = new Project();
                 project.setProjectsId(projectSet.getInt("PROJECTID"));
-
-                project.setDepartmentId(projectSet.getInt("DEPARMENTID"));
+                
+                project.setDepartmentId(projectSet.getInt("DEPARTMENTID"));
                 project.setProjectName(projectSet.getString("PROJECTNAME"));
                 project.setProjectDescription(projectSet.getString("PROJECTDESCRIPTION"));
                 project.setCreationDate(projectSet.getTimestamp("CREATIONDATE"));
-
+                
                 projectFound.add(project);
-
+                
             }
-
+            
         } catch (SQLException e) {
             logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
         } finally {
@@ -62,24 +79,24 @@ public class ProjectDAO implements Dao<Project> {
             } catch (SQLException ex) {
                 logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
             }
-
+            
         }
         return projectFound;
-
+        
     }
-
+    
     @Override
     public boolean save(Project t) {
-
+        
         try {
             Connect connection = new Connect();
             int result = connection.setQuery("INSERT INTO `gestion_tickets`.`projects` "
-                    + "( `DEPARMENTID`, `PROJECTNAME`, `PROJECTDESCRIPTION`, `CREATIONDATE`) "
+                    + "( `DEPARTMENTID`, `PROJECTNAME`, `PROJECTDESCRIPTION`, `CREATIONDATE`) "
                     + "VALUES ( '" + t.getDepartmentId()
                     + "', '" + t.getProjectName() + "', '"
                     + t.getProjectDescription() + "', '"
                     + t.getCreationDate() + "');");
-
+            
             if (result <= 0) {
                 logger.error("INSERT to Projects table has failed");
                 return false;
@@ -87,26 +104,26 @@ public class ProjectDAO implements Dao<Project> {
                 logger.info("INSERT to Projects table has successfully completed!");
                 return true;
             }
-
+            
         } catch (Exception e) {
             logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
             return false;
         }
     }
-
+    
     @Override
     public boolean update(Project t, String[] params) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public boolean delete(Project t) {
         try {
             Connect connection = new Connect();
-
+            
             int result = connection.setQuery("DELETE FROM `gestion_tickets`.`projects` WHERE `ProjectID` = "
                     + t.getProjectsId() + ";");
-
+            
             if (result <= 0) {
                 logger.error("DELETE to Projects table has failed");
                 return false;
@@ -114,15 +131,15 @@ public class ProjectDAO implements Dao<Project> {
                 logger.info("DELETO to Projects table has successfully completed!");
                 return true;
             }
-
+            
         } catch (Exception e) {
             logger.error("Error processing DELETE query in save method. Message: " + e.getMessage());
             return false;
         }
     }
-
+    
     public List<Project> getProjbyDepto() {
-
+        
         Connect connection = null;
         List<Project> projectFound = new ArrayList<>();
         try {
@@ -131,22 +148,22 @@ public class ProjectDAO implements Dao<Project> {
             logger.error("Error creating conecction in getAll() method. Message: " + ex.getMessage());
         }
         try {
-
-            connection.setRs("SELECT * FROM PROJECTS WHERE DEPARMENTID = " + Session.deparmentId + ";");
+            
+            connection.setRs("SELECT * FROM PROJECTS WHERE DEPARTMENTID = " + Session.deparmentId + ";");
             ResultSet projectSet = (ResultSet) connection.getRs();
-
+            
             while (projectSet.next()) {
                 Project project = new Project();
                 project.setProjectsId(projectSet.getInt("PROJECTID"));
-                project.setDepartmentId(projectSet.getInt("DEPARMENTID"));
+                project.setDepartmentId(projectSet.getInt("DEPARTMENTID"));
                 project.setProjectName(projectSet.getString("PROJECTNAME"));
                 project.setProjectDescription(projectSet.getString("PROJECTDESCRIPTION"));
                 project.setCreationDate(projectSet.getTimestamp("CREATIONDATE"));
-
+                
                 projectFound.add(project);
-
+                
             }
-
+            
         } catch (SQLException e) {
             logger.error("Error processing ResultSet in getAll() method. Message: " + e.getMessage());
         } finally {
@@ -155,10 +172,10 @@ public class ProjectDAO implements Dao<Project> {
             } catch (SQLException ex) {
                 logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
             }
-
+            
         }
         return projectFound;
-
+        
     }
-
+    
 }

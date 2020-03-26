@@ -7,12 +7,16 @@ package sv.edu.udb.models;
 
 import java.util.List;
 import java.util.Optional;
+import org.apache.log4j.Logger;
+import sv.edu.udb.util.Connect;
 
 /**
  *
  * @author Rick
  */
 public class CommentDAO implements Dao<Comment> {
+
+    private static final Logger logger = Logger.getLogger(CommentDAO.class);
 
     @Override
     public Optional<Comment> get(long id) {
@@ -25,8 +29,30 @@ public class CommentDAO implements Dao<Comment> {
     }
 
     @Override
-    public boolean save(Comment t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean save(Comment c) {
+        try {
+            Connect connection = new Connect();
+
+            String sql = "INSERT INTO `gestion_tickets`.`comments` "
+                    + "(`EMPLOYEEID`, `DEPARTMENTID`, `REQUESTID`, `COMMENTTEXT`, "
+                    + "`COMMENTDATE`) VALUES (" + c.getEmployeeId() + ", "
+                    + c.getDepartmentId() + " , " + c.getRequestId()
+                    + ", '" + c.getCommentText() + "', '" + c.getCommentDate() + "');";
+
+            int result = connection.setQuery(sql);
+
+            if (result <= 0) {
+                logger.warn("INSERT to Comments table has failed.");
+                return false;
+            } else {
+                logger.info("INSERT to Comments table has successfully completed!");
+                return true;
+            }
+
+        } catch (Exception e) {
+            logger.error("Error processing INSERT query in save method. Message: " + e.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -38,5 +64,5 @@ public class CommentDAO implements Dao<Comment> {
     public boolean delete(Comment t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
