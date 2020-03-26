@@ -376,7 +376,7 @@ public class CreateRequest extends javax.swing.JInternalFrame {
             nuevoTicket.setProjectID(Integer.parseInt(selectedItemText.split("[\\\\(||\\\\)]")[1]));
         }
         nuevoTicket.setIdProgrammer(0);
-        nuevoTicket.setIdTester(0);
+        nuevoTicket.setIdTester(-1);
         nuevoTicket.setTicketStatus(RequestStatus.ASIGNAR_PROGRAMADOR.name());
         nuevoTicket.setInternalCode(generateInternalCode(d.getDepartmentName()));
         nuevoTicket.setStartDate(new Timestamp(System.currentTimeMillis()));

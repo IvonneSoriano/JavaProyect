@@ -21,6 +21,12 @@ public class TicketsController {
 
         return tickets;
     }
+    public List<Ticket> getAllTickets(int d) {
+        TicketDAO dao = new TicketDAO();
+        List<Ticket> tickets = dao.getAll(d);
+
+        return tickets;
+    }
 
     public Ticket showTicket(int id) {
         TicketDAO dao = new TicketDAO();
