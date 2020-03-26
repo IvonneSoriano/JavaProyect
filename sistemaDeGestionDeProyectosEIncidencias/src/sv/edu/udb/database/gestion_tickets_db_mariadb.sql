@@ -109,14 +109,11 @@ CREATE TABLE IF NOT EXISTS `gestion_tickets`.`tickets` (
   `INTERNALCODE` VARCHAR(8) NOT NULL,
   `STARTDATE` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ENDDATE` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `AVANCE` FLOAT NOT NULL DEFAULT 0,
   PRIMARY KEY (`TICKETID`, `REQUESTID`),
   CONSTRAINT `fk_tickets_requests1`
         FOREIGN KEY (`REQUESTID`)
-        REFERENCES `gestion_tickets`.`requests` (`REQUESTID`),
- CONSTRAINT `fk_tickets_projectid`
-        FOREIGN KEY (`PROJECTID`)
-        REFERENCES `gestion_tickets`.`projects` (`PROJECTID`)
-
+        REFERENCES `gestion_tickets`.`requests` (`REQUESTID`)
         ON DELETE CASCADE
         ON UPDATE NO ACTION)
 ENGINE = InnoDB

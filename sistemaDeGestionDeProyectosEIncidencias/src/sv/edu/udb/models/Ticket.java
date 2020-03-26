@@ -2,6 +2,7 @@ package sv.edu.udb.models;
 
 import java.util.*;
 import java.sql.*;
+
 /**
  *
  * @author Imer
@@ -11,6 +12,7 @@ public class Ticket {
     private int id, request, programmer, tester, projectID;
     private String ticketStatus, internalCode;
     private Timestamp startDate, endDate;
+    private float avance;
 
     public Ticket() {
     }
@@ -55,6 +57,14 @@ public class Ticket {
         return ticketStatus;
     }
 
+    public void setAvance(float status) {
+        this.avance = status;
+    }
+
+    public float getAvance() {
+        return avance;
+    }
+
     public void setInternalCode(String internalCode) {
         this.internalCode = internalCode;
     }
@@ -70,7 +80,7 @@ public class Ticket {
     public Timestamp getStartDate() {
         return startDate;
     }
-    
+
     public String getStartDDate() {
         String[] f = startDate.toString().split(" ");
         return f[0];

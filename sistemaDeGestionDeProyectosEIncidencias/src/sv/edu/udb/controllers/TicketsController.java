@@ -66,4 +66,14 @@ public class TicketsController {
    public boolean saveTicket(Ticket t) {
         return new TicketDAO().save(t);
    }
+   
+   public boolean updateAvance(int idTicket, float a){
+       TicketDAO dao = new TicketDAO();
+        return dao.updateAvance(idTicket,a);
+   }
+   
+   public float getAvance(int id){
+        TicketDAO dao = new TicketDAO();
+        return dao.getAvance(id);
+   }
 }
