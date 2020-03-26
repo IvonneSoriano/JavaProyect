@@ -36,7 +36,6 @@ public class TicketsList extends javax.swing.JInternalFrame {
         initComponents();
         loadData();
         showTickets();
-        JOptionPane.showMessageDialog(rootPane, "Work");
     }
 
     /**

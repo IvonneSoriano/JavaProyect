@@ -49,6 +49,7 @@ public class Contenedor extends javax.swing.JFrame {
             if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
                     || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
                 employeeMenu.setVisible(false);
+                projectMenu.setVisible(false);
             }
             if (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId()){
                 cods= tController.checkTickets(Session.deparmentId);
@@ -57,6 +58,10 @@ public class Contenedor extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(projectMenu, "El ticket "+ cod.getInternalCode() + " necesita un tester");
                     }
                 }    
+            }
+            
+            if (Session.employeeType != Roles.JEFE_AREA_FUNCIONAL.getRolId()){
+                btnNewTicket.setVisible(false);
             }
     }
 
@@ -144,7 +149,6 @@ public class Contenedor extends javax.swing.JFrame {
         ticketMenu = new javax.swing.JMenu();
         btnNewTicket = new javax.swing.JMenuItem();
         btnVerTicket = new javax.swing.JMenuItem();
-        cerrarSesionMenuItem = new javax.swing.JMenuItem();
         employeeMenu = new javax.swing.JMenu();
         btnAgregarEmp = new javax.swing.JMenuItem();
         btnVerEmp = new javax.swing.JMenuItem();
@@ -207,15 +211,6 @@ public class Contenedor extends javax.swing.JFrame {
             }
         });
         ticketMenu.add(btnVerTicket);
-
-        cerrarSesionMenuItem.setMnemonic('x');
-        cerrarSesionMenuItem.setText("Cerrar Sesion");
-        cerrarSesionMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cerrarSesionMenuItemActionPerformed(evt);
-            }
-        });
-        ticketMenu.add(cerrarSesionMenuItem);
 
         menuBar.add(ticketMenu);
 
@@ -311,14 +306,6 @@ public class Contenedor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cerrarSesionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionMenuItemActionPerformed
-        Session.logOut();
-        new Login().setVisible(true);
-        this.dispose();
-        return;
-
-    }//GEN-LAST:event_cerrarSesionMenuItemActionPerformed
 
  
     private void insertProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjectActionPerformed
@@ -434,7 +421,6 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnNewTicket;
     private javax.swing.JMenuItem btnVerEmp;
     private javax.swing.JMenuItem btnVerTicket;
-    private javax.swing.JMenuItem cerrarSesionMenuItem;
     public static javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem editProject;
     private javax.swing.JMenu employeeMenu;
