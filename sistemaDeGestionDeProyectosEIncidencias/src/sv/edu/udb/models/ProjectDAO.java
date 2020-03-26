@@ -68,7 +68,22 @@ public class ProjectDAO implements Dao<Project> {
 
     }
 
-    @Override
+    
+    public Project getProjectName(int id){
+        Project foundName = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM PROJECTS WHERE PROJECTID=" + id + ";");
+            ResultSet projectRs = (ResultSet) connection.getRs();
+            while (projectRs.next()) {                
+                foundName = new Project();
+                foundName.setProjectName("PROJECTNAME");
+            }
+        } catch (Exception e) {
+             logger.error("Error processing ResultSet in getProjectName() method. Message: " + e.getMessage());
+        }
+        return foundName;
+    }
     public boolean save(Project t) {
 
         try {

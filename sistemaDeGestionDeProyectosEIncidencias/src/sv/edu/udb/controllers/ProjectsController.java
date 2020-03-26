@@ -30,7 +30,7 @@ public class ProjectsController {
 
         return projects;
     }
-
+   
     public boolean insertProject(Project p) {
         ProjectDAO dao = new ProjectDAO();
         return dao.save(p);
@@ -40,5 +40,8 @@ public class ProjectsController {
         ProjectDAO dao = new ProjectDAO();
         return dao.delete(p);
     }
-
+    public Project getProjectName(int id){
+        ProjectDAO dao = new ProjectDAO();
+        return  dao.getProjectName(id);
+    }
 }

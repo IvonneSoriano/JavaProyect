@@ -6,6 +6,9 @@
 package sv.edu.udb.controllers;
 
 import java.util.Optional;
+import java.util.List;
+
+
 import sv.edu.udb.models.Request;
 import sv.edu.udb.models.RequestDAO;
 import sv.edu.udb.util.DAODefaults;
@@ -25,5 +28,15 @@ public class RequestController {
         RequestDAO dao = new RequestDAO();
         Optional<Request> req = dao.getLastReequestId();
         return req.orElseGet(() -> new Request(DAODefaults.NO_LAST_REQUEST_FOUND.getDefaultValue()));
+        
     }
+    public List<Request> getRequests(){
+    
+        RequestDAO dao = new RequestDAO();
+        List<Request> requests = dao.getAll();
+
+        return requests;
+    }
+
+   
 }
