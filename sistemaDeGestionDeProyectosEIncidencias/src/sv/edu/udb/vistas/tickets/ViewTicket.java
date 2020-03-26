@@ -226,6 +226,9 @@ fillAvance();
         txtPorcentaje = new javax.swing.JFormattedTextField();
         lblPorcentaje = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+
         pnlInfoTicket.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblAvance.setText("Avance");

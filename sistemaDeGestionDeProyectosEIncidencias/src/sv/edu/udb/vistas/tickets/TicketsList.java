@@ -51,6 +51,9 @@ public class TicketsList extends javax.swing.JInternalFrame {
         tblTickets = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+
         tblTickets.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},

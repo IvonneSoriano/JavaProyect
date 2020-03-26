@@ -21,13 +21,13 @@ INSERT INTO `gestion_tickets`.`departments` (`DEPARTMENTNAME`) VALUES ('Facturac
 INSERT INTO `gestion_tickets`.`departments` (`DEPARTMENTNAME`) VALUES ('Relaciones Publicas');
 
 ALTER TABLE `gestion_tickets`.`employees` AUTO_INCREMENT = 0;
-INSERT INTO `gestion_tickets.employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (1,1,1,'Administrador','I','admin1',SHA2('admin1', 256));
-INSERT INTO `gestion_tickets.employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (2,1,1,'Alberto','Jefe de Finanzas','albertofinanzas',SHA2('albertofinanzas', 256));
-INSERT INTO `gestion_tickets.employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (3,2,1,'Will','Empleado de Finanzas','willfinanzas',SHA2('willfinanzas', 256));
-INSERT INTO `gestion_tickets.employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (4,3,1,'Rodrigo','Jefe de desarrollo Finanzas','rodrigofinanzas',SHA2('rodrigofinanzas', 256));
-INSERT INTO `gestion_tickets.employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (5,1,2,'Carlos','Jefe de Ventas','carlosventas',SHA2('carlosventas', 256));
-INSERT INTO `gestion_tickets.employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (6,2,2,'Santiago','Empleado de Ventas','santiagoventas',SHA2('santiagoventas', 256));
-INSERT INTO `gestion_tickets.employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (7,3,2,'Armando','Jefe de desarrollo Ventas','armandoventas',SHA2('armandoventas', 256));
+INSERT INTO `gestion_tickets`.`employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (1,1,1,'Administrador','I','admin1',SHA2('admin1', 256));
+INSERT INTO `gestion_tickets`.`employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (2,1,1,'Alberto','Jefe de Finanzas','albertofinanzas',SHA2('albertofinanzas', 256));
+INSERT INTO `gestion_tickets`.`employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (3,2,1,'Will','Empleado de Finanzas','willfinanzas',SHA2('willfinanzas', 256));
+INSERT INTO `gestion_tickets`.`employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (4,3,1,'Rodrigo','Jefe de desarrollo Finanzas','rodrigofinanzas',SHA2('rodrigofinanzas', 256));
+INSERT INTO `gestion_tickets`.`employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (5,1,2,'Carlos','Jefe de Ventas','carlosventas',SHA2('carlosventas', 256));
+INSERT INTO `gestion_tickets`.`employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (6,2,2,'Santiago','Empleado de Ventas','santiagoventas',SHA2('santiagoventas', 256));
+INSERT INTO `gestion_tickets`.`employees` (`EmployeeID`,`ROLID`,`DEPARTMENTID`,`EMPLOYEENAME`,`EMPLOYEELASTNAME`,`USERNAME`,`PASSWORD`) VALUES (7,3,2,'Armando','Jefe de desarrollo Ventas','armandoventas',SHA2('armandoventas', 256));
 
 
 ALTER TABLE `gestion_tickets`.`projects` AUTO_INCREMENT = 0;

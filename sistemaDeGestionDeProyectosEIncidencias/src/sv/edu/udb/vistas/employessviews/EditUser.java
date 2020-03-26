@@ -112,6 +112,9 @@ public class EditUser extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNcontra = new javax.swing.JPasswordField();
 
+        setClosable(true);
+        setIconifiable(true);
+
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(35, 10, 89));
         lblTitulo.setText("Editar Empleado");

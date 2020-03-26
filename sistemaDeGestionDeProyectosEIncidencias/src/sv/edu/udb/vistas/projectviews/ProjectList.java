@@ -64,6 +64,9 @@ public class ProjectList extends javax.swing.JInternalFrame {
         lblTituloEditar = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

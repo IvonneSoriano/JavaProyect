@@ -115,6 +115,9 @@ public class ShowUsers extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSupervisor = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+
         btnEdit.setBackground(new java.awt.Color(35, 10, 89));
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Editar");

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package sv.edu.udb.vistas.requestview;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import sv.edu.udb.controllers.RequestController;
 import sv.edu.udb.controllers.RequestTypeController;
 import sv.edu.udb.models.Request;
 import sv.edu.udb.models.Session;
+
 /**
  *
  * @author Imer Palma
@@ -28,12 +30,13 @@ public class RequestList extends javax.swing.JInternalFrame {
     RequestController reControl = new RequestController();
     List<Request> listRe = new ArrayList<>();
     ProjectsController proControl = new ProjectsController();
-    RequestTypeController rtControl= new RequestTypeController();
+    RequestTypeController rtControl = new RequestTypeController();
     DefaultTableModel modelo1;
+
     public RequestList() {
         initComponents();
         loadData();
-         
+
     }
 
     /**
@@ -48,6 +51,9 @@ public class RequestList extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        setClosable(true);
+        setIconifiable(true);
 
         jLabel1.setText("Lista de solicitudes ");
 
@@ -89,29 +95,32 @@ public class RequestList extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void loadData(){
-       
+    public void loadData() {
+
         Object[][] data = null;
         String[] columns = {
             "Id Solicitud", "Tipo de solicitud", "Projecto", "Fecha de solicitud", "Descripcion", "Estatus"
         };
         modelo1 = new DefaultTableModel(data, columns);
         this.jTable1.setModel(modelo1);
-       
-       
-                listRe = reControl.getRequests();
-               
-       
-            for (Request request : listRe) {
-                   Object[] newRow = { request.getId(),request.getIdTypeRequest(), request.getProjectId(), request.getRequestDate()
-                           ,request.getRequestDescription(),request.getRequestStatus()
-                   };
-                   modelo1.addRow(newRow);  
-            } 
-           
-               
-               
-        
+
+        listRe = reControl.findRequestByDeparmentId(Session.deparmentId);
+
+        for (Request request : listRe) {
+            Object[] newRow = {request.getId(), request.getIdTypeRequest(), request.getProjectId(), request.getRequestDate(),
+                request.getRequestDescription(), request.getRequestStatus()
+            };
+
+            this.jTable1.getColumnModel().getColumn(0).setPreferredWidth(250);
+            this.jTable1.getColumnModel().getColumn(1).setPreferredWidth(325);
+            this.jTable1.getColumnModel().getColumn(2).setPreferredWidth(225);
+            this.jTable1.getColumnModel().getColumn(3).setPreferredWidth(350);
+            this.jTable1.getColumnModel().getColumn(4).setPreferredWidth(600);
+            this.jTable1.getColumnModel().getColumn(5).setPreferredWidth(600);
+
+            modelo1.addRow(newRow);
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

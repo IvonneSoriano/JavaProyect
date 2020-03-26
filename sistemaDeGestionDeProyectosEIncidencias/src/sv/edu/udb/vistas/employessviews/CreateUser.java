@@ -84,6 +84,9 @@ public class CreateUser extends javax.swing.JInternalFrame {
         lblDepto = new javax.swing.JLabel();
         cmbbxDepoto = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setIconifiable(true);
+
         lblTipo.setForeground(new java.awt.Color(0, 41, 250));
         lblTipo.setText("Tipo de empleado:");
 
@@ -98,6 +101,7 @@ public class CreateUser extends javax.swing.JInternalFrame {
             }
         });
 
+        lblApellido.setForeground(new java.awt.Color(0, 41, 250));
         lblApellido.setText("Apellido:");
 
         txtLastname.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -108,8 +112,6 @@ public class CreateUser extends javax.swing.JInternalFrame {
 
         lblUsers.setForeground(new java.awt.Color(0, 41, 250));
         lblUsers.setText("Usuario:");
-
-        txtUsuario.setText("jTextField1");
 
         lblContra.setForeground(new java.awt.Color(0, 41, 250));
         lblContra.setText("Contraseña:");
