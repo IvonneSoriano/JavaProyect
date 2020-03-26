@@ -13,8 +13,14 @@ public enum RequestStatus {
     VENCIDO,
     EN_ESPERA,
     FINALIZADO,
+    ASIGNAR_PROGRAMADOR,
     EN_DESARROLLO,
     SOLICITUD_RECHAZADA,
     DEVUELTO_CON_OBSERVACIONES,
-    ESPERANDO_APROBACION_AREA_SOLICITANTE
+    ESPERANDO_APROBACION_AREA_SOLICITANTE;
+    
+    public String getStatus(RequestStatus p){
+        return p.toString();
+    }
+    
 }

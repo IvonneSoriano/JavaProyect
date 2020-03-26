@@ -132,7 +132,7 @@ public class TicketDAO implements Dao<Ticket> {
                 result = isExist.getInt(1);
             }
             if(result > 0){
-            connection.setRs("SELECT COUNT(*) FROM `tickets` WHERE " + p + " = "+ id +" AND TICKET_STATUS='DESARROLLO';");    
+            connection.setRs("SELECT COUNT(*) FROM `tickets` WHERE " + p + " = "+ id +" AND TICKET_STATUS='EN_DESARROLLO';");    
             ResultSet isExist2 = connection.getRs();
             while (isExist2.next()){
                 result = isExist2.getInt(1);
@@ -182,25 +182,27 @@ public class TicketDAO implements Dao<Ticket> {
         }
     }
     
-//    public String[] verifyTesterNeeded(int id){
-//        String[] cod = null;
-//        int i =0;
-//        try {
-//            Connect connection = new Connect();
-//            int result = connection.setQuery("SELECT COUNT(*) FROM `tickets` INNER JOIN requests ON tickets.REQUESTID = requests.REQUESTID WHERE requests.DeparmentID ="+id+";");
-//            cod = new String[result];
-//            connection.setRs("SELECT tickets.INTERNALCODE FROM `tickets` INNER JOIN requests on requests.REQUESTID = tickets.REQUESTID WHERE tickets.ID_TESTER=0 AND requests.DeparmentID ="+ id +";");
-//            ResultSet codigos = (ResultSet) connection.getRs();
-//            while (codigos.next()) {
-//                cod[i]=codigos.getString(0);
-//                i++;
-//
-//            }
-//        } catch (Exception e) {
-//            logger.error("Error processing ResultSet in verifyTesterNeeded() method. Message: " + e.getMessage());
-//        }
-//        return cod;
-//    }
+        public boolean updateStatus(int idTicket, String s){
+       try {
+            Connect connection = new Connect();
+
+            int result = connection.setQuery("UPDATE `gestion_tickets`.`TICKETS` SET "
+                    + "TICKET_STATUS = '"+ s
+                    + "' WHERE TICKETID = " + idTicket+ ";"
+            );
+            if (result <= 0) {
+                logger.error("UPDATE to Tickets table has failed");
+                return false;
+            } else {
+                logger.info("UPDATE to Tickets table has successfully completed!");
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("Error processing UPDATE query in updateStatus method. Message: " + e.getMessage());
+            return false;
+        }
+    }
+
      public List<Ticket> verifyTesterNeeded(int id){
         Connect connection = null;
         List<Ticket> ticketFound = new ArrayList<>();

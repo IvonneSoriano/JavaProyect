@@ -262,7 +262,7 @@ public class Contenedor extends javax.swing.JFrame {
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
         // TODO add your handling code here:
          closeForms();
-         ViewTicket cu = new ViewTicket(1);
+         ViewTicket cu = new ViewTicket(2);
         desktopPane.add(cu);
         cu.show();
     }//GEN-LAST:event_saveAsMenuItemActionPerformed

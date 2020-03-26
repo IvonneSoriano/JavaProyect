@@ -40,10 +40,12 @@ public class TicketsController {
         return dao.updateQA(t, p);
     }
        
-//       public String[] checkTickets(int id){
-//           TicketDAO dao = new TicketDAO();
-//        return dao.verifyTesterNeeded(id);
-//       }
+              public boolean updateS(int t, String p){
+        TicketDAO dao = new TicketDAO();
+        return dao.updateStatus(t, p);
+    }
+       
+
            public List<Ticket> checkTickets(int id){
            TicketDAO dao = new TicketDAO();
         return dao.verifyTesterNeeded(id);
