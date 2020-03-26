@@ -45,5 +45,6 @@ INSERT INTO  `gestion_tickets`.`requests` (`REQUESTID`,`REQUESTTYPEID`,`REQUESTD
 INSERT INTO  `gestion_tickets`.`requests` (`REQUESTID`,`REQUESTTYPEID`,`REQUESTDATE`,`REQUESTDESCRIPTION`,`REQUESTSTATUS`) VALUES (8,1,'2020-03-25 02:36:11','nuevo sistema para ing.biomedica inventarios','EN_ESPERA');
 INSERT INTO  `gestion_tickets`.`requests` (`REQUESTID`,`REQUESTTYPEID`,`REQUESTDATE`,`REQUESTDESCRIPTION`,`REQUESTSTATUS`) VALUES (9,3,'2020-03-25 02:36:52','Correcion en la UI del sistema actual\nMenu de ventas','EN_ESPERA');
 
+UPDATE `employees` SET `PASSWORD`= SHA2('admin1', 256) WHERE `EMPLOYEENAME` = 'ADMINISTRADOR'
 
 
