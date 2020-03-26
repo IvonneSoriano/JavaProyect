@@ -166,7 +166,7 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         lblAgregarComentario = new javax.swing.JLabel();
 
         setClosable(true);
-        setMaximizable(true);
+        setIconifiable(true);
         setResizable(true);
         setTitle("Nuevo Requerimiento");
 
@@ -339,8 +339,6 @@ public class CreateRequest extends javax.swing.JInternalFrame {
                     "Ha ocurrido un error por favor intente mas tarde. ",
                     "Nuevo Requerimiento - Error", JOptionPane.WARNING_MESSAGE);
         }
-        
-        
 
         // actualizando contenedor - how?
         desktopPane.updateUI();
@@ -363,7 +361,7 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         RequestController rc = new RequestController();
         String requestID = this.getTitle().split(":")[1].trim();
         Ticket nuevoTicket = new Ticket();
-        
+
 //        PARA EL GENERADOR DE CODIGO
         Deparment d = new Deparment();
         DeparmentController dc = new DeparmentController();
@@ -406,14 +404,14 @@ public class CreateRequest extends javax.swing.JInternalFrame {
                 "Requerimiento Aceptado - Exito", JOptionPane.INFORMATION_MESSAGE);
 
         this.dispose();
-        Contenedor.desktopPane.updateUI();
+       
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnRechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRechazarActionPerformed
-         logger.info("Rechazando solicitud");
+        logger.info("Rechazando solicitud");
         RequestController rc = new RequestController();
         String requestID = this.getTitle().split(":")[1].trim();
-        
+
         logger.info("Agregando nuevo comentario");
         Comment nuevoComentario = new Comment();
         nuevoComentario.setEmployeeId(Session.employeeId);
@@ -461,8 +459,8 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         String code = "";
         code = name.toUpperCase().substring(0, 3);
         Calendar cal = Calendar.getInstance();
-        String a = Integer.toString(cal.get(1)).substring(0,2);
-        code = code + a+ramdomNum();
+        String a = Integer.toString(cal.get(1)).substring(0, 2);
+        code = code + a + ramdomNum();
         return code;
     }
 
@@ -473,11 +471,11 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         for (int i = 0; i < 3; i++) {
 //        n = Math.floor(Math.random()*9);
             n = (int) Math.floor(Math.random() * 6 + 1);
-            num+= Integer.toString(n);
+            num += Integer.toString(n);
         }
-        while(c.checkIC(num)>0){
+        while (c.checkIC(num) > 0) {
             num = ramdomNum();
         }
-        return  num;
+        return num;
     }
 }

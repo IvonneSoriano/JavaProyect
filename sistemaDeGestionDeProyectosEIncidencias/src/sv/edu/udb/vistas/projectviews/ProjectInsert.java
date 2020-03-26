@@ -82,6 +82,9 @@ public class ProjectInsert extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+
         jLabel1.setForeground(new java.awt.Color(0, 41, 250));
         jLabel1.setText("Departamento:");
 

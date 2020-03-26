@@ -33,40 +33,47 @@ import sv.edu.udb.util.RequestStatus;
  * @author kiss_
  */
 public class Contenedor extends javax.swing.JFrame {
-    
+
     private static Logger logger = Logger.getLogger(Contenedor.class);
-    private List<Ticket> cods= null;
+    private List<Ticket> cods = null;
     private TicketsController tController = new TicketsController();
-     private DefaultTableModel modeloTablaSolicitudes;
+    private DefaultTableModel modeloTablaSolicitudes;
+
     /**
      * Creates new form Contenedor
      */
     public Contenedor() {
-            initComponents();
-            loadData();
-            setExtendedState(Contenedor.MAXIMIZED_BOTH);
-            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-            if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
-                    || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
-                employeeMenu.setVisible(false);
-                projectMenu.setVisible(false);
+        initComponents();
+        loadData();
+        setExtendedState(Contenedor.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
+                || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
+            employeeMenu.setVisible(false);
+            projectMenu.setVisible(false);
+        }
+        if (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId()) {
+            cods = tController.checkTickets(Session.deparmentId);
+            if (!cods.isEmpty()) {
+                for (Ticket cod : cods) {
+                    JOptionPane.showMessageDialog(projectMenu, "El ticket " + cod.getInternalCode() + " necesita un tester");
+                }
             }
-            if (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId()){
-                cods= tController.checkTickets(Session.deparmentId);
-                if(!cods.isEmpty()){
-                     for (Ticket cod : cods) {
-                        JOptionPane.showMessageDialog(projectMenu, "El ticket "+ cod.getInternalCode() + " necesita un tester");
-                    }
-                }    
-            }
-            
-            if (Session.employeeType != Roles.JEFE_AREA_FUNCIONAL.getRolId()){
-                btnNewTicket.setVisible(false);
-            }
+        }
+
+        if (Session.employeeType != Roles.JEFE_AREA_FUNCIONAL.getRolId()) {
+            btnNewTicket.setVisible(false);
+        }
     }
 
-    
     public void loadData() {
+
+        if (Session.employeeType == Roles.PROGRAMADOR.getRolId()
+                || Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()) {
+            ocultarTablaSolicitudesPendientes();
+            return;
+        }
 
         RequestController controller = new RequestController();
         Object[][] data = null;
@@ -77,11 +84,7 @@ public class Contenedor extends javax.swing.JFrame {
         this.jTblSolicitudes.setModel(modeloTablaSolicitudes);
 
         List<Request> listFound = null;
-        if (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId()) {
-            listFound = controller.findRequestsByStatusAndDepartmentId(RequestStatus.EN_ESPERA.name(), Session.deparmentId);
-        } else {
-            listFound = controller.findRequestByDeparmentId(Session.deparmentId);
-        }
+        listFound = controller.findRequestsByStatusAndDepartmentId(RequestStatus.EN_ESPERA.name(), Session.deparmentId);
 
         if (listFound.size() > 0) {
             for (Request r : listFound) {
@@ -100,19 +103,21 @@ public class Contenedor extends javax.swing.JFrame {
                 modeloTablaSolicitudes.addRow(newRow);
             }
         } else {
-            lblSolicitudesPendientes.setVisible(false);
-            jTblSolicitudes.setVisible(false);
-            jScrollPane1.setVisible(false);
+            this.ocultarTablaSolicitudesPendientes();
         }
     }
-                                                  
-    
+
+    private void ocultarTablaSolicitudesPendientes() {
+        lblSolicitudesPendientes.setVisible(false);
+        jTblSolicitudes.setVisible(false);
+        jScrollPane1.setVisible(false);
+    }
+
     public void closeForms() {
         desktopPane.removeAll();
         desktopPane.updateUI();
     }
-                                        
-                                          
+
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
@@ -120,7 +125,7 @@ public class Contenedor extends javax.swing.JFrame {
         RequestList rl = new RequestList();
         desktopPane.add(rl);
         rl.show();
-        
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btnVerTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTicketActionPerformed
@@ -130,7 +135,6 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(tl);
         tl.show();
     }//GEN-LAST:event_btnVerTicketActionPerformed
- 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -307,7 +311,7 @@ public class Contenedor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
- 
+
     private void insertProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjectActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -327,14 +331,14 @@ public class Contenedor extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jListMenuActionPerformed
-  
+
     private void btnNewTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTicketActionPerformed
         //closeForms();
         CreateRequest r = new CreateRequest();
         desktopPane.add(r);
         r.show();
     }//GEN-LAST:event_btnNewTicketActionPerformed
-    
+
     private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -342,7 +346,7 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(cu);
         cu.show();
     }//GEN-LAST:event_btnVerEmpActionPerformed
-    
+
     private void btnAgregarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -373,7 +377,7 @@ public class Contenedor extends javax.swing.JFrame {
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
-         Session.logOut();
+        Session.logOut();
         new Login().setVisible(true);
         this.dispose();
         return;
@@ -437,4 +441,3 @@ public class Contenedor extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 }
-
