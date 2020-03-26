@@ -57,6 +57,7 @@ public class Connect {
     public int setQuery(String query) throws SQLException {
         return this.s.executeUpdate(query);
     }
+    
     //Metodo que cierra la conexion
 
     public void cerrarConexion() throws SQLException {

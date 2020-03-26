@@ -5,44 +5,62 @@
  */
 package sv.edu.udb.vistas;
 
-import java.util.List;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
-import sv.edu.udb.controllers.DeparmentController;
-import sv.edu.udb.controllers.RequestController;
-import sv.edu.udb.controllers.RequestTypeController;
-import sv.edu.udb.models.Request;
 import sv.edu.udb.models.Session;
-import sv.edu.udb.util.RequestStatus;
 import sv.edu.udb.util.Roles;
 import sv.edu.udb.vistas.employessviews.CreateUser;
 import sv.edu.udb.vistas.projectviews.*;
 import sv.edu.udb.vistas.employessviews.ShowUsers;
 import sv.edu.udb.vistas.tickets.CreateRequest;
+import sv.edu.udb.vistas.employessviews.*;
+import sv.edu.udb.vistas.requestview.*;
+import sv.edu.udb.vistas.tickets.*;
+import sv.edu.udb.controllers.TicketsController;
+import java.util.List;
+import sv.edu.udb.controllers.DeparmentController;
+import sv.edu.udb.controllers.RequestController;
+import sv.edu.udb.models.Request;
+import sv.edu.udb.controllers.RequestTypeController;
+import sv.edu.udb.models.Ticket;
+import sv.edu.udb.util.RequestStatus;
 
 /**
  *
  * @author kiss_
  */
 public class Contenedor extends javax.swing.JFrame {
-
+    
     private static Logger logger = Logger.getLogger(Contenedor.class);
-    private DefaultTableModel modeloTablaSolicitudes;
-
+    private List<Ticket> cods= null;
+    private TicketsController tController = new TicketsController();
+     private DefaultTableModel modeloTablaSolicitudes;
     /**
      * Creates new form Contenedor
      */
     public Contenedor() {
-        initComponents();
-        loadData();
-        setExtendedState(Contenedor.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
-                || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
-            employeeMenu.setVisible(false);
-        }
+            initComponents();
+            loadData();
+            setExtendedState(Contenedor.MAXIMIZED_BOTH);
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
+                    || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
+                employeeMenu.setVisible(false);
+            }
+            if (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId()){
+                cods= tController.checkTickets(Session.deparmentId);
+                if(!cods.isEmpty()){
+                     for (Ticket cod : cods) {
+                        JOptionPane.showMessageDialog(projectMenu, "El ticket "+ cod.getInternalCode() + " necesita un tester");
+                    }
+                }    
+            }
     }
 
+    
     public void loadData() {
 
         RequestController controller = new RequestController();
@@ -82,6 +100,39 @@ public class Contenedor extends javax.swing.JFrame {
             jScrollPane1.setVisible(false);
         }
     }
+                                                  
+    
+    public void closeForms() {
+        desktopPane.removeAll();
+        desktopPane.updateUI();
+    }
+                                        
+                                          
+
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+        // TODO add your handling code here:
+         closeForms();
+         ViewTicket cu = new ViewTicket(2);
+        desktopPane.add(cu);
+        cu.show();
+    }//GEN-LAST:event_saveAsMenuItemActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        closeForms();
+        RequestList rl = new RequestList();
+        desktopPane.add(rl);
+        rl.show();
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnVerTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTicketActionPerformed
+        // TODO add your handling code here:
+        closeForms();
+        TicketsList tl = new TicketsList();
+        desktopPane.add(tl);
+        tl.show();
+    }//GEN-LAST:event_btnVerTicketActionPerformed
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,6 +162,7 @@ public class Contenedor extends javax.swing.JFrame {
         jListMenu = new javax.swing.JMenuItem();
         editProject = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,11 +207,21 @@ public class Contenedor extends javax.swing.JFrame {
 
         btnVerTicket.setMnemonic('s');
         btnVerTicket.setText("Ver Ticket");
+        btnVerTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerTicketActionPerformed(evt);
+            }
+        });
         ticketMenu.add(btnVerTicket);
 
         saveAsMenuItem.setMnemonic('a');
         saveAsMenuItem.setText("Save As ...");
         saveAsMenuItem.setDisplayedMnemonicIndex(5);
+        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAsMenuItemActionPerformed(evt);
+            }
+        });
         ticketMenu.add(saveAsMenuItem);
 
         cerrarSesionMenuItem.setMnemonic('x');
@@ -226,7 +288,16 @@ public class Contenedor extends javax.swing.JFrame {
         menuBar.add(projectMenu);
 
         jMenu1.setForeground(new java.awt.Color(35, 10, 89));
-        jMenu1.setText("jMenu1");
+        jMenu1.setText("Peticiones");
+
+        jMenuItem1.setText("Ver peticiones");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         menuBar.add(jMenu1);
 
         setJMenuBar(menuBar);
@@ -235,11 +306,11 @@ public class Contenedor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
         );
 
         pack();
@@ -253,10 +324,7 @@ public class Contenedor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cerrarSesionMenuItemActionPerformed
 
-    public void closeForms() {
-        desktopPane.removeAll();
-        desktopPane.updateUI();
-    }
+ 
     private void insertProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertProjectActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -276,14 +344,14 @@ public class Contenedor extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jListMenuActionPerformed
-
+  
     private void btnNewTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTicketActionPerformed
         //closeForms();
         CreateRequest r = new CreateRequest();
         desktopPane.add(r);
         r.show();
     }//GEN-LAST:event_btnNewTicketActionPerformed
-
+    
     private void btnVerEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerEmpActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -291,7 +359,7 @@ public class Contenedor extends javax.swing.JFrame {
         desktopPane.add(cu);
         cu.show();
     }//GEN-LAST:event_btnVerEmpActionPerformed
-
+    
     private void btnAgregarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -367,6 +435,7 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenuItem insertProject;
     private javax.swing.JMenuItem jListMenu;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTblSolicitudes;
     private javax.swing.JLabel lblSolicitudesPendientes;
