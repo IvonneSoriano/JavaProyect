@@ -14,6 +14,13 @@ import sv.edu.udb.models.TicketDAO;
  */
 public class TicketsController {
     
+        public List<Ticket> getAllTickets(){
+        TicketDAO dao = new TicketDAO();
+        List<Ticket> tickets = dao.getAll();
+        
+        return tickets;
+    }
+    
     public Ticket showTicket(int id){
         TicketDAO dao = new TicketDAO();
         return dao.getOne(id);
