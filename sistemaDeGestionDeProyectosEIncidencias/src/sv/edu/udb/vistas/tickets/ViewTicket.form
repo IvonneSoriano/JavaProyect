@@ -19,14 +19,14 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="216" max="-2" attributes="0"/>
                       <Component id="lvlTicketName" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" pref="184" max="32767" attributes="0"/>
+                      <EmptySpace pref="140" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
@@ -48,7 +48,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Component id="pnlInfoTicket" min="-2" max="-2" attributes="0"/>
@@ -94,29 +94,26 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtFechaFinal" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblFechaStart" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="lblFechaFinal" min="-2" max="-2" attributes="0"/>
-                      <Component id="cmbQA" min="-2" max="-2" attributes="0"/>
                       <Component id="chkbxQA" min="-2" max="-2" attributes="0"/>
                       <Component id="lblSuperFunc" min="-2" max="-2" attributes="0"/>
                       <Component id="lblSupervisorProgra" min="-2" max="-2" attributes="0"/>
                       <Component id="lblTituloSup" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtAvance" max="32767" attributes="0"/>
-                          <Component id="lblAvance" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbEstado" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtAvance" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblAvance" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="txtFechaFinal" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtFechaStart" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cmbQA" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cmbProgr" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblProgra" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="lblFechaStart" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="lblTituloSuper" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtFechaStart" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="lblTituloSuper" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbEstado" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="95" max="32767" attributes="0"/>
+                  <EmptySpace pref="99" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -140,6 +137,10 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="lblSuperFunc" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="lblProgra" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="cmbProgr" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Component id="chkbxQA" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="cmbQA" min="-2" max="-2" attributes="0"/>
@@ -149,7 +150,7 @@
                   <Component id="txtFechaStart" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="lblFechaFinal" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="txtFechaFinal" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -229,12 +230,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblFechaStart">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
+            <Property name="text" type="java.lang.String" value="Fecha de inicio"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblFechaFinal">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel2"/>
+            <Property name="text" type="java.lang.String" value="Fecha de finalizaci&#xf3;n"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtFechaStart">
@@ -247,10 +248,36 @@
             <Property name="text" type="java.lang.String" value="jTextField2"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JLabel" name="lblProgra">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Programador asignado"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cmbProgr">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="lvlTicketName">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="14" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="59" green="a" red="23" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Nombre del Ticket"/>
       </Properties>
     </Component>
@@ -304,7 +331,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="299" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="317" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

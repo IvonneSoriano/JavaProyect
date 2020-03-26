@@ -5,8 +5,7 @@
  */
 package sv.edu.udb.models;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +71,25 @@ public class RequestTypeDAO implements Dao<RequestType> {
         }
         return requestTypesFound;
     }
-
+    public RequestType getRequestTypeName(int id){
+        RequestType foundName = null;
+        try {
+            Connect connection = null;
+            String sql = "SELECT * FROM REQUESTTYPE WHERE REQUESTTYPEID=" + id + ";";
+            connection.setRs("SELECT * FROM REQUESTTYPE WHERE REQUESTTYPEID=" + id + ";");
+            System.out.println(sql);
+            ResultSet reType = (ResultSet) connection.getRs();
+            while (reType.next()) {                
+                foundName = new  RequestType();
+                foundName.setRequestTypeName("REQUESTTYPENAME");
+                
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getRequestName() method. Message: " + e.getMessage());
+        }
+        
+        return  foundName;
+    }
     @Override
     public boolean save(RequestType t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

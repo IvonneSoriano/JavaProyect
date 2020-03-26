@@ -30,7 +30,7 @@ public class ProjectsController {
 
         return projects;
     }
-
+   
     public boolean insertProject(Project p) {
         ProjectDAO dao = new ProjectDAO();
         return dao.save(p);
@@ -47,4 +47,8 @@ public class ProjectsController {
         return projectFound.orElseGet(() -> new Project(DAODefaults.NO_PROJECT_FOUND.getDefaultValue()));
     }
 
+    public Project getProjectName(int id){
+        ProjectDAO dao = new ProjectDAO();
+        return  dao.getProjectName(id);
+    }
 }

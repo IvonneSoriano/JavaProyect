@@ -377,3 +377,4 @@ public class Contenedor extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 }
+

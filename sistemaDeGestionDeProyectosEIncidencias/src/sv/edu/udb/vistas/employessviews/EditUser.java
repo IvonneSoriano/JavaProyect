@@ -264,11 +264,13 @@ public class EditUser extends javax.swing.JInternalFrame {
     private void txtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyPressed
         // TODO add your handling code here:
         valid.numberTyped(evt);
+        txtName.setText("");
     }//GEN-LAST:event_txtNameKeyPressed
 
     private void txtLastnameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastnameKeyPressed
         // TODO add your handling code here:
         valid.numberTyped(evt);
+        txtName.setText("");
     }//GEN-LAST:event_txtLastnameKeyPressed
 
 

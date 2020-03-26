@@ -4,25 +4,18 @@
  * and open the template in the editor.
  */
 package sv.edu.udb.controllers;
-
-import java.util.List;
 import sv.edu.udb.models.Ticket;
 import sv.edu.udb.models.TicketDAO;
-import sv.edu.udb.util.DAODefaults;
-
+        
 /**
  *
- * @author Rick
+ * @author kiss_
  */
-public class TicketController {
-  
-    public List<Ticket> getAllTickets(){
+public class TicketsController {
+    
+    public Ticket showTicket(int id){
         TicketDAO dao = new TicketDAO();
-        List<Ticket> tickets = dao.getAll();
-        
-        return tickets;
+        return dao.getOne(id);
     }
-   public boolean saveTicket(Ticket t) {
-        return new TicketDAO().save(t);
-   }
+    
 }

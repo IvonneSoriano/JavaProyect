@@ -1,7 +1,7 @@
 package sv.edu.udb.models;
 
 import java.util.*;
-
+import java.sql.*;
 /**
  *
  * @author Imer
@@ -10,7 +10,7 @@ public class Ticket {
 
     private int id, request, programmer, tester, projectID;
     private String ticketStatus, internalCode;
-    private Date startDate, endDate;
+    private Timestamp startDate, endDate;
 
     public Ticket() {
     }
@@ -63,19 +63,19 @@ public class Ticket {
         return internalCode;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 
-    public Date getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 

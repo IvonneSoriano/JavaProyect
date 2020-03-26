@@ -15,6 +15,8 @@ import sv.edu.udb.util.DAODefaults;
  *
  * @author Rick
  */
+
+
 public class RequestController {
 
     public boolean insertRequest(Request r) {
@@ -45,5 +47,17 @@ public class RequestController {
 
     public void updateRequestStatus(Request r) {
         new RequestDAO().updateStatus(r);
+    }
+
+    public List<Request> getRequests() {
+        RequestDAO dao = new RequestDAO();
+        List<Request> requests = dao.getAll();
+
+        return requests;
+    }
+
+    public Request getRequest(int id) {
+        RequestDAO dao = new RequestDAO();
+        return dao.getOneById(id);
     }
 }

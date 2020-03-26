@@ -76,7 +76,7 @@ public class EmployeeDAO implements Dao<Employee> {
                     + "VALUES ('" + t.getRolId() + "', '" + t.getDepartmentId()
                     + "', '" + t.getEmployeeName() + "', '"
                     + t.getEmployeeLastname() + "', '"
-                    + t.getUsername() + "', '" + t.getPassword() + "');");
+                    + t.getUsername() + "', SHA2('" + t.getPassword() + "',256));");
 
             if (result <= 0) {
                 logger.error("INSERT to Employees table has failed");
@@ -104,8 +104,8 @@ public class EmployeeDAO implements Dao<Employee> {
                     + "', `EMPLOYEENAME` = '" + t.getEmployeeName()
                     + "', `EMPLOYEELASTNAME` = '" + t.getEmployeeLastname()
                     + "', `USERNAME` = '" + t.getUsername()
-                    + "', `PASSWORD` = '" + t.getPassword()
-                    + " ' WHERE `EmployeeID` = " + t.getEmployeeId() + ";"
+                    + "', `PASSWORD` = SHA2('" + t.getPassword()
+                    + " ',256) WHERE `EmployeeID` = " + t.getEmployeeId() + ";"
             );
             if (result <= 0) {
                 logger.error("UPDATE to Employees table has failed");
@@ -166,11 +166,12 @@ public class EmployeeDAO implements Dao<Employee> {
         }
     }
 
-    public Optional<Employee> getEmployeeByUsername(String username) {
+    public Optional<Employee> getEmployeeByUsername(String username, char[] password) {
         Employee foundEmployee = null;
         try {
             Connect connection = new Connect();
-            connection.setRs("SELECT * FROM EMPLOYEES WHERE username='" + username + "';");
+             String pass = new String(password);
+            connection.setRs("SELECT * FROM EMPLOYEES WHERE username='" + username + "' and PASSWORD= SHA2('"+ pass +"',256);");
             ResultSet employees = (ResultSet) connection.getRs();
 
             while (employees.next()) {
@@ -182,7 +183,7 @@ public class EmployeeDAO implements Dao<Employee> {
                 foundEmployee.setEmployeeLastname(employees.getString("EMPLOYEELASTNAME"));
                 foundEmployee.setUsername(employees.getString("USERNAME"));
                 foundEmployee.setPassword(employees.getString("PASSWORD"));
-
+                
             }
         } catch (Exception e) {
             logger.error("Error processing ResultSet in getEmployeeByUsername() method. Message: " + e.getMessage());
@@ -365,5 +366,7 @@ public class EmployeeDAO implements Dao<Employee> {
         }
         return employeesFound;
     }
+    
+    
 
 }

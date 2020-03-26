@@ -295,7 +295,7 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         cbProyectosExistentes.setSelectedIndex(-1);
         cbTipoSolicitud.setSelectedIndex(-1);
     }
-    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerforme
         Request r = new Request();
         RequestTypeController typeController = new RequestTypeController();
 
@@ -308,6 +308,8 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         r.setIdTypeRequest(typeController.findRequestTypeByName(String.valueOf(
                 cbTipoSolicitud.getSelectedItem())).getId());
         r.setRequestDate(new Timestamp(System.currentTimeMillis()));
+
+
         r.setRequestDescription(txtDescripcionRequerimiento.getText());
         r.setRequestStatus(RequestStatus.EN_ESPERA.name());
         r.setDepartmentId(Session.deparmentId);

@@ -47,7 +47,33 @@ public class RequestDAO implements Dao<Request> {
 
     @Override
     public List<Request> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         Connect connection = null;
+         List<Request> requestFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+            connection.setRs("SELECT * FROM REQUESTS");
+            ResultSet requestSet = connection.getRs();
+            while (requestSet.next()) {                
+                Request request = new Request();
+                request.setId(requestSet.getInt("REQUESTID"));
+                request.setIdTypeRequest(requestSet.getInt("REQUESTTYPEID"));
+                request.setRequestDate(requestSet.getTimestamp("REQUESTDATE"));
+                request.setRequestDescription(requestSet.getString("REQUESTDESCRIPTION"));
+                request.setRequestStatus(requestSet.getString("REQUESTSTATUS"));
+                request.setProjectId(requestSet.getInt("PROJECTID"));
+                requestFound.add(request);
+            }
+        } catch (SQLException e) {
+             logger.error("Error processing SELECT query in save method. Message: " + e.getMessage());
+        }finally {
+            try {
+                connection.cerrarConexion();
+            } catch (SQLException ex) {
+                logger.error("Error closing conecction in getAll() method. Message: " + ex.getMessage());
+            }
+
+        }
+        return requestFound;
     }
 
     @Override
@@ -228,5 +254,26 @@ public class RequestDAO implements Dao<Request> {
             logger.error("Error processing UPDATE query. Message: " + e.getMessage());
             return false;
         }
+    }
+  
+    public Request getOneById(int id){
+      Request request = null;
+        try {
+            Connect connection = new Connect();
+            connection.setRs("SELECT * FROM requests WHERE REQUESTID = " + id +";");
+            ResultSet requests = (ResultSet) connection.getRs();
+
+            while (requests.next()) {
+                request = new Request();
+                request.setId(requests.getInt("REQUESTID"));
+                request.setIdTypeRequest(requests.getInt("REQUESTTYPEID"));
+                request.setRequestDate(requests.getTimestamp("REQUESTDATE"));
+                request.setRequestDescription(requests.getString("REQUESTDESCRIPTION"));
+                request.setRequestStatus(requests.getString("REQUESTSTATUS"));
+            }
+        } catch (Exception e) {
+            logger.error("Error processing ResultSet in getOneById() method. Message: " + e.getMessage());
+        }
+        return request;   
     }
 }
