@@ -374,7 +374,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     private void cmbQAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbQAFocusLost
         // TODO add your handling code here:
            if (ticket.getIdTester()== 0) {
-            String nombre = (String) (cmbProgr.getSelectedItem());
+            String nombre = (String) (cmbQA.getSelectedItem());
             Employee e = new Employee();
             e = eController.getEmployee(e.getName(nombre), e.getLastname(nombre));
             if (tController.updateT(ticket.getIdTicket(), e.getEmployeeId())) {

@@ -18,6 +18,9 @@ import sv.edu.udb.vistas.tickets.CreateRequest;
 import sv.edu.udb.vistas.employessviews.*;
 import sv.edu.udb.vistas.requestview.*;
 import sv.edu.udb.vistas.tickets.*;
+import sv.edu.udb.controllers.TicketsController;
+import java.util.List;
+import sv.edu.udb.models.Ticket;
 
 /**
  *
@@ -26,7 +29,8 @@ import sv.edu.udb.vistas.tickets.*;
 public class Contenedor extends javax.swing.JFrame {
     
     private static Logger logger = Logger.getLogger(Contenedor.class);
-
+    private List<Ticket> cods= null;
+    private TicketsController tController = new TicketsController();
     /**
      * Creates new form Contenedor
      */
@@ -37,6 +41,14 @@ public class Contenedor extends javax.swing.JFrame {
             if (Session.employeeType == Roles.EMPLEADO_AREA_FUNCIONAL.getRolId()
                     || Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
                 employeeMenu.setVisible(false);
+            }
+            if (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId()){
+                cods= tController.checkTickets(Session.deparmentId);
+                if(!cods.isEmpty()){
+                     for (Ticket cod : cods) {
+                        JOptionPane.showMessageDialog(projectMenu, "El ticket "+ cod.getInternalCode() + " necesita un tester");
+                    }
+                }    
             }
     }
 

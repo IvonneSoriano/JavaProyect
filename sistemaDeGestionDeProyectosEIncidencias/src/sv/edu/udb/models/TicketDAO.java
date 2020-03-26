@@ -117,6 +117,7 @@ public class TicketDAO implements Dao<Ticket> {
 
     public boolean checkEmployee(int id, String p) {
         Connect connection = null;
+         int result = 0;
         boolean status = false;
         try {
             connection = new Connect();
@@ -125,9 +126,17 @@ public class TicketDAO implements Dao<Ticket> {
         }
         try {
 
-            int result = connection.setQuery("SELECT COUNT(*) FROM `tickets` WHERE "+ p + " = " + id + ";");
+            connection.setRs("SELECT COUNT(*) FROM `tickets` WHERE "+ p + " = " + id + ";");
+            ResultSet isExist = connection.getRs();
+            while (isExist.next()){
+                result = isExist.getInt(1);
+            }
             if(result > 0){
-            result = connection.setQuery("SELECT COUNT(*) FROM `tickets` WHERE " + p + " = "+ id +" AND TICKET_STATUS='DESARROLLO';");    
+            connection.setRs("SELECT COUNT(*) FROM `tickets` WHERE " + p + " = "+ id +" AND TICKET_STATUS='DESARROLLO';");    
+            ResultSet isExist2 = connection.getRs();
+            while (isExist2.next()){
+                result = isExist2.getInt(1);
+            }
             if(result==0){
                 status = false;
             }
@@ -157,8 +166,8 @@ public class TicketDAO implements Dao<Ticket> {
             Connect connection = new Connect();
 
             int result = connection.setQuery("UPDATE `gestion_tickets`.`TICKETS` SET "
-                    + "ID_TESTER = " + idP
-                    + "  WHERE TICKETID = " + idTicket+ ";"
+                    + "ID_TESTER = "+ idP
+                    + " WHERE TICKETID = " + idTicket+ ";"
             );
             if (result <= 0) {
                 logger.error("UPDATE to Tickets table has failed");
@@ -171,6 +180,42 @@ public class TicketDAO implements Dao<Ticket> {
             logger.error("Error processing UPDATE query in updateQA method. Message: " + e.getMessage());
             return false;
         }
+    }
+    
+//    public String[] verifyTesterNeeded(int id){
+//        String[] cod = null;
+//        int i =0;
+//        try {
+//            Connect connection = new Connect();
+//            int result = connection.setQuery("SELECT COUNT(*) FROM `tickets` INNER JOIN requests ON tickets.REQUESTID = requests.REQUESTID WHERE requests.DeparmentID ="+id+";");
+//            cod = new String[result];
+//            connection.setRs("SELECT tickets.INTERNALCODE FROM `tickets` INNER JOIN requests on requests.REQUESTID = tickets.REQUESTID WHERE tickets.ID_TESTER=0 AND requests.DeparmentID ="+ id +";");
+//            ResultSet codigos = (ResultSet) connection.getRs();
+//            while (codigos.next()) {
+//                cod[i]=codigos.getString(0);
+//                i++;
+//
+//            }
+//        } catch (Exception e) {
+//            logger.error("Error processing ResultSet in verifyTesterNeeded() method. Message: " + e.getMessage());
+//        }
+//        return cod;
+//    }
+     public List<Ticket> verifyTesterNeeded(int id){
+        Connect connection = null;
+        List<Ticket> ticketFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+                connection.setRs("SELECT `tickets`.`INTERNALCODE` FROM tickets INNER JOIN `requests` on `requests`.`REQUESTID` = `tickets`.`REQUESTID` WHERE `tickets`.`ID_TESTER`=0 AND `requests`.`DeparmentID` = "+id+";" );
+            ResultSet ticketSet = connection.getRs();
+            while (ticketSet.next()) {
+                Ticket ticket = new Ticket();
+                ticket.setInternalCode(ticketSet.getString("tickets.INTERNALCODE"));
+                ticketFound.add(ticket);
+            }
+        } catch (Exception e) {
+        }
+        return ticketFound;
     }
 
 }

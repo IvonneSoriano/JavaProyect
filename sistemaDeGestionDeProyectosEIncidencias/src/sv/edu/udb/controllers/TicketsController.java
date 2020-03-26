@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package sv.edu.udb.controllers;
+import java.util.List;
 import sv.edu.udb.models.Ticket;
 import sv.edu.udb.models.TicketDAO;
         
@@ -31,5 +32,13 @@ public class TicketsController {
         TicketDAO dao = new TicketDAO();
         return dao.updateQA(t, p);
     }
-    
+       
+//       public String[] checkTickets(int id){
+//           TicketDAO dao = new TicketDAO();
+//        return dao.verifyTesterNeeded(id);
+//       }
+           public List<Ticket> checkTickets(int id){
+           TicketDAO dao = new TicketDAO();
+        return dao.verifyTesterNeeded(id);
+       }
 }
