@@ -46,7 +46,7 @@ public class TicketDAO implements Dao<Ticket> {
                 ticket.setInternalCode(ticketSet.getString("INTERNALCODE"));
                 ticket.setStartDate(ticketSet.getTimestamp("STARTDATE"));
                 ticket.setEndDate(ticketSet.getTimestamp("ENDDATE"));
-                
+                ticketFound.add(ticket);
             }
         } catch (Exception e) {
         }
@@ -231,7 +231,7 @@ public class TicketDAO implements Dao<Ticket> {
         List<Ticket> ticketFound = new ArrayList<>();
         try {
             connection = new Connect();
-                connection.setRs("SELECT `tickets`.`INTERNALCODE` FROM tickets INNER JOIN `requests` on `requests`.`REQUESTID` = `tickets`.`REQUESTID` WHERE `tickets`.`ID_TESTER`=0 AND `requests`.`DeparmentID` = "+id+";" );
+                connection.setRs("SELECT `tickets`.`INTERNALCODE` FROM tickets INNER JOIN `requests` on `requests`.`REQUESTID` = `tickets`.`REQUESTID` WHERE `tickets`.`ID_TESTER`=0 AND `requests`.`DepartmentID` = "+id+";" );
             ResultSet ticketSet = connection.getRs();
             while (ticketSet.next()) {
                 Ticket ticket = new Ticket();
@@ -260,4 +260,30 @@ public class TicketDAO implements Dao<Ticket> {
         }
         return result;
     }
+        
+        public List<Ticket> getAll(int dep) {
+        Connect connection = null;
+        List<Ticket> ticketFound = new ArrayList<>();
+        try {
+            connection = new Connect();
+            connection.setRs("SELECT tickets.* FROM TICKETS INNER JOIN requests ON tickets.REQUESTID = requests.REQUESTID WHERE requests.DEPARTMENTID ="+dep+";");
+            ResultSet ticketSet = connection.getRs();
+            while (ticketSet.next()) {                
+                Ticket ticket = new Ticket();
+                ticket.setIdTicket(ticketSet.getInt("TICKETID"));
+                ticket.setRequestId(ticketSet.getInt("REQUESTID"));
+                ticket.setProjectID(ticketSet.getInt("PROJECTID"));
+                ticket.setIdProgrammer(ticketSet.getInt("ID_PROGRAMADOR"));
+                ticket.setIdTester(ticketSet.getInt("ID_TESTER"));
+                ticket.setTicketStatus(ticketSet.getString("TICKET_STATUS"));
+                ticket.setInternalCode(ticketSet.getString("INTERNALCODE"));
+                ticket.setStartDate(ticketSet.getTimestamp("STARTDATE"));
+                ticket.setEndDate(ticketSet.getTimestamp("ENDDATE"));
+             ticketFound.add(ticket);
+            }
+        } catch (Exception e) {
+        }
+        return ticketFound;
+    } 
+        
 }

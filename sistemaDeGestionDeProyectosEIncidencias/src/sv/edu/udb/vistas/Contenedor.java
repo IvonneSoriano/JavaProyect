@@ -109,13 +109,6 @@ public class Contenedor extends javax.swing.JFrame {
                                         
                                           
 
-    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
-        // TODO add your handling code here:
-         closeForms();
-         ViewTicket cu = new ViewTicket(2);
-        desktopPane.add(cu);
-        cu.show();
-    }//GEN-LAST:event_saveAsMenuItemActionPerformed
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         closeForms();
@@ -151,7 +144,6 @@ public class Contenedor extends javax.swing.JFrame {
         ticketMenu = new javax.swing.JMenu();
         btnNewTicket = new javax.swing.JMenuItem();
         btnVerTicket = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
         cerrarSesionMenuItem = new javax.swing.JMenuItem();
         employeeMenu = new javax.swing.JMenu();
         btnAgregarEmp = new javax.swing.JMenuItem();
@@ -163,6 +155,8 @@ public class Contenedor extends javax.swing.JFrame {
         editProject = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        OptionMenu = new javax.swing.JMenu();
+        btnCerrar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -213,16 +207,6 @@ public class Contenedor extends javax.swing.JFrame {
             }
         });
         ticketMenu.add(btnVerTicket);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveAsMenuItemActionPerformed(evt);
-            }
-        });
-        ticketMenu.add(saveAsMenuItem);
 
         cerrarSesionMenuItem.setMnemonic('x');
         cerrarSesionMenuItem.setText("Cerrar Sesion");
@@ -299,6 +283,18 @@ public class Contenedor extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         menuBar.add(jMenu1);
+
+        OptionMenu.setText("Opciones");
+
+        btnCerrar.setText("Cerrar Sesion");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
+        OptionMenu.add(btnCerrar);
+
+        menuBar.add(OptionMenu);
 
         setJMenuBar(menuBar);
 
@@ -388,6 +384,14 @@ public class Contenedor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTblSolicitudesMouseClicked
 
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+         Session.logOut();
+        new Login().setVisible(true);
+        this.dispose();
+        return;
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -424,7 +428,9 @@ public class Contenedor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu OptionMenu;
     private javax.swing.JMenuItem btnAgregarEmp;
+    private javax.swing.JMenuItem btnCerrar;
     private javax.swing.JMenuItem btnNewTicket;
     private javax.swing.JMenuItem btnVerEmp;
     private javax.swing.JMenuItem btnVerTicket;
@@ -441,7 +447,6 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JLabel lblSolicitudesPendientes;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu projectMenu;
-    private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenu ticketMenu;
     // End of variables declaration//GEN-END:variables
 
