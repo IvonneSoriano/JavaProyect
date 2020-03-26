@@ -15,10 +15,10 @@ INSERT INTO `gestion_tickets`.`roles` (`ROLNAME`) VALUES ('PROGRAMADOR');
 INSERT INTO `gestion_tickets`.`roles` (`ROLNAME`) VALUES ('ADMINISTRADOR');
 
 ALTER TABLE `gestion_tickets`.`departments` AUTO_INCREMENT = 0;
-INSERT INTO `gestion_tickets`.`departments` (`DEPARMENTNAME`) VALUES ('Departamento de Finanzas');
-INSERT INTO `gestion_tickets`.`departments` (`DEPARMENTNAME`) VALUES ('Departamento de Ventas');
-INSERT INTO `gestion_tickets`.`departments` (`DEPARMENTNAME`) VALUES ('Departamento de Facturacion Fija');
-INSERT INTO `gestion_tickets`.`departments` (`DEPARMENTNAME`) VALUES ('Departamento de Facturacion Movil');
+INSERT INTO `gestion_tickets`.`departments` (`DEPARMENTNAME`) VALUES ('Finanzas');
+INSERT INTO `gestion_tickets`.`departments` (`DEPARMENTNAME`) VALUES ('Ventas');
+INSERT INTO `gestion_tickets`.`departments` (`DEPARMENTNAME`) VALUES ('Facturacion');
+INSERT INTO `gestion_tickets`.`departments` (`DEPARMENTNAME`) VALUES ('Relaciones Publicas');
 
 ALTER TABLE `gestion_tickets`.`employees` AUTO_INCREMENT = 0;
 INSERT INTO `gestion_tickets`.`employees` (`ROLID`, `DEPARMENTID`, `EMPLOYEENAME`, `EMPLOYEELASTNAME`, `USERNAME`, `PASSWORD`) 

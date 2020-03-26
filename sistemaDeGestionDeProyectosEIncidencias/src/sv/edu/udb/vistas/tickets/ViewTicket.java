@@ -33,6 +33,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     private RequestController rController = new RequestController();
     private EmployeeController eController = new EmployeeController();
     private boolean isJTI = false;
+    private boolean isJAD = false;
     private RequestStatus rs;
 
     public ViewTicket() {
@@ -44,24 +45,25 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         ticket = tController.showTicket(id);
         request = rController.getRequest(ticket.getRequestId());
         isJTI = (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId());
+        isJAD = (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId());
         fillData();
         inputsState();
     }
 
-    public void refreshCP(){
+    public void refreshCP() {
         cmbProgr.removeAllItems();
         Employee e;
         e = eController.getEmployeeById(ticket.getIdProgrammer());
-                cmbProgr.removeAllItems();
-                cmbProgr.addItem(e.getFullName());
+        cmbProgr.addItem(e.getFullName());
     }
-       public void refreshCQA(){
-        cmbProgr.removeAllItems();
+
+    public void refreshCQA() {
+        cmbQA.removeAllItems();
         Employee e;
         e = eController.getEmployeeById(ticket.getIdTester());
-                cmbQA.removeAllItems();
-                cmbQA.addItem(e.getFullName());
+        cmbQA.addItem(e.getFullName());
     }
+
     public void fillData() {
         Employee e;
         lvlTicketName.setText(ticket.getInternalCode());
@@ -70,24 +72,25 @@ public class ViewTicket extends javax.swing.JInternalFrame {
             if (ticket.getIdProgrammer() == 0) {
                 fillProgrammers();
             } else {
-               refreshCP();
+                refreshCP();
             }
         } else {
             if (ticket.getIdProgrammer() > 0) {
                 refreshCP();
-            } 
+//JOptionPane.showMessageDialog(rootPane, "Hola");
+            }
         }
 
         if (!isJTI) {
-            if (ticket.getIdTester()== 0) {
+            if (ticket.getIdTester() == 0) {
                 fillTesters();
             } else {
-            refreshCQA();
+                refreshCQA();
             }
         } else {
-            if (ticket.getIdTester()> 0) {
-           refreshCQA();
-            } 
+            if (ticket.getIdTester() > 0) {
+                refreshCQA();
+            }
         }
         fillStatus();
 //        JOptionPane.showMessageDialog(rootPane, ticket.getIdTicket());
@@ -95,9 +98,17 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 
     public void inputsState() {
 //        cmbEstado.setEnabled(isJTI);
-        chkbxQA.setEnabled(isJTI);
-        cmbProgr.setEnabled(isJTI);
-        cmbQA.setEnabled(!isJTI);
+
+        chkbxQA.setEnabled(false);
+        cmbProgr.setEnabled(false);
+        cmbQA.setEnabled(false);
+        if (isJTI) {
+            chkbxQA.setEnabled(true);
+            cmbProgr.setEnabled(true);
+        };
+        if (isJAD) {
+            cmbQA.setEnabled(true);
+        }
         if (ticket.getIdTester() == 0) {
             chkbxQA.setSelected(true);
             if (isJTI == false) {
@@ -130,7 +141,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
 
         }
     }
-    
+
     public void fillStatus() {
         cmbEstado.removeAllItems();
         cmbEstado.addItem(RequestStatus.ASIGNAR_PROGRAMADOR.toString());
@@ -415,10 +426,10 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     private void cmbEstadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbEstadoFocusLost
         // TODO add your handling code here:
         String nombre = (String) (cmbEstado.getSelectedItem());
-         if (tController.updateS(ticket.getIdTicket(), nombre)) {
-                ticket.setTicketStatus(nombre);
-                JOptionPane.showMessageDialog(rootPane, "El estado ha cambiado correctamente");
-            }
+        if (tController.updateS(ticket.getIdTicket(), nombre)) {
+            ticket.setTicketStatus(nombre);
+            JOptionPane.showMessageDialog(rootPane, "El estado ha cambiado correctamente");
+        }
     }//GEN-LAST:event_cmbEstadoFocusLost
 
 

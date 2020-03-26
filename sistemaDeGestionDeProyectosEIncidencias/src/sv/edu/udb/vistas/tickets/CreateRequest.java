@@ -7,6 +7,8 @@ package sv.edu.udb.vistas.tickets;
 
 import java.awt.Dimension;
 import java.sql.Timestamp;
+import java.time.Year;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -20,6 +22,9 @@ import sv.edu.udb.models.RequestType;
 import sv.edu.udb.util.RequestStatus;
 import sv.edu.udb.util.RequestTypes;
 import static sv.edu.udb.vistas.Contenedor.desktopPane;
+import sv.edu.udb.controllers.DeparmentController;
+import sv.edu.udb.models.Deparment;
+import sv.edu.udb.models.Session;
 
 /**
  *
@@ -191,7 +196,6 @@ public class CreateRequest extends javax.swing.JInternalFrame {
 
         // when no option is selected in this combobox it's because there's no need
         // for a new project
-
         Request r = new Request();
         RequestTypeController typeController = new RequestTypeController();
 
@@ -204,7 +208,6 @@ public class CreateRequest extends javax.swing.JInternalFrame {
         r.setIdTypeRequest(typeController.findRequestTypeByName(String.valueOf(
                 cbTipoSolicitud.getSelectedItem())).getId());
         r.setRequestDate(new Timestamp(System.currentTimeMillis()));
-
 
         r.setRequestDescription(txtDescripcionRequerimiento.getText());
         r.setRequestStatus(RequestStatus.EN_ESPERA.name());
@@ -224,6 +227,13 @@ public class CreateRequest extends javax.swing.JInternalFrame {
                     "Ha ocurrido un error por favor intente mas tarde. ",
                     "Nuevo Requerimiento - Error", JOptionPane.WARNING_MESSAGE);
         }
+        
+//        PARA EL GENERADOR DE CODIGO
+//        Deparment d = new Deparment();
+//        DeparmentController dc = new DeparmentController();
+//        d = dc.showDeparment(Session.deparmentId);
+//        JOptionPane.showMessageDialog(rootPane, generateInternalCode(d.getDepartmentName()));
+        
 
     }//GEN-LAST:event_btnCrearActionPerformed
 
@@ -251,4 +261,25 @@ public class CreateRequest extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblTipoSolicitud;
     private javax.swing.JTextArea txtDescripcionRequerimiento;
     // End of variables declaration//GEN-END:variables
+
+    public String generateInternalCode(String name) {
+        String code = "";
+        code = name.toUpperCase().substring(0, 3);
+        Calendar cal = Calendar.getInstance();
+        String a = Integer.toString(cal.get(1)).substring(0,2);
+        code = code + a+ramdomNum();
+        return code;
+    }
+
+    public String ramdomNum() {
+        String num = "";
+        int n;
+        for (int i = 0; i < 3; i++) {
+//        n = Math.floor(Math.random()*9);
+            n = (int) Math.floor(Math.random() * 6 + 1);
+            num+= Integer.toString(n);
+        }
+
+        return num;
+    }
 }
