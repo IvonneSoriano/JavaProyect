@@ -26,6 +26,7 @@ public class TicketsList extends javax.swing.JInternalFrame {
     /** Creates new form ViewTickets */
     public TicketsList() {
         initComponents();
+        loadData();
     }
 
     /** This method is called from within the constructor to
