@@ -258,6 +258,8 @@ fillAvance();
 
         lblAvance.setText("Avance");
 
+        txtAvance.setEditable(false);
+
         lblEstado.setText("Estado");
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
