@@ -251,6 +251,9 @@ fillAvance();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblComments = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+
         pnlInfoTicket.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblAvance.setText("Avance");

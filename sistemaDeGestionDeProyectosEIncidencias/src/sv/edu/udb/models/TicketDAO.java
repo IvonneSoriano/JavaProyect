@@ -20,7 +20,7 @@ import sv.edu.udb.models.Ticket;
  */
 public class TicketDAO implements Dao<Ticket> {
 
-    private static Logger logger = Logger.getLogger(EmployeeDAO.class);
+    private static Logger logger = Logger.getLogger(TicketDAO.class);
 
     @Override
     public Optional<Ticket> get(long id) {
