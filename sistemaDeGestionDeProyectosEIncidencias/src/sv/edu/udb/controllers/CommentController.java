@@ -5,6 +5,7 @@
  */
 package sv.edu.udb.controllers;
 
+import java.util.List;
 import sv.edu.udb.models.Comment;
 import sv.edu.udb.models.CommentDAO;
 
@@ -16,5 +17,8 @@ public class CommentController {
 
     public boolean saveComment(Comment c) {
         return new CommentDAO().save(c);
+    }
+    public List<Comment> getAllid(int id) {
+        return new CommentDAO().getAllid(id);
     }
 }
