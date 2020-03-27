@@ -5,6 +5,7 @@
  */
 package sv.edu.udb.vistas.tickets;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.sql.Timestamp;
 import javax.swing.JOptionPane;
 import sv.edu.udb.models.Employee;
@@ -37,6 +38,7 @@ public class ViewTicket extends javax.swing.JInternalFrame {
     private EmployeeController eController = new EmployeeController();
     private boolean isJTI = false;
     private boolean isJAD = false;
+    List<Comment> tList = new ArrayList<>();
     private RequestStatus rs;
     
     public ViewTicket() {
@@ -49,8 +51,10 @@ public class ViewTicket extends javax.swing.JInternalFrame {
         request = rController.getRequest(ticket.getRequestId());
         isJTI = (Session.employeeType == Roles.JEFE_DE_DESARROLLO.getRolId());
         isJAD = (Session.employeeType == Roles.JEFE_AREA_FUNCIONAL.getRolId());
+         tList = new CommentController().getAllid(ticket.getRequestId());
         inputsState();
         fillData();
+        fillComments();
         
     }
     
@@ -190,6 +194,26 @@ fillAvance();
         txtAvance.setText(c);
     }
 
+    public void fillComments(){
+         
+
+         if(!tList.isEmpty()){
+             String matriz[][] = new String[tList.size()][3];
+         
+        for (int i = 0; i < tList.size(); i++) {
+            matriz[i][0] = Integer.toString(tList.get(i).getCommentId());
+            matriz[i][1] = Integer.toString(tList.get(i).getEmployeeId());
+            matriz[i][2] = (tList.get(i).getCommentText());
+        }
+        tblComments.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "ID", "User", "Comment"
+                }
+        ));
+         }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -222,9 +246,10 @@ fillAvance();
         txtComentario = new javax.swing.JTextArea();
         lblActividad = new javax.swing.JLabel();
         btnComentario = new javax.swing.JButton();
-        pnlComentarios = new javax.swing.JPanel();
         txtPorcentaje = new javax.swing.JFormattedTextField();
         lblPorcentaje = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblComments = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -232,6 +257,8 @@ fillAvance();
         pnlInfoTicket.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblAvance.setText("Avance");
+
+        txtAvance.setEditable(false);
 
         lblEstado.setText("Estado");
 
@@ -377,22 +404,22 @@ fillAvance();
             }
         });
 
-        pnlComentarios.setAutoscrolls(true);
-
-        javax.swing.GroupLayout pnlComentariosLayout = new javax.swing.GroupLayout(pnlComentarios);
-        pnlComentarios.setLayout(pnlComentariosLayout);
-        pnlComentariosLayout.setHorizontalGroup(
-            pnlComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlComentariosLayout.setVerticalGroup(
-            pnlComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
-        );
-
         txtPorcentaje.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##,#0%"))));
 
         lblPorcentaje.setText("Avance");
+
+        tblComments.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Username", "Comment", "%"
+            }
+        ));
+        jScrollPane2.setViewportView(tblComments);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -409,7 +436,6 @@ fillAvance();
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pnlComentarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jScrollPane1)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,16 +447,21 @@ fillAvance();
                                             .addComponent(lblTDes)
                                             .addComponent(lblDescripcionAd, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addGap(30, 30, 30))
+                        .addGap(205, 205, 205))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(216, 216, 216)
-                        .addComponent(lvlTicketName)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(216, 216, 216)
+                                .addComponent(lvlTicketName))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(pnlInfoTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlInfoTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(259, 259, 259))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlInfoTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(lvlTicketName)
@@ -449,8 +480,9 @@ fillAvance();
                 .addGap(33, 33, 33)
                 .addComponent(lblActividad)
                 .addGap(18, 18, 18)
-                .addComponent(pnlComentarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pnlInfoTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -529,6 +561,7 @@ fillAvance();
         if (Session.employeeType == Roles.PROGRAMADOR.getRolId()) {
             if ((!txtComentario.getText().equals("") || !txtComentario.getText().equals(" ")) && (!txtPorcentaje.getText().equals(" ") || !txtPorcentaje.getText().equals(""))) {
                 new CommentController().saveComment(nuevoComentario);
+                fillComments();
                 if (new TicketsController().updateAvance(ticket.getIdTicket(), Float.parseFloat(txtPorcentaje.getText()))) {
                     ticket.setAvance(new TicketsController().getAvance(ticket.getIdTicket()));
                 }
@@ -538,6 +571,7 @@ fillAvance();
         } else {
             if (!txtComentario.getText().equals("") && !txtComentario.getText().equals(" ")) {
                 new CommentController().saveComment(nuevoComentario);
+                fillComments();
             }            
         }
         
@@ -554,6 +588,7 @@ fillAvance();
     private javax.swing.JComboBox<String> cmbProgr;
     private javax.swing.JComboBox<String> cmbQA;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblActividad;
     private javax.swing.JLabel lblAvance;
     private javax.swing.JLabel lblDescripcionAd;
@@ -564,8 +599,8 @@ fillAvance();
     private javax.swing.JLabel lblProgra;
     private javax.swing.JLabel lblTDes;
     private javax.swing.JLabel lvlTicketName;
-    private javax.swing.JPanel pnlComentarios;
     private javax.swing.JPanel pnlInfoTicket;
+    private javax.swing.JTable tblComments;
     private javax.swing.JTextField txtAvance;
     private javax.swing.JTextArea txtComentario;
     private javax.swing.JFormattedTextField txtFechaFinal;
